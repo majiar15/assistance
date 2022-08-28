@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-center display align-items-center ">
+    <div class="bg-white login  container">
+        <div class="row">
+            <img src="./assets/unilibre.png" alt="logo unilibre" id="logo-login">
+
+        </div>
+        <div class="row">
+            <p class="d-flex  hello-hand">Bienvenido </p>
+        </div>
+        <form #gfgform="ngForm" class="form-login">
+            <div class="input2-css d-flex flex-column">
+                <label class="label-css">Cedula</label>
+                <input class="input-css" type="number" placeholder="Ingresa tu cedula" name='cc' ngModel>
+            </div>
+            <div class="input2-css d-flex flex-column">
+                <label class="label-css">Contraseña</label>
+                <input class="input-css" type="password" placeholder="Ingresa tu contraseña" name='contraseña' ngModel>
+            </div>
+            <button class="button-login">Ingresar</button>
+        </form>
+
+    </div>
+
+</div>

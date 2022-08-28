@@ -1,0 +1,77 @@
+.login{
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 66px 96px;
+    gap: 16px;
+    width: 520px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(223, 224, 235);
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+#logo-login{
+    width: 120px;
+}
+.display{
+    height: 100vh;
+}
+.hello-hand{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    color: rgb(4, 11, 20);
+}
+.form-login{
+    width: 85%;
+}
+.input-css{
+    border: 1px solid rgb(173, 188, 206);
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 12px;
+    width: 100%;
+    background: none;
+    margin-top: 4px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 150%;
+}
+.label-css{
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: rgb(37, 42, 49);
+}
+.input2-css{
+    text-align: left;
+    margin-bottom: 24px;
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    position: relative;
+}
+.button-login{
+    cursor: pointer;
+    height: 44px;
+    width: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    background: rgb(234, 0, 41);
+    border: 1px solid rgb(234, 0, 41);
+    text-decoration: none;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    border-radius: 30px;
+}
