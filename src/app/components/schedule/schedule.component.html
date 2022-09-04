@@ -1,0 +1,40 @@
+<div class="card-global mt-4">
+    <form #gfgform="ngForm">
+        <div class="mb-3 p-4">
+            <label type="schedule" class="form-label">Horarios</label>
+            <select name="schedule" class="form-select" id="schedule">
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miercoles">Miercoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+                <option value="sabado">Sabado</option>
+
+            </select>
+        </div>
+        <hr>
+        <div class="mb-3 p-4">
+            <label for="day">Lunes</label>
+            
+            <div class="input-group mb-3 time-space-between">
+                <div class="time-expanded">
+                    <label for="time-start" class="form-label">Hora Inicio*</label>
+                    <input type="time" class="form-control" name="time-start" id="time-start">
+                    
+    
+                </div>
+                <div class="time-expanded">
+                    <label for="time-end" class="form-label">Hora Fin*</label>
+                    <input type="time" class="form-control" name="time-end" id="time-end">
+    
+                </div>
+                    
+               
+               
+                    
+               
+            </div>
+
+        </div>
+    </form>
+</div>

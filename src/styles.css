@@ -7,3 +7,23 @@
     font-family: "Source Sans Pro", sans-serif;
     outline: none !important;
 }
+
+.card-global{
+    width: 65%;
+    
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.divider{
+    color: gray;
+    height: 5px;
+}
+
+.primary{
+    
+    border-radius: 20px;
+    font-size: 14px;
+    justify-content:flex-end
+}

@@ -1,0 +1,10 @@
+.time-expanded{
+    width: 47%;
+}
+.time-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+.divider{
+    border-top: 1px solid;
+}

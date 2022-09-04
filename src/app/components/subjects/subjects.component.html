@@ -1,0 +1,45 @@
+<div class="card-global ">
+    <h4>Asignar profesor</h4>
+    <hr>
+    <form #gfgform="ngForm" class="p-4">
+        <div class="mb-3">
+            <label for="name-subjects" class="form-label">Nombre de la Asignatura*</label>
+            <input type="text" class="form-control" name="name-subjects" id="name-subjects">
+        </div>
+        <div class="input-group mb-3 date-space-between">
+            <div class="date-expanded">
+                <label for="date-start" class="form-label">Fecha Inicio*</label>
+                <input type="date" class="form-control" name="date-start" id="date-start">
+
+            </div>
+            <div class="date-expanded">
+                <label for="date-end" class="form-label">Fecha Fin*</label>
+                <input type="date" class="form-control" name="date-end" id="date-end">
+
+            </div>
+                
+           
+           
+                
+           
+        </div>
+
+        <div class="mb-3">
+            <label type="teacher" class="form-label">Profesores</label>
+            <select name="teacher" class="form-select" id="teacher">
+                <option value="Luis Soto">Luis Soto</option>
+                <option value="Martin Salians">Martin Salinas</option>
+                <option value="Daniel Jimenez">Daniel Jimenez</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="hour">Intencidad de horas</label>
+            <input type="number" class="form-control" name="hour" id="hour">
+        </div>
+
+
+
+        <button class="btn btn-outline-danger primary" type="submit">Asignar materia</button>
+
+    </form>
+</div>

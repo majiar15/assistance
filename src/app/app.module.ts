@@ -9,6 +9,9 @@ import { HomeComponent } from './pages/home/home.component';
 
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CardComponent } from './components/card/card.component';
+import { SubjectsComponent } from './components/subjects/subjects.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { RegisterStudentComponent } from './components/register-student/register-student.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { CardComponent } from './components/card/card.component';
     HomeComponent,
 
     SidebarComponent,
-    CardComponent
+    CardComponent,
+    SubjectsComponent,
+    ScheduleComponent,
+    RegisterStudentComponent
 
   ],
   imports: [
