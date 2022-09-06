@@ -1,3 +1,11 @@
-.w100{
-    width: 100%;
+
+.main{
+    height: 100vh;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.width-student{
+    width: 60%;
 }
