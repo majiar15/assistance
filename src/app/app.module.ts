@@ -13,21 +13,21 @@ import { SubjectsComponent } from './components/subjects/subjects.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { RegisterStudentComponent } from './components/register-student/register-student.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
+import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
     HomeComponent,
-
     SidebarComponent,
     CardComponent,
     SubjectsComponent,
     ScheduleComponent,
     RegisterStudentComponent,
-    SidebarItemComponent
+    SidebarItemComponent,
+    RegisterStudentsPageComponent
 
   ],
   imports: [
