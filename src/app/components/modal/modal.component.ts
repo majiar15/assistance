@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -9,6 +9,7 @@ import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@ang
 export class ModalComponent implements OnInit {
 
   @Input() show: string = '';
+  @Output() closeModalEvent = new EventEmitter<boolean>();
   constructor() { 
     
   }
@@ -17,5 +18,8 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  close(): void {
+    this.closeModalEvent.emit(false);
+  }
 
 }
