@@ -7,7 +7,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  public items:number[] =[1,2,3,4,5,6,7,8,9];
+  public items =[
+    {
+      title: "Introduccion a la ingenieria",
+      color: 'colorRed'
+    },
+    {
+      title:"Redes I",
+      color: 'colorBlue'
+    },
+    {
+      title:"Calculo diferencial",
+      color: 'colorGreen'
+    },
+    {
+      title:"Calculo Integral",
+      color: 'colorYellow'
+    },
+    {
+      title:"Ingenieria de software II",
+      color: 'colorSilver'
+    },
+    {
+      title:"Web avanzada",
+      color: 'colorWhite'
+    },
+    {
+      title:"Movil I",
+      color: 'colorBlack'
+    },
+    {
+      title:"Movil II",
+      color: 'colorRed'
+    },
+    {
+      title:"Arquitectura de computadores",
+      color: 'colorGreen'
+    }];
   constructor(
     
   ) { }

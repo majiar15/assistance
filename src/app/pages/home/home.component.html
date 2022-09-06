@@ -14,15 +14,8 @@
         <h1>Mis Cursos</h1>
         <!-- <app-register-student class="width-student"></app-register-student> -->
         <div class="wrap-card">
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
-            <app-card></app-card>
+            
+            <app-card *ngFor="let item of items;"  [title]="item.title" [classStyle]="item.color"></app-card>
         </div>
     </div>
 </div>
