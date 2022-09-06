@@ -2,7 +2,37 @@
 .cardColor{
     height: 150px;
     width:auto;
-    background-color: aqua;
     border-radius: 5px 5px 0px 0px;
 }
 
+.card{
+ cursor: pointer;
+}
+.colorRed{
+    
+    background-color: rgba(255, 0, 0, 0.788);
+}
+.colorBlue{
+    
+    background-color: rgba(92, 92, 243, 0.822);
+}
+.colorGreen{
+    
+    background-color: rgba(60, 170, 60, 0.733);
+}
+.colorYellow{
+    
+    background-color: rgba(252, 252, 57, 0.726);
+}
+.colorSilver{
+    
+    background-color: silver;
+}
+.colorWhite{
+    
+    background-color: white;
+}
+.colorBlack{
+    
+    background-color: rgba(22, 22, 22, 0.897);
+}

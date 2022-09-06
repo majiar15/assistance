@@ -1,8 +1,8 @@
-<div class="card" style="width: 19rem;">
+<div (click)="showModal()" class="card" style="width: 19rem;">
     
-    <div class="cardColor"></div>
+    <div class="cardColor" [ngClass]="classStyle"></div>
     <div class="card-body">
-      <h5 class="card-title">Introducción a la ingenieria</h5>
+      <h5 class="card-title">{{title}}</h5>
       
     </div>
   </div>

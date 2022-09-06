@@ -7,6 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
+  public items = [
+    {
+      title: 'Asistencia',
+      class: 'bi bi-book'
+    },
+    {
+      title: 'Asignatura',
+      class: 'bi bi-book'
+    },
+    {
+      title: 'Alumnos',
+      class: 'bi bi-book'
+    },
+    {
+      title: 'Profesores',
+      class: 'bi bi-book'
+    }
+  ];
   constructor() { }
 
   ngOnInit(): void {

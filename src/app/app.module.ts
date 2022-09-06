@@ -15,20 +15,21 @@ import { RegisterStudentComponent } from './components/register-student/register
 import { StudentTableComponent } from './components/student-table/student-table.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
+import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
     HomeComponent,
-
     SidebarComponent,
     CardComponent,
     SubjectsComponent,
     ScheduleComponent,
     RegisterStudentComponent,
+    SidebarItemComponent,
+    RegisterStudentsPageComponent,
     StudentTableComponent,
     ModalComponent,
     SidebarItemComponent,

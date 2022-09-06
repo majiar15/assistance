@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -8,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalComponent implements OnInit {
 
-  constructor() { }
+  
+  constructor() { 
+    
+  }
 
-  public show =false;
+  
   ngOnInit(): void {
   }
+
 
 }

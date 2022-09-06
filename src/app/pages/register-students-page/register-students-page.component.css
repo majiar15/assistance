@@ -17,10 +17,3 @@
 .width-student{
     width: 60%;
 }
-.wrap-card{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 40px;
-    overflow-y: scroll;
-}

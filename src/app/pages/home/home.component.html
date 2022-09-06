@@ -7,18 +7,18 @@
 <!-- 
 <app-subjects></app-subjects>
 <app-schedule></app-schedule> -->
+
+
 <div class="d-flex">
     
     <app-sidebar></app-sidebar>
     <div class="main">
-        <h1>Registro de estudiante</h1>
+        <h1>Mis Cursos</h1>
         <!-- <app-register-student class="width-student"></app-register-student> -->
-        <app-modal #modal></app-modal>
-        <button type="button" class="btn btn-primary">Open modal for @mdo</button>
+        <div class="wrap-card">
+            
+            <app-card  *ngFor="let item of items;"  [title]="item.title" [classStyle]="item.color"></app-card>
+        </div>
+        <app-modal #modal ></app-modal>
     </div>
-
-    
-      
-
 </div>
-

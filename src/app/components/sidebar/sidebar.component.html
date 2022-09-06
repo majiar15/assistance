@@ -11,10 +11,8 @@
     
         <nav>
             <ul>
-                <app-sidebar-item></app-sidebar-item>
-                <app-sidebar-item></app-sidebar-item>
-                <app-sidebar-item></app-sidebar-item>
-                <app-sidebar-item></app-sidebar-item>
+                
+                <app-sidebar-item *ngFor="let item of items" [classIcono]="item.class" [title]="item.title"></app-sidebar-item>
             </ul>
         </nav>
     </div>
