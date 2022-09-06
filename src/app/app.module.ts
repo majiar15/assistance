@@ -12,6 +12,8 @@ import { CardComponent } from './components/card/card.component';
 import { SubjectsComponent } from './components/subjects/subjects.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { RegisterStudentComponent } from './components/register-student/register-student.component';
+import { StudentTableComponent } from './components/student-table/student-table.component';
+import { ModalComponent } from './components/modal/modal.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 
@@ -27,7 +29,10 @@ import { RegisterStudentsPageComponent } from './pages/register-students-page/re
     ScheduleComponent,
     RegisterStudentComponent,
     SidebarItemComponent,
-    RegisterStudentsPageComponent
+    RegisterStudentsPageComponent,
+    StudentTableComponent,
+    ModalComponent,
+    SidebarItemComponent,
 
   ],
   imports: [
