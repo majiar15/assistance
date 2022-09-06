@@ -54,7 +54,10 @@ export class HomeComponent implements OnInit {
   }
 
   showModal(){
-    this.modal=true;
+    
+    
+    this.modal=!this.modal;
+    console.log('Se ejecuto el click de card desde home',this.modal);
   }
 
 }

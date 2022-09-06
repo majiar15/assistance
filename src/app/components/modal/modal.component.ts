@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 })
 export class ModalComponent implements OnInit {
 
-  
+  @Input() show: string = '';
   constructor() { 
     
   }
