@@ -1,0 +1,51 @@
+.modalc{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 16px;
+    background:rgba(0,0,0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: autoz;
+    z-index: 9999999;
+    
+    
+
+}
+.modalc .modal-container{
+    width: 100%;
+    max-width: 500px;
+    
+    
+}
+.modalc .modal-container .modal-header{
+    height: 93px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    background-color: #ffff;
+    background-size: cover;
+    background-position: center;
+    border-radius: 7px 7px 0 0;
+    
+}
+
+.modalc .modal-header .modañ-title{
+
+    font-size: 20;
+    font-weight: 600;
+    color: #0000;
+
+
+}
+.modalc .modal-body{
+
+    padding: 32px;
+    background: #ffff;
+    border-radius: 0 0 7px 7px;
+
+}
