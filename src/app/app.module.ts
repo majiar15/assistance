@@ -12,6 +12,8 @@ import { CardComponent } from './components/card/card.component';
 import { SubjectsComponent } from './components/subjects/subjects.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { RegisterStudentComponent } from './components/register-student/register-student.component';
+import { StudentTableComponent } from './components/student-table/student-table.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { RegisterStudentComponent } from './components/register-student/register
     CardComponent,
     SubjectsComponent,
     ScheduleComponent,
-    RegisterStudentComponent
+    RegisterStudentComponent,
+    StudentTableComponent,
+    ModalComponent
 
   ],
   imports: [

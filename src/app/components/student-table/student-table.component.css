@@ -1,0 +1,30 @@
+.table-student{
+    margin: 10px;
+    width: 80%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+th{
+    color:#334D6E;
+    font-weight: 600;
+    font-size: 14px;
+}
+td{
+    color: #707683;
+    font-size: 14px;
+}
+
+/* 
+.assist{
+   
+    background-color: #ea002b5e;
+    align-items: center;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+    color: red;
+    
+
+} */
