@@ -1,0 +1,9 @@
+.item{
+    display: flex;
+    justify-content: space-evenly;
+    width: 120px;
+    cursor: pointer;
+}
+.item-active {
+    color: #EA0029;
+}
