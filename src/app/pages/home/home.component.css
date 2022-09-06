@@ -3,7 +3,7 @@
     height: 100vh;
     width: 80%;
     display: flex;
-    justify-content: center;
+    padding-left: 60px ;
     align-items: center;
 }
 .width-student{
