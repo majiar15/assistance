@@ -1,15 +1,21 @@
 .table-student{
-    margin: 10px;
-    width: 80%;
+    
+    width: 95%;
     background-color: white;
     border-radius: 7px;
     box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    display: table;
 }
 
 th{
     color:#334D6E;
     font-weight: 600;
     font-size: 14px;
+}
+tr{
+    height: 50px;
+   
+   
 }
 td{
     color: #707683;

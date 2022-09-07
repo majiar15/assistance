@@ -19,6 +19,7 @@ import { RegisterStudentsPageComponent } from './pages/register-students-page/re
 import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
 import { AssistancePageComponent } from './pages/assistance-page/assistance-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AssistanceViewPageComponent } from './pages/assistance-view-page/assistance-view-page.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SidebarItemComponent,
     RegisterSubjectPageComponent,
     AssistancePageComponent,
+    AssistanceViewPageComponent,
 
   ],
   imports: [

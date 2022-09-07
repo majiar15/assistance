@@ -4,6 +4,9 @@
     width:auto;
     border-radius: 5px 5px 0px 0px;
 }
+h5{
+    font-size: 1.25rem;
+}
 
 .card{
  cursor: pointer;

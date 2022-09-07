@@ -9,7 +9,9 @@
     align-items: center;
 }
 .filter{
-    width: 60%;
+    width: 30%;
+    display: flex;
+    align-items: center;
 }
 
 .form-control{

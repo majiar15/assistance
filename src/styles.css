@@ -11,12 +11,13 @@
     src: url(assets/fonts/Roboto/Roboto-Regular.ttf) format("opentype");
   }
 
+
 .background-application{
     background-color: #F5F6F8;
 }
 *{
     scroll-behavior: smooth;
-    font-family: "Roboto"," Source Sans Pro", sans-serif;
+    font-family: " Source Sans Pro", sans-serif;
     outline: none !important;
 }
 
@@ -85,5 +86,4 @@ label{
     text-align: left;
     line-height: 125%;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

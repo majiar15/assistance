@@ -8,8 +8,8 @@
             <p>Seleccione el proceso que desea realizar.</p>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-danger primary" type="submit">Ver asistencias</button>
-            <button class="btn btn-outline-danger primary" type="submit" (click)="close()">Agregar asistencia</button>
+            <button class="btn btn-danger primary" type="submit" [routerLink]="['/view-assistance']">Ver asistencias</button>
+            <button class="btn btn-outline-danger primary" type="submit" [routerLink]="['/assistance']">Agregar asistencia</button>
         </div>
 
     </div>
