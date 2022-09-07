@@ -32,3 +32,46 @@ nav ul{
 .item-active {
     color: #EA0029;
 }
+.sidebar-responsive{
+    display: none;
+}
+.sidebar-responsive > i{
+    font-size: 30px;
+}
+
+@media  screen and (max-width: 720px) {
+    .sidebar{
+        position: absolute;
+        z-index: 100;
+        transition: all 600ms;
+    }
+    .sidebar-responsive{
+        display: flex;
+        background-color: white;
+        height: 70px;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 30px;
+        padding-left: 20px;
+    }
+    .logo > img{
+        width: 50px;
+        
+        cursor: pointer;
+        padding: 0px;
+    }
+    header{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .hidden-sidebar{
+        transform: translate(-250px);
+    }
+    .show-sidebar{
+        transform: translate( 0px);
+    }
+}

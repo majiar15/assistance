@@ -57,3 +57,17 @@ label{
     margin-bottom: 4px;
     color: rgb(37, 42, 49);
 }
+
+
+@media  screen and (max-width: 720px) {
+    .container-page{
+        display: flex;
+        flex-direction: column;
+      }
+    .main{
+        width: 90%;
+    }
+    .width-subject{
+        width: 100%;
+    }
+}

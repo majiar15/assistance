@@ -17,7 +17,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
-
+import { SidebarModule } from 'ng-sidebar';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import { RegisterSubjectPageComponent } from './pages/register-subject-page/regi
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    SidebarModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
