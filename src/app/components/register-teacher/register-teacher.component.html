@@ -1,0 +1,39 @@
+<div class="card-global">
+    <h4>Información del profesor</h4>
+    <hr>
+    <form #gfgform="ngForm" class="p-4">
+        <div class="input-group mb-3 info-space-between">
+            <div class="date-expanded">
+                <label for="CC" class="form-label">Cedula*</label>
+                <input type="number" class="form-control" name="CC" id="CC">
+            </div>
+
+            <div class="date-expanded">
+                <label for="card-code" class="form-label">Codigo de carnet*</label>
+                <input type="number" class="form-control" name="card-code" id="card-code">
+
+            </div>
+
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre*</label>
+            <input type="text" class="form-control" name="name" id="name">
+
+        </div>
+
+        <div class="mb-3">
+            <label for="surnames" class="form-label">Apellidos*</label>
+            <input type="text" class="form-control" name="surnames" id="surnames">
+
+        </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electronico*</label>
+            <input type="email" class="form-control" name="email" id="email">
+
+        </div>
+        <div class="button-wrapper">
+            <button class="button" type="submit">Registrar profesor</button>
+        </div>
+    </form>
+</div>

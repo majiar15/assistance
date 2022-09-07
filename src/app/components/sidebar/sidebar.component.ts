@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
     {
       title: 'Profesores',
       class: 'bi bi-book',
-      link: 'techer'
+      link: 'register-teacher'
     }
   ];
   constructor() { 

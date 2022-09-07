@@ -1,0 +1,33 @@
+.content-filter{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+    width: 95%;
+    margin-bottom: 20px;
+    align-items: center;
+}
+.filter{
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.form-control{
+    height: 34px;
+}
+
+@media  screen and (max-width: 720px) {
+    .container-page{
+        display: flex;
+        flex-direction: column;
+      }
+    .main{
+        width: 90%;
+        padding-left: 30px ;
+    }
+    .width-subject{
+        width: 100%;
+    }
+}
