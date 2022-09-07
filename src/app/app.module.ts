@@ -17,6 +17,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
+import { AssistancePageComponent } from './pages/assistance-page/assistance-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -35,12 +37,14 @@ import { RegisterSubjectPageComponent } from './pages/register-subject-page/regi
     ModalComponent,
     SidebarItemComponent,
     RegisterSubjectPageComponent,
+    AssistancePageComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
