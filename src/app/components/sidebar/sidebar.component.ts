@@ -16,7 +16,7 @@ export class SidebarComponent implements OnInit {
     {
       title: 'Asignatura',
       class: 'bi bi-book',
-      link: 'course'
+      link: 'register-subject'
     },
     {
       title: 'Alumnos',
