@@ -7,6 +7,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
 import { AssistancePageComponent } from './pages/assistance-page/assistance-page.component';
 import { AssistanceViewPageComponent } from './pages/assistance-view-page/assistance-view-page.component';
+import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'register-subject',component: RegisterSubjectPageComponent},
   { path: 'assistance',component:AssistancePageComponent},
   { path: 'view-assistance',component:AssistanceViewPageComponent},
+  { path: 'register-teacher',component:RegisterTeacherPageComponent},
   { path: 'modal',component:ModalComponent},
   { path: '**', redirectTo: 'login' }, 
   

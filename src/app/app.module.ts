@@ -20,6 +20,8 @@ import { RegisterSubjectPageComponent } from './pages/register-subject-page/regi
 import { AssistancePageComponent } from './pages/assistance-page/assistance-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssistanceViewPageComponent } from './pages/assistance-view-page/assistance-view-page.component';
+import { RegisterTeacherComponent } from './components/register-teacher/register-teacher.component';
+import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { AssistanceViewPageComponent } from './pages/assistance-view-page/assist
     RegisterSubjectPageComponent,
     AssistancePageComponent,
     AssistanceViewPageComponent,
+    RegisterTeacherComponent,
+    RegisterTeacherPageComponent,
 
   ],
   imports: [
