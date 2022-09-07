@@ -16,6 +16,7 @@ import { StudentTableComponent } from './components/student-table/student-table.
 import { ModalComponent } from './components/modal/modal.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
+import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { RegisterStudentsPageComponent } from './pages/register-students-page/re
     StudentTableComponent,
     ModalComponent,
     SidebarItemComponent,
+    RegisterSubjectPageComponent,
 
   ],
   imports: [

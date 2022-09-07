@@ -16,6 +16,7 @@
 .logo > img{
     width: 80px;
     padding-bottom: 20px;
+    cursor: pointer;
 }
 
 nav ul{
@@ -27,4 +28,7 @@ nav ul{
  justify-content: space-evenly;
  width: 170px;
  cursor: pointer;
+}
+.item-active {
+    color: #EA0029;
 }

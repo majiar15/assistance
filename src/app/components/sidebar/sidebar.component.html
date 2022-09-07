@@ -3,7 +3,7 @@
     <div>
         <header>
             <div class="logo">
-                <img src="./assets/unilibre.png" alt="logo unilibre" id="logo-login">
+                <img src="./assets/unilibre.png" alt="logo unilibre" id="logo-login" routerLink="/home">
     
             </div>
             <div class="title">Control de asistencia</div>
@@ -12,7 +12,7 @@
         <nav>
             <ul>
                 
-                <app-sidebar-item *ngFor="let item of items" [classIcono]="item.class" [title]="item.title"></app-sidebar-item>
+                <app-sidebar-item *ngFor="let item of items" [classIcono]="item.class" [title]="item.title"  [routerLink]="['/', item.link]"  routerLinkActive="item-active"></app-sidebar-item>
             </ul>
         </nav>
     </div>

@@ -32,3 +32,33 @@
     font-size: 14px;
     justify-content:flex-end
 }
+.button{
+    cursor: pointer;
+    height: 44px;
+    width: 215px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    background: rgb(234, 0, 41);
+    border: 1px solid rgb(234, 0, 41);
+    text-decoration: none;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    border-radius: 30px;
+}
+.button-wrapper{
+    display: flex;
+    justify-content: flex-end;
+}
+label{
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: rgb(37, 42, 49);
+}

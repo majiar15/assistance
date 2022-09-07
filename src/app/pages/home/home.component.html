@@ -9,7 +9,7 @@
 <app-schedule></app-schedule> -->
 
 <div *ngIf="modal==true">
-    <app-modal></app-modal>
+    <app-modal (closeModalEvent)="showModal()"></app-modal>
 </div>
 
 <div class="d-flex">

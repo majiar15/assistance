@@ -10,19 +10,23 @@ export class SidebarComponent implements OnInit {
   public items = [
     {
       title: 'Asistencia',
-      class: 'bi bi-book'
+      class: 'bi bi-book',
+      link: 'home'
     },
     {
       title: 'Asignatura',
-      class: 'bi bi-book'
+      class: 'bi bi-book',
+      link: 'register-subject'
     },
     {
       title: 'Alumnos',
-      class: 'bi bi-book'
+      class: 'bi bi-person',
+      link: 'register'
     },
     {
       title: 'Profesores',
-      class: 'bi bi-book'
+      class: 'bi bi-book',
+      link: 'techer'
     }
   ];
   constructor() { }
