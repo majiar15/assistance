@@ -1,11 +1,16 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+    font-family: Oswald;
+    src: url(assets/fonts/Oswald/Oswald-Regular.ttf) format("opentype");
+  }
 .background-application{
     background-color: #F5F6F8;
 }
 *{
     scroll-behavior: smooth;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Oswald"," Source Sans Pro", sans-serif;
     outline: none !important;
 }
 
