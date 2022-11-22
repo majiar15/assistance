@@ -87,3 +87,15 @@ label{
     line-height: 125%;
 }
 
+.alert{
+    padding: 0px;
+    margin: 0 0 4px;
+}
+.alert-error{
+    color: #DC4040;
+   font-size: 14px;
+}
+.alert-success{
+    color: #3AA337;
+   font-size: 14px;
+}

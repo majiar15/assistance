@@ -9,14 +9,23 @@
         </div>
         <form #gfgform="ngForm" class="form-login">
             <div class="input2-css d-flex flex-column">
-                <label class="label-css">Cedula</label>
-                <input class="input-css" type="number" placeholder="Ingresa tu cedula" name='cc' ngModel>
+                <label class="label-css">Email</label>
+                <input class="input-css" type="text" placeholder="Ingresa tu cedula" name='cc' [(ngModel)]="dni">
             </div>
             <div class="input2-css d-flex flex-column">
                 <label class="label-css">Contraseña</label>
-                <input class="input-css" type="password" placeholder="Ingresa tu contraseña" name='contraseña' ngModel>
+                <input class="input-css" type="password" placeholder="Ingresa tu contraseña" name='contraseña' [(ngModel)]="password">
             </div>
-            <button class="button-login" (click)="login()">Ingresar</button>
+            <div  *ngIf="message.text!=''" >
+                <div class="alert-error">
+                    {{message.text}}
+                </div>
+                
+            </div>
+            <button class="button-login" (click)="login()" [disabled]="loading">
+                <div *ngIf="loading" class="spinner-border" role="status"></div>    
+                <span *ngIf="!loading"> Ingresar</span> 
+            </button>
         </form>
 
     </div>

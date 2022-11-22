@@ -8,20 +8,22 @@ import { RegisterSubjectPageComponent } from './pages/register-subject-page/regi
 import { AssistancePageComponent } from './pages/assistance-page/assistance-page.component';
 import { AssistanceViewPageComponent } from './pages/assistance-view-page/assistance-view-page.component';
 import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
+import { AuthGuard } from './guards/auth.guard';
+import { LoggedGuard } from './guards/logged.guard';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent,canActivate:[LoggedGuard] },
   
 
   
-  { path: 'home',component:HomeComponent},
-  { path: 'register',component: RegisterStudentsPageComponent},
-  { path: 'register-subject',component: RegisterSubjectPageComponent},
-  { path: 'assistance',component:AssistancePageComponent},
-  { path: 'view-assistance',component:AssistanceViewPageComponent},
-  { path: 'register-teacher',component:RegisterTeacherPageComponent},
-  { path: 'modal',component:ModalComponent},
+  { path: 'home',component:HomeComponent,canActivate:[AuthGuard]},
+  { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard]},
+  { path: 'register-subject',component: RegisterSubjectPageComponent,canActivate:[AuthGuard]},
+  { path: 'assistance',component:AssistancePageComponent,canActivate:[AuthGuard]},
+  { path: 'view-assistance',component:AssistanceViewPageComponent,canActivate:[AuthGuard]},
+  { path: 'register-teacher',component:RegisterTeacherPageComponent,canActivate:[AuthGuard]},
+  { path: 'modal',component:ModalComponent,canActivate:[AuthGuard]},
   { path: '**', redirectTo: 'login' }, 
   
 ];
