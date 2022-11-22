@@ -23,7 +23,7 @@ export class LoginService {
       'Content-Type':'application/json',
       
     });
-    return this.http.post(`${this.appService.baseUrl}/auth/login`,data,{headers}).pipe(map((resp:any)=>{
+    return this.http.post(`api/auth/login`,data,{headers}).pipe(map((resp:any)=>{
       
 
       

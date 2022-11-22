@@ -9,7 +9,6 @@ import { map, Observable } from 'rxjs';
 })
 export class AppService {
 
-  baseUrl=environment.urlBase
   public token: string='';
  
   constructor(
@@ -20,7 +19,7 @@ export class AppService {
   getHeadersLambda(): any {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token
+      'Authorization': 'Bearer ' + this.token,
     })
 
     return ({ headers: headers });
@@ -29,7 +28,7 @@ export class AppService {
   postItem(path:any,data:any):Observable<any>{
     console.log("Post",this.getHeadersLambda());
     
-    return this.http.post(`${this.baseUrl}${path}`,data,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.http.post(`${path}`,data,this.getHeadersLambda()).pipe(map((response:any)=>{
 
       if(response.data){
         return {valid:true,data:response.data,message:response.message}
@@ -40,7 +39,7 @@ export class AppService {
   }
 
   updateItem(path:any,data:any):Observable<any>{
-    return this.http.put(`${this.baseUrl}${path}`,data,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.http.put(`${path}`,data,this.getHeadersLambda()).pipe(map((response:any)=>{
 
       if(response.data){
         return {valid:true,data:response.data,message:response.message}
@@ -51,7 +50,7 @@ export class AppService {
   }
 
   getItem(path:any){
-    return this.http.get(`${this.baseUrl}${path}`,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.http.get(`${path}`,this.getHeadersLambda()).pipe(map((response:any)=>{
 
       if(response.data){
         return {valid:true,data:response.data,message:response.message}
@@ -62,7 +61,7 @@ export class AppService {
   }
 
   deleteItem(path:any){
-    return this.http.delete(`${this.baseUrl}${path}`,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.http.delete(`${path}`,this.getHeadersLambda()).pipe(map((response:any)=>{
 
       if(response.data){
         return {valid:true,data:response.data,message:response.message}

@@ -35,7 +35,7 @@ export class RegisterTeacherComponent implements OnInit {
 
   registerTeacher(){
     
-    if(!this.form.valid){
+    if(this.form.valid){
       this.loading=true;
       let data={
         email: this.form.value.email,
@@ -44,27 +44,31 @@ export class RegisterTeacherComponent implements OnInit {
         password: this.form.value.password
       }
       
-      const url='/cursos';
-      // this.appService.postItem(url,data).subscribe({
-      //   next:(response:any)=>{
-      //     this.loading=false;
-      //     this.message={text:'Profesor registrado correctamente',status:false}
-      //   },
-      //   error:(error)=>{
-      //     this.loading=false;
-      //     this.message={text:'Ha ocurrido un error, por favor intente nuevamente.',status:false}
-      //   }
-      // })
-      this.appService.getItem(url).subscribe({
+      const url='/api/teacher';
+      this.appService.postItem(url,data).subscribe({
         next:(response:any)=>{
           this.loading=false;
           this.message={text:'Profesor registrado correctamente',status:false}
         },
         error:(error)=>{
           this.loading=false;
+          console.log(error);
           this.message={text:'Ha ocurrido un error, por favor intente nuevamente.',status:false}
         }
       })
+      // this.appService.getItem(url).subscribe({
+      //   next:(response:any)=>{
+      //     this.loading=false;
+      //     console.log(response);
+      //     this.message={text:'Profesor registrado correctamente',status:false}
+      //   },
+      //   error:(error)=>{
+      //     this.loading=false;
+      //     console.log(error);
+
+      //     this.message={text:'Ha ocurrido un error, por favor intente nuevamente.',status:false}
+      //   }
+      // })
       
     }else{
       this.message={text:'Existes campos vacios',status:false}
