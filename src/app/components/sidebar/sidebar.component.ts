@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
+  public showMenu: boolean = false;
   public items = [
     {
       title: 'Asistencia',
@@ -29,9 +30,15 @@ export class SidebarComponent implements OnInit {
       link: 'register-teacher'
     }
   ];
-  constructor() { }
+  constructor() { 
+
+  }
 
   ngOnInit(): void {
+  }
+
+  public openMenu(){
+    this.showMenu = !this.showMenu
   }
 
 }

@@ -33,6 +33,14 @@ td i{
 .bi-hand-thumbs-down-fill{
     color: red;
 }
+
+
+@media  screen and (max-width: 720px) {
+    .table-student{
+        width: 50%;
+        overflow-x: scroll;
+    }
+}
 /* 
 .assist{
    

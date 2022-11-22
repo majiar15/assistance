@@ -17,3 +17,17 @@
 .form-control{
     height: 34px;
 }
+
+@media  screen and (max-width: 720px) {
+    .container-page{
+        display: flex;
+        flex-direction: column;
+      }
+    .main{
+        width: 90%;
+        padding-left: 30px ;
+    }
+    .width-subject{
+        width: 100%;
+    }
+}

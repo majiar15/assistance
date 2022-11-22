@@ -19,7 +19,6 @@ import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.com
 import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
 import { AssistancePageComponent } from './pages/assistance-page/assistance-page.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AssistanceViewPageComponent } from './pages/assistance-view-page/assistance-view-page.component';
 import { RegisterTeacherComponent } from './components/register-teacher/register-teacher.component';
 import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
@@ -53,7 +52,7 @@ import { RegisterTeacherPageComponent } from './pages/register-teacher-page/regi
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

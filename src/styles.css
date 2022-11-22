@@ -71,6 +71,18 @@ label{
 }
 
 
+@media  screen and (max-width: 720px) {
+    .container-page{
+        display: flex;
+        flex-direction: column;
+      }
+    .main{
+        width: 90%;
+    }
+    .width-subject{
+        width: 100%;
+    }
+}
 .main{
     height: 100vh;
     width: 80%;
