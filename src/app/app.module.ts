@@ -23,6 +23,8 @@ import { AssistanceViewPageComponent } from './pages/assistance-view-page/assist
 import { RegisterTeacherComponent } from './components/register-teacher/register-teacher.component';
 import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
 import { DurationPipe } from './pipe/home.pipe';
+import { EnrollPageComponent } from './pages/enroll-page/enroll-page.component';
+import { EnrollComponent } from './components/enroll/enroll.component';
 
 
 
@@ -46,7 +48,9 @@ import { DurationPipe } from './pipe/home.pipe';
     AssistanceViewPageComponent,
     RegisterTeacherComponent,
     RegisterTeacherPageComponent,
-    DurationPipe
+    DurationPipe,
+    EnrollPageComponent,
+    EnrollComponent
 
 
 

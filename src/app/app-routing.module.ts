@@ -10,6 +10,7 @@ import { AssistanceViewPageComponent } from './pages/assistance-view-page/assist
 import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedGuard } from './guards/logged.guard';
+import { EnrollPageComponent } from './pages/enroll-page/enroll-page.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'assistance',component:AssistancePageComponent,canActivate:[AuthGuard]},
   { path: 'view-assistance',component:AssistanceViewPageComponent,canActivate:[AuthGuard]},
   { path: 'register-teacher',component:RegisterTeacherPageComponent,canActivate:[AuthGuard]},
+  { path: 'enroll',component:EnrollPageComponent,canActivate:[AuthGuard]},
   { path: 'modal',component:ModalComponent,canActivate:[AuthGuard]},
   { path: '**', redirectTo: 'login' }, 
   

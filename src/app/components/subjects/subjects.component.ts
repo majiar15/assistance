@@ -16,7 +16,7 @@ export class SubjectsComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
   message: any;
   loading = false;
-  intensity=0;
+
   constructor(
     private formBuilder: FormBuilder,
     public appService: AppService,
@@ -98,7 +98,11 @@ export class SubjectsComponent implements OnInit {
       this.subjectService.asignarCourse(data).subscribe({
         next: (response: any) => {
           this.loading = false;
-          this.message = { text: 'Profesor registrado correctamente', status: false }
+          this.form.reset()
+          this.subjectService.intensity=0;
+          
+          this.subjectService.schedule=[];
+          this.message = { text: 'Profesor registrado correctamente', status: true }
         },
         error: (error) => {
           this.loading = false;
@@ -108,6 +112,12 @@ export class SubjectsComponent implements OnInit {
       })
 
 
+    }else{
+      this.message = { text: 'Existen campos vacios.', status: false }
     }
-  }
+
+    setTimeout(() => {
+      this.message=null;  
+    }, 3000);
+  } 
 }

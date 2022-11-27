@@ -31,9 +31,9 @@ export class LoginService {
         
         localStorage.setItem('token',resp.data); 
         this.appService.token=resp.data;
-        return {valid:true,message:resp.message}
+        return {valid:true, data:resp.data, message:resp.message}
       }else{
-        return {valid:false,message:resp.message}
+        return {valid:false, data:'', message:resp.message}
       }
     }))
   }

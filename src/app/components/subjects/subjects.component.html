@@ -44,7 +44,7 @@
         </div>
 
         <div class="button-wrapper">
-            <button class="button" type="submit" [disabled]="loading" >
+            <button class="button" type="submit" [disabled]="loading || subjectService.intensity!=0"  [ngClass]="subjectService.intensity!=0?'button-disable':''">
                 <div *ngIf="loading" class="spinner-border" role="status"></div>    
                 <span *ngIf="!loading">Asignar materia</span> 
                 

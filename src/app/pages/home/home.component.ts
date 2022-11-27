@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'app-home',
@@ -7,57 +8,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  public items =[
-    {
-      title: "Introduccion a la ingenieria",
-      color: 'colorRed'
-    },
-    {
-      title:"Redes I",
-      color: 'colorBlue'
-    },
-    {
-      title:"Calculo diferencial",
-      color: 'colorGreen'
-    },
-    {
-      title:"Calculo Integral",
-      color: 'colorYellow'
-    },
-    {
-      title:"Ingenieria de software II",
-      color: 'colorSilver'
-    },
-    {
-      title:"Web avanzada",
-      color: 'colorWhite'
-    },
-    {
-      title:"Movil I",
-      color: 'colorBlack'
-    },
-    {
-      title:"Movil II",
-      color: 'colorRed'
-    },
-    {
-      title:"Arquitectura de computadores",
-      color: 'colorGreen'
-    }];
+  public colors = [
+    'colorRed', 'colorBlue', 'colorGreen', 'colorYellow',
+    'colorSilver', 'colorWhite', 'colorBlack', 'colorRed', 'colorGreen'];
 
-    modal=false
+  loading = false;
+  modal = false
   constructor(
-    
+    public appService: AppService
   ) { }
 
   ngOnInit(): void {
+    let tokenEncript = localStorage.getItem('token') ?? '';
+    let token = this.appService.getDecodedAccessToken(tokenEncript)
+    console.log("Token decodificado: ", token);
+    if (this.appService.course_teacher.length == 0) {
+      console.log("ENTRO EN EL IF PRIMERO");
+      this.loading=true;
+      this.appService.getItem(`/api/cursos/courseByTeacher?teacher_id=${token.user_id}`).subscribe(
+        (response: any) => {
+          if (response.valid) {
+            console.log("ENTRO EN EL IF");
+
+            this.appService.course_teacher = response.data;
+            this.loading=false;
+          }
+
+        }
+      )
+    }
+
   }
 
-  showModal(){
-    
-    
-    this.modal=!this.modal;
-    console.log('Se ejecuto el click de card desde home',this.modal);
+  showModal() {
+
+
+    this.modal = !this.modal;
+    console.log('Se ejecuto el click de card desde home', this.modal);
   }
 
 }

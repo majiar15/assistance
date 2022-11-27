@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, Observable } from 'rxjs';
-
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,8 @@ export class AppService {
   public token: string='';
 
   public teacher:any[]=[];
- 
+  public course_teacher:any[]=[];
+  public courses:any[]=[];
   constructor(
     private http: HttpClient,
   ) { }
@@ -71,5 +72,13 @@ export class AppService {
         return {valid:false,data:null,message:response.message}
       }
     }))
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch(Error) {
+      return null;
+    }
   }
 }

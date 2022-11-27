@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/pages/login/login.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,6 +14,11 @@ export class SidebarComponent implements OnInit {
       title: 'Asistencia',
       class: 'bi bi-book',
       link: 'home'
+    },
+    {
+      title: 'Matriculas',
+      class: 'bi bi-book',
+      link: 'enroll'
     },
     {
       title: 'Asignatura',
@@ -30,7 +36,9 @@ export class SidebarComponent implements OnInit {
       link: 'register-teacher'
     }
   ];
-  constructor() { 
+  constructor(
+    public loginService:LoginService
+  ) { 
 
   }
 
@@ -41,4 +49,8 @@ export class SidebarComponent implements OnInit {
     this.showMenu = !this.showMenu
   }
 
+  logout(){
+    this.loginService.isLogged=false;
+    localStorage.clear()
+  }
 }

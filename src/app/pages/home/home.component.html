@@ -19,8 +19,14 @@
         <h1>Mis Cursos</h1>
         <!-- <app-register-student class="width-student"></app-register-student> -->
         <div class="wrap-card">
-            <div *ngFor="let item of items">
-                <app-card (click)="showModal()"  [title]="item.title" [classStyle]="item.color"></app-card>
+            <div class="w-100" *ngIf="appService.course_teacher.length==0 && !loading" >
+                <div class="alert alert-danger">
+                    <h3>Usted no tiene cursos disponibles.</h3>
+                </div>
+            </div>
+            <div *ngIf="loading" class="spinner-border" role="status"></div>  
+            <div *ngFor="let item of appService.course_teacher;let i =index">
+                <app-card (click)="showModal()"  [title]="item.name" [classStyle]="colors[i]"></app-card>
             </div>
             
         </div>
