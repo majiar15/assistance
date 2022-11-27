@@ -1,9 +1,10 @@
 <div class="card-global mt-4 mb-4">
-    <form #gfgform="ngForm" class="p-4">
+    <form #gfgform="ngForm" class="p-4" (submit)="saveSchedule()">
         <div class="mb-3">
             <label type="schedule" class="form-label">Horarios</label>
-            <select name="schedule" class="form-select" id="schedule">
+            <select name="schedule" class="form-select" id="schedule" [(ngModel)]="subjectService.schedule[indice].day" >
                 <option value="lunes">Lunes</option>
+
                 <option value="martes">Martes</option>
                 <option value="miercoles">Miercoles</option>
                 <option value="jueves">Jueves</option>
@@ -19,22 +20,27 @@
             <div class="input-group mb-3 time-space-between">
                 <div class="time-expanded">
                     <label for="time-start" class="form-label">Hora Inicio*</label>
-                    <input type="time" class="form-control" name="time-start" id="time-start">
+                    <input type="time" class="form-control" name="time-start" id="time-start" [(ngModel)]="subjectService.schedule[indice].time_initial" >
                     
     
                 </div>
                 <div class="time-expanded">
                     <label for="time-end" class="form-label">Hora Fin*</label>
-                    <input type="time" class="form-control" name="time-end" id="time-end">
+                    <input type="time" class="form-control" name="time-end" id="time-end" [(ngModel)]="subjectService.schedule[indice].time_end">
     
                 </div>
-                    
-               
-               
-                    
-               
+
             </div>
 
+        </div>
+        <div *ngIf="message" >
+            <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
+                {{message.text}}
+            </div>
+            
+        </div>
+        <div class="button-wrapper">
+            <button class="button" [ngClass]="subjectService.schedule[indice].active?'button-disable':''" type="submit" [disabled]="subjectService.schedule[indice].active" >Siguiente</button>
         </div>
     </form>
 </div>

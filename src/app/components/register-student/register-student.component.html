@@ -1,38 +1,49 @@
 <div class="card-global">
     <h4>Información del estudiante</h4>
     <hr>
-    <form #gfgform="ngForm" class="p-4">
+    <form [formGroup]="form" class="p-4" (submit)="registerStudent()">
         <div class="input-group mb-3 info-space-between">
             <div class="date-expanded">
                 <label for="CC" class="form-label">Cedula*</label>
-                <input type="number" class="form-control" name="CC" id="CC">
+                <input type="number" class="form-control" name="CC" id="CC" formControlName="DNI">
             </div>
 
             <div class="date-expanded">
                 <label for="card-code" class="form-label">Codigo de carnet*</label>
-                <input type="number" class="form-control" name="card-code" id="card-code">
+                <input type="number" class="form-control" name="card-code" id="card-code" formControlName="carnet_estudiante">
 
             </div>
 
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">Nombre*</label>
-            <input type="text" class="form-control" name="name" id="name">
+            <input type="text" class="form-control" name="name" id="name" formControlName="name">
 
         </div>
 
         <div class="mb-3">
             <label for="surnames" class="form-label">Apellidos*</label>
-            <input type="text" class="form-control" name="surnames" id="surnames">
+            <input type="text" class="form-control" name="surnames" id="surnames" formControlName="surnames">
 
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Correo electronico*</label>
-            <input type="email" class="form-control" name="email" id="email">
+            <input type="email" class="form-control" name="email" id="email" formControlName="email">
 
         </div>
+        <div *ngIf="message" >
+            <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
+                {{message.text}}
+            </div>
+            
+        </div>
         <div class="button-wrapper">
-            <button class="button" type="submit">Registrar estudiante</button>
+            
+            <button class="button" type="submit" [disabled]="loading">
+                
+                <div *ngIf="loading" class="spinner-border" role="status"></div>   
+                <span *ngIf="!loading">Registrar estudiante</span> 
+            </button>
         </div>
     </form>
 </div>

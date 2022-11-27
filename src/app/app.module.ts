@@ -22,6 +22,8 @@ import { AssistancePageComponent } from './pages/assistance-page/assistance-page
 import { AssistanceViewPageComponent } from './pages/assistance-view-page/assistance-view-page.component';
 import { RegisterTeacherComponent } from './components/register-teacher/register-teacher.component';
 import { RegisterTeacherPageComponent } from './pages/register-teacher-page/register-teacher-page.component';
+import { DurationPipe } from './pipe/home.pipe';
+
 
 
 @NgModule({
@@ -44,6 +46,9 @@ import { RegisterTeacherPageComponent } from './pages/register-teacher-page/regi
     AssistanceViewPageComponent,
     RegisterTeacherComponent,
     RegisterTeacherPageComponent,
+    DurationPipe
+
+
 
   ],
   imports: [

@@ -56,20 +56,7 @@ export class RegisterTeacherComponent implements OnInit {
           this.message={text:'Ha ocurrido un error, por favor intente nuevamente.',status:false}
         }
       })
-      // this.appService.getItem(url).subscribe({
-      //   next:(response:any)=>{
-      //     this.loading=false;
-      //     console.log(response);
-      //     this.message={text:'Profesor registrado correctamente',status:false}
-      //   },
-      //   error:(error)=>{
-      //     this.loading=false;
-      //     console.log(error);
 
-      //     this.message={text:'Ha ocurrido un error, por favor intente nuevamente.',status:false}
-      //   }
-      // })
-      
     }else{
       this.message={text:'Existes campos vacios',status:false}
     }

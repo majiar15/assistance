@@ -1,20 +1,20 @@
 <div class="card-global ">
     <h4>Asignar curso</h4>
     <hr>
-    <form #gfgform="ngForm" class="p-4">
+    <form [formGroup]="form" class="p-4" (submit)="registerSchedule()" >
         <div class="mb-3">
             <label for="name-subjects" class="form-label">Nombre de la Asignatura*</label>
-            <input type="text" class="form-control" name="name-subjects" id="name-subjects">
+            <input type="text" class="form-control" name="name-subjects" id="name-subjects" formControlName="nombre" >
         </div>
         <div class="input-group mb-3 date-space-between">
             <div class="date-expanded">
                 <label for="date-start" class="form-label">Fecha Inicio*</label>
-                <input type="date" class="form-control" name="date-start" id="date-start">
+                <input type="date" class="form-control" name="date-start" id="date-start" formControlName="fecha_inicial">
 
             </div>
             <div class="date-expanded">
                 <label for="date-end" class="form-label">Fecha Fin*</label>
-                <input type="date" class="form-control" name="date-end" id="date-end">
+                <input type="date" class="form-control" name="date-end" id="date-end" formControlName="fecha_fin">
 
             </div>
                 
@@ -26,20 +26,34 @@
 
         <div class="mb-3">
             <label type="teacher" class="form-label">Profesores</label>
-            <select name="teacher" class="form-select" id="teacher">
-                <option value="Luis Soto">Luis Soto</option>
-                <option value="Martin Salians">Martin Salinas</option>
-                <option value="Daniel Jimenez">Daniel Jimenez</option>
+            <select name="teacher" class="form-select" id="teacher" formControlName="profesor_id">
+                <option [value]="teacher.teacher_id" *ngFor="let teacher of appService.teacher" >{{teacher.name}}</option>
+                
             </select>
         </div>
         <div class="mb-3">
             <label for="hour">Intencidad de horas</label>
-            <input type="number" class="form-control" name="hour" id="hour">
+            <input type="number" class="form-control" name="hour" id="hour" (keyup)="showSchedule($event)">
         </div>
 
+        <div *ngIf="message" >
+            <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
+                {{message.text}}
+            </div>
+            
+        </div>
 
         <div class="button-wrapper">
-            <button class="button" type="submit">Asignar materia</button>
+            <button class="button" type="submit" [disabled]="loading" >
+                <div *ngIf="loading" class="spinner-border" role="status"></div>    
+                <span *ngIf="!loading">Asignar materia</span> 
+                
+            </button>
         </div>
     </form>
+
+
 </div>
+
+
+ <app-schedule class="width-subject" [indice]="i" *ngFor="let input of subjectService.schedule;let i = index" ></app-schedule>

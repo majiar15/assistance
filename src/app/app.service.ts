@@ -10,6 +10,8 @@ import { map, Observable } from 'rxjs';
 export class AppService {
 
   public token: string='';
+
+  public teacher:any[]=[];
  
   constructor(
     private http: HttpClient,

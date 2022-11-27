@@ -59,6 +59,9 @@
     letter-spacing: -0.02em;
     border-radius: 30px;
 }
+.button-disable{
+    background: rgba(234, 0, 43, 0.514) !important;
+}
 .button-wrapper{
     display: flex;
     justify-content: flex-end;
