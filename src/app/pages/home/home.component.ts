@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
+import { decodedAccessToken } from 'src/app/util/decodedToken';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +22,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     let tokenEncript = localStorage.getItem('token') ?? '';
-    let token = this.appService.getDecodedAccessToken(tokenEncript)
+    let token = decodedAccessToken(tokenEncript)
     console.log("Token decodificado: ", token);
     if (this.appService.course_teacher.length == 0) {
       console.log("ENTRO EN EL IF PRIMERO");
       this.loading=true;
-      this.appService.getItem(`/api/cursos/courseByTeacher?teacher_id=${token.user_id}`).subscribe(
+      this.appService.getItem(`/api/cursos/courseByTeacher/${token?.user_id}`).subscribe(
         (response: any) => {
           if (response.valid) {
             console.log("ENTRO EN EL IF");

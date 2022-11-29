@@ -10,7 +10,6 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-
   dni: String = '';
   password: String = '';
   message = { text: '', status: false };
@@ -63,4 +62,11 @@ export class LoginComponent implements OnInit {
 
   }
 
+  showModal() {
+
+    console.log("F");
+    this.loginService.modal = false;
+    console.log(this.loginService.modal);
+    
+  }
 }

@@ -15,6 +15,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { RegisterStudentComponent } from './components/register-student/register-student.component';
 import { StudentTableComponent } from './components/student-table/student-table.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ModalSessionExpiredComponent } from './components/modalSessionExpired/modalSessionExpired.component';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { RegisterStudentsPageComponent } from './pages/register-students-page/register-students-page.component';
 import { RegisterSubjectPageComponent } from './pages/register-subject-page/register-subject-page.component';
@@ -42,6 +43,7 @@ import { EnrollComponent } from './components/enroll/enroll.component';
     RegisterStudentsPageComponent,
     StudentTableComponent,
     ModalComponent,
+    ModalSessionExpiredComponent,
     SidebarItemComponent,
     RegisterSubjectPageComponent,
     AssistancePageComponent,
