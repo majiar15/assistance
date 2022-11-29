@@ -1,27 +1,34 @@
-# Assistance
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+# Front end web avanzada Daniel Salinas - Martin Jimenez
 
-## Development server
+_esta aplicacion fue realizada utilizando Angular, Boostrap, SCSS
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Instalación 🔧
 
-## Code scaffolding
+### _1. clone el repositorio_
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+git clone https://github.com/majiar15/assistance
+```
 
-## Build
+### _2. instale las dependencias_
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+npm install
+```
 
-## Running unit tests
+### _3. encendemos la aplicacion_
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+npm start
 
-## Running end-to-end tests
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+### _4. Iniciamos sesion_
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+para iniciar session se debe inicializar el backend y crear un usuario administrador para la creacion de los profesores y estudiantes
+
+```
+
