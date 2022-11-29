@@ -29,21 +29,13 @@ export class ModalComponent implements OnInit {
     this.closeModalEvent.emit(false);
   }
   viewAssistance(){
-
+    this.router.navigate([`/view-assistance/${this.course_ID}`,])
+    
   }
   addAsistance(){
     console.log("Navgaraaaa");
+    this.router.navigate([`/assistance/${this.course_ID}`,])
     
-    this.appService.getItem(`/api/estudiante/asistencia/${this.course_ID}`).subscribe(
-      (response:any)=>{
-
-        if(response.valid){
-          this.appService.student_assitance=response.data;
-          this.router.navigate(['/assistance'])
-        }
-
-      }
-      )
   }
 
 }

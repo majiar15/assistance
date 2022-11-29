@@ -16,9 +16,11 @@
             <th>{{student.DNI}}</th>
             <td>{{student.name}}</td>
             <td>Ingenieria de sistemas</td>
-            <td>22/10/2022</td>
-            <td>08:00 PM</td>
-            <td><i class="bi bi-hand-thumbs-up-fill"></i></td>
+            <td>{{fecha_actual}}</td>
+            <td>{{hora_actual}}</td>
+            <td >
+                <i (click)="takeAttendance(student)" class="bi" [ngClass]="student.estado?'bi-hand-thumbs-up-fill':'bi-hand-thumbs-down-fill'"></i>
+            </td>
         </tr>
         
     </tbody>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
+import { decodedAccessToken } from 'src/app/util/decodedToken';
 import { LoginService } from './login.service';
 
 @Component({
@@ -40,9 +41,14 @@ export class LoginComponent implements OnInit {
             this.loginService.isLogged=true;
             
             this.loading=false;
-           
+            let token=decodedAccessToken(localStorage.getItem('token')??'')
+             if(token?.isAdmin){
+              this.router.navigate(['/enroll'])
+             }else{
+              this.router.navigate(['/home'])
+             }
             
-            this.router.navigate(['/home'])
+           
           }
         },
         error: (error) => {

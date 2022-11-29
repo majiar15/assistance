@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'app-assistance-view-page',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssistanceViewPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public appService:AppService,
+  ) { }
 
   ngOnInit(): void {
+
+    
+
   }
 
 }

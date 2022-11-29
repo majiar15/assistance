@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/pages/login/login.service';
+import { decodedAccessToken } from 'src/app/util/decodedToken';
+import { items_admin, items_teacher } from 'src/app/util/list_sidebar';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,33 +11,7 @@ import { LoginService } from 'src/app/pages/login/login.service';
 export class SidebarComponent implements OnInit {
 
   public showMenu: boolean = false;
-  public items = [
-    {
-      title: 'Asistencia',
-      class: 'bi bi-book',
-      link: 'home'
-    },
-    {
-      title: 'Matriculas',
-      class: 'bi bi-book',
-      link: 'enroll'
-    },
-    {
-      title: 'Asignatura',
-      class: 'bi bi-book',
-      link: 'register-subject'
-    },
-    {
-      title: 'Alumnos',
-      class: 'bi bi-person',
-      link: 'register'
-    },
-    {
-      title: 'Profesores',
-      class: 'bi bi-book',
-      link: 'register-teacher'
-    }
-  ];
+  public items:any;
   constructor(
     public loginService:LoginService
   ) { 
@@ -43,6 +19,14 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    let token=decodedAccessToken(localStorage.getItem('token')??'')
+    if(token?.isAdmin){
+      this.items=items_admin
+    }else{
+      this.items=items_teacher
+    }
+
   }
 
   public openMenu(){
