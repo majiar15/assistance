@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
+import { decodedAccessToken } from './util/decodedToken';
 
 @Injectable({
   providedIn: 'root'
@@ -74,11 +75,5 @@ export class AppService {
     }))
   }
 
-  getDecodedAccessToken(token: string): any {
-    try {
-      return jwt_decode(token);
-    } catch(Error) {
-      return null;
-    }
-  }
+
 }

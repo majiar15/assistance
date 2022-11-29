@@ -1,3 +1,7 @@
+<div *ngIf="this.loginService.modal">
+    <app-modal-expired (closeModalEvent)="showModal()"></app-modal-expired>
+</div>
+
 <div class="d-flex justify-content-center display align-items-center ">
     <div class="bg-white login  container">
         <div class="row">
@@ -10,7 +14,7 @@
         <form #gfgform="ngForm" class="form-login">
             <div class="input2-css d-flex flex-column">
                 <label class="label-css">Email</label>
-                <input class="input-css" type="text" placeholder="Ingresa tu cedula" name='cc' [(ngModel)]="dni">
+                <input class="input-css" type="text" placeholder="Ingresa tu correo" name='cc' [(ngModel)]="dni">
             </div>
             <div class="input2-css d-flex flex-column">
                 <label class="label-css">Contraseña</label>

@@ -12,13 +12,14 @@ export class LoggedGuard implements CanActivate {
     private loginService: LoginService,
     private router: Router
     ) { 
-      this.loginService.fetchAuthSession();
+      
     }
   canActivate() {
 
     if(this.loginService.isLogged){
       this.router.navigate(['/home'])
     }
+    this.loginService.fetchAuthSession();
 
     return true;
   }

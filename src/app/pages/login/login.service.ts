@@ -3,14 +3,16 @@ import { Injectable } from '@angular/core';
 
 import { AppService } from 'src/app/app.service';
 import { map, Observable, of, Subject } from 'rxjs';
+import { decodedAccessToken } from 'src/app/util/decodedToken';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-
+  public modal = false;
   public isLogged=false;
+  
   constructor(
     private http: HttpClient,
     private appService:AppService,
@@ -41,6 +43,24 @@ export class LoginService {
 
   fetchAuthSession(){
     if(localStorage.getItem('token') && localStorage.getItem('token')  != null ){
+
+      const payload = decodedAccessToken( localStorage.getItem('token') || '');
+      if (!payload) return;
+
+      console.log("verificando...", (payload && payload.exp  < new Date().getTime()));
+      console.log(payload);
+      console.log(payload.exp < new Date().getTime());
+      if(payload.exp < (new Date().getTime() / 1000)){
+        console.log("vencido");
+        
+        this.isLogged=false;
+        this.modal=true;
+        localStorage.removeItem('token');
+        return;
+      }
+
+
+
       this.isLogged=true;
       this.appService.token=localStorage.getItem('token')||'';
     } 
