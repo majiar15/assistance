@@ -14,6 +14,7 @@ export class AppService {
   public teacher:any[]=[];
   public course_teacher:any[]=[];
   public courses:any[]=[];
+  public student_assitance:any[]=[];
   constructor(
     private http: HttpClient,
   ) { }

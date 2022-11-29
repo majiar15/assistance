@@ -12,55 +12,15 @@
         </tr>
     </thead>
     <tbody>
-        <tr >
-            <th>125777</th>
-            <td>Alberto Soto Perez</td>
+        <tr *ngFor="let student of appService.student_assitance" >
+            <th>{{student.DNI}}</th>
+            <td>{{student.name}}</td>
             <td>Ingenieria de sistemas</td>
             <td>22/10/2022</td>
             <td>08:00 PM</td>
             <td><i class="bi bi-hand-thumbs-up-fill"></i></td>
         </tr>
-        <tr>
-            <th>125777</th>
-            <td>Alberto Soto Perez</td>
-            <td>Ingenieria de sistemas</td>
-            <td>22/10/2022</td>
-            <td>08:00 PM</td>
-            <td><i class="bi bi-hand-thumbs-down-fill"></i></td>
-        </tr>
-        <tr>
-            <th>125777</th>
-            <td>Alberto Soto Perez</td>
-            <td>Ingenieria de sistemas</td>
-            <td>22/10/2022</td>
-            <td>08:00 PM</td>
-            <td><i class="bi bi-hand-thumbs-down-fill"></i></td>
-        </tr>
-        <tr>
-            <th>125777</th>
-            <td>Alberto Soto Perez</td>
-            <td>Ingenieria de sistemas</td>
-            <td>22/10/2022</td>
-            <td>08:00 PM</td>
-            <td><i class="bi bi-hand-thumbs-down-fill"></i></td>
-        </tr>
-        <tr>
-            <th>125777</th>
-            <td>Alberto Soto Perez</td>
-            <td>Ingenieria de sistemas</td>
-            <td>22/10/2022</td>
-            <td>08:00 PM</td>
-            <td><i class="bi bi-hand-thumbs-down-fill"></i></td>
-            
-        </tr>
-        <tr>
-            <th>125777</th>
-            <td>Alberto Soto Perez</td>
-            <td>Ingenieria de sistemas</td>
-            <td>22/10/2022</td>
-            <td>08:00 PM</td>
-            <td><i class="bi bi-hand-thumbs-down-fill"></i></td>
-        </tr>
+        
     </tbody>
     
 </table>

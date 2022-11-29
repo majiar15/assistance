@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
 
   loading = false;
   modal = false
+  course_active:any;
   constructor(
     public appService: AppService
   ) { }
@@ -40,9 +41,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-  showModal() {
+  showModal(course:any) {
 
-
+    this.course_active=course;
     this.modal = !this.modal;
     console.log('Se ejecuto el click de card desde home', this.modal);
   }
