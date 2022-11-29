@@ -11,6 +11,8 @@ import { RegisterTeacherPageComponent } from './pages/register-teacher-page/regi
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedGuard } from './guards/logged.guard';
 import { EnrollPageComponent } from './pages/enroll-page/enroll-page.component';
+import { AdminGuard } from './guards/admin.guard';
+import { TeacherGuard } from './guards/teacher.guard';
 
 
 const routes: Routes = [
@@ -18,13 +20,13 @@ const routes: Routes = [
   
 
   
-  { path: 'home',component:HomeComponent,canActivate:[AuthGuard]},
-  { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard]},
-  { path: 'register-subject',component: RegisterSubjectPageComponent,canActivate:[AuthGuard]},
+  { path: 'home',component:HomeComponent,canActivate:[AuthGuard, AdminGuard]},
+  { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard, TeacherGuard]},
+  { path: 'register-subject',component: RegisterSubjectPageComponent,canActivate:[AuthGuard, TeacherGuard]},
   { path: 'assistance/:id',component:AssistancePageComponent,canActivate:[AuthGuard]},
   { path: 'view-assistance/:id',component:AssistanceViewPageComponent,canActivate:[AuthGuard]},
-  { path: 'register-teacher',component:RegisterTeacherPageComponent,canActivate:[AuthGuard]},
-  { path: 'enroll',component:EnrollPageComponent,canActivate:[AuthGuard]},
+  { path: 'register-teacher',component:RegisterTeacherPageComponent,canActivate:[AuthGuard, TeacherGuard]},
+  { path: 'enroll',component:EnrollPageComponent,canActivate:[AuthGuard, TeacherGuard]},
   { path: 'modal',component:ModalComponent,canActivate:[AuthGuard]},
   { path: '**', redirectTo: 'login' }, 
   

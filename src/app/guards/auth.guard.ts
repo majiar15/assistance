@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate {
     private loginService: LoginService,
     private router: Router
     ) { 
+      this.loginService.fetchAuthSession();
     }
   canActivate() {
     

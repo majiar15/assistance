@@ -6,21 +6,24 @@ import { LoginService } from '../pages/login/login.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LoggedGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
+    valid: boolean = false;
   constructor(
     private loginService: LoginService,
     private router: Router
     ) { 
-      this.loginService.fetchAuthSession();
+      this.valid = this.loginService.validAdmin();
     }
   canActivate() {
-
-    if(this.loginService.isLogged){
-      this.router.navigate(['/home'])
+    
+    if(this.valid){
+      this.router.navigate(['/enroll']);
+      return false;
     }
-    this.loginService.fetchAuthSession();
+    this.valid = this.loginService.validAdmin();
 
+      
     return true;
   }
   

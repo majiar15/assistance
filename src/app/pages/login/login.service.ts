@@ -65,5 +65,20 @@ export class LoginService {
       this.appService.token=localStorage.getItem('token')||'';
     } 
   }
+  validAdmin(): boolean{
+    if(localStorage.getItem('token') && localStorage.getItem('token')  != null ){
+
+      const payload = decodedAccessToken( localStorage.getItem('token') || '');
+      if (!payload) return false;
+
+      
+      if(payload.isAdmin){
+        return true;
+      }
+
+    }
+    return false;
+
+  }
 
 }
