@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
-import { RegisterSubjectService } from 'src/app/pages/register-subject-page/register-subject.service';
 import * as moment from 'moment';
-import { DurationPipe } from 'src/app/pipe/home.pipe';
+import { DurationPipe } from 'src/app/shared/pipe/home.pipe';
+import { CommonModule } from '@angular/common';
+import { RegisterSubjectService } from 'src/app/dashboard/assign-course/assign-course.service';
+import { ScheduleComponent } from '../schedule/schedule.component';
 
 
 @Component({
-  selector: 'app-subjects',
-  templateUrl: './subjects.component.html',
-  styleUrls: ['./subjects.component.css']
+    standalone: true,
+    selector: 'app-subjects',
+    templateUrl: './subjects.component.html',
+    styleUrls: ['./subjects.component.css'],
+    imports: [ScheduleComponent,CommonModule,ReactiveFormsModule]
 })
 export class SubjectsComponent implements OnInit {
 

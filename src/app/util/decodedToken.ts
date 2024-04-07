@@ -1,4 +1,4 @@
-import { Itoken } from "../interfaces/token";
+import { Itoken } from "../shared/interfaces/token";
 import jwt_decode from 'jwt-decode';
 
 export function decodedAccessToken(token: string): Itoken | null{

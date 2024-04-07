@@ -4,9 +4,11 @@ import { AppService } from 'src/app/app.service';
 
 
 @Component({
+  standalone:true,
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  styleUrls: ['./modal.component.css'],
+  
 })
 export class ModalComponent implements OnInit {
 

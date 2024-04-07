@@ -1,12 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { AppService } from 'src/app/app.service';
 
 @Component({
+  standalone:true,
   selector: 'app-student-table',
   templateUrl: './student-table.component.html',
-  styleUrls: ['./student-table.component.css']
+  styleUrls: ['./student-table.component.css'],
+  imports:[CommonModule ]
 })
 export class StudentTableComponent implements OnInit {
 

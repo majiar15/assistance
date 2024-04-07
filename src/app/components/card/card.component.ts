@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone:true,
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrls: ['./card.component.css'],
+  imports:[CommonModule]
 })
 export class CardComponent implements OnInit {
   @Input() title: string = '';

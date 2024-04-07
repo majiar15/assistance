@@ -2,47 +2,47 @@
 /* You can add global styles to this file, and also import other style files */
 
 @font-face {
-    font-family: Oswald;
-    src: url(assets/fonts/Oswald/Oswald-Regular.ttf) format("opentype");
-  }
-
-  @font-face {
-    font-family: Roboto;
-    src: url(assets/fonts/Roboto/Roboto-Regular.ttf) format("opentype");
-  }
+    font-family: 'Fira Sans';
+    src: url(/src/assets/fonts/FiraSans-Regular.ttf) format("opentype");
+}
 
 
-.background-application{
+
+.background-application {
     background-color: #F5F6F8;
 }
-*{
+
+* {
     scroll-behavior: smooth;
-    font-family: " Source Sans Pro", sans-serif;
+    /* font-family: "Source Sans Pro", sans-serif; */
+    font-family: 'Fira Sans',Arial, sans-serif;
     outline: none !important;
 }
 
-.card-global{
-    
+.card-global {
+
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-.divider{
+.divider {
     color: gray;
     height: 5px;
 }
-.w-100{
+
+.w-100 {
     width: 100%;
 }
 
-.primary{
-    
+.primary {
+
     border-radius: 20px;
     font-size: 14px;
-    justify-content:flex-end
+    justify-content: flex-end
 }
-.button{
+
+.button {
     cursor: pointer;
     height: 44px;
     width: 215px;
@@ -62,14 +62,17 @@
     letter-spacing: -0.02em;
     border-radius: 30px;
 }
-.button-disable{
+
+.button-disable {
     background: rgba(234, 0, 43, 0.514) !important;
 }
-.button-wrapper{
+
+.button-wrapper {
     display: flex;
     justify-content: flex-end;
 }
-label{
+
+label {
     font-weight: 600;
     font-size: 14px;
     margin-bottom: 4px;
@@ -77,27 +80,31 @@ label{
 }
 
 
-@media  screen and (max-width: 720px) {
-    .container-page{
+@media screen and (max-width: 720px) {
+    .container-page {
         display: flex;
         flex-direction: column;
-      }
-    .main{
+    }
+
+    .main {
         width: 90%;
     }
-    .width-subject{
+
+    .width-subject {
         width: 100%;
     }
 }
-.main{
+
+.main {
     height: 100vh;
     width: 80%;
     display: flex;
-    padding-left: 60px ;
+    padding-left: 60px;
     flex-direction: column;
 }
-.main h1{
- padding: 30px 0px 30px 0px;
+
+.main h1 {
+    padding: 30px 0px 30px 0px;
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
@@ -105,15 +112,17 @@ label{
     line-height: 125%;
 }
 
-.alert{
+.alert {
     padding: 0px;
     margin: 0 0 4px;
 }
-.alert-error{
+
+.alert-error {
     color: #DC4040;
-   font-size: 14px;
+    font-size: 14px;
 }
-.alert-success{
+
+.alert-success {
     color: #3AA337;
-   font-size: 14px;
+    font-size: 14px;
 }

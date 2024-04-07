@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
 
 @Component({
+  standalone:true,
   selector: 'app-register-teacher',
   templateUrl: './register-teacher.component.html',
-  styleUrls: ['./register-teacher.component.css']
+  styleUrls: ['./register-teacher.component.css'],
+  imports:[CommonModule,ReactiveFormsModule ]
 })
 export class RegisterTeacherComponent implements OnInit {
 

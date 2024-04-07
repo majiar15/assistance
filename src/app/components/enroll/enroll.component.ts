@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
 
 @Component({
+  standalone:true,
   selector: 'app-enroll',
   templateUrl: './enroll.component.html',
-  styleUrls: ['./enroll.component.css']
+  styleUrls: ['./enroll.component.css'],
+  imports:[CommonModule,ReactiveFormsModule ]
 })
 export class EnrollComponent implements OnInit {
 

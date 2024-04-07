@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { map, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { decodedAccessToken } from './util/decodedToken';
+import { HttpService } from './shared/services/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,61 +18,54 @@ export class AppService {
   public courses:any[]=[];
   public student_assitance:any[]=[];
   constructor(
-    private http: HttpClient,
+    private httpSeervice: HttpService,
   ) { }
 
 
-  getHeadersLambda(): any {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token,
-    })
-
-    return ({ headers: headers });
-  }
+  
 
   postItem(path:any,data:any):Observable<any>{
-    console.log("Post",this.getHeadersLambda());
     
-    return this.http.post(`${path}`,data,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.httpSeervice.post(`${path}`,data).pipe(map((response:any)=>{
 
       if(response.data){
-        return {valid:true,data:response.data,message:response.message}
+        return {valid:true,data:response.data,message:''}
       }else{
-        return {valid:false,data:null,message:response.message}
+        return {valid:false,data:null,message:''}
       }
     }))
   }
 
   updateItem(path:any,data:any):Observable<any>{
-    return this.http.put(`${path}`,data,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.httpSeervice.put(`${path}`,data).pipe(map((response:any)=>{
 
       if(response.data){
-        return {valid:true,data:response.data,message:response.message}
+        return {valid:true,data:response.data,message:''}
       }else{
-        return {valid:false,data:null,message:response.message}
+        return {valid:false,data:null,message:''}
       }
     }))
   }
 
   getItem(path:any){
-    return this.http.get(`${path}`,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.httpSeervice.get(path).pipe(map((response:any)=>{
 
       if(response.data){
-        return {valid:true,data:response.data,message:response.message}
+
+        return {valid:true,data:response.data,message:''}
       }else{
-        return {valid:false,data:null,message:response.message}
+        return {valid:false,data:null,message:''}
       }
     }))
   }
 
   deleteItem(path:any){
-    return this.http.delete(`${path}`,this.getHeadersLambda()).pipe(map((response:any)=>{
+    return this.httpSeervice.delete(path).pipe(map((response:any)=>{
 
       if(response.data){
-        return {valid:true,data:response.data,message:response.message}
+        return {valid:true,data:response.data,message:''}
       }else{
-        return {valid:false,data:null,message:response.message}
+        return {valid:false,data:null,message:''}
       }
     }))
   }

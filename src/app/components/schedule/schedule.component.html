@@ -1,5 +1,5 @@
 <div class="card-global mt-4 mb-4">
-    <form #gfgform="ngForm" class="p-4" (submit)="saveSchedule()">
+    <form class="p-4" (submit)="saveSchedule()">
         <div class="mb-3">
             <label type="schedule" class="form-label">Horarios</label>
             <select name="schedule" class="form-select" id="schedule" [(ngModel)]="subjectService.schedule[indice].day" >

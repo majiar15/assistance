@@ -1,11 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { RegisterSubjectService } from 'src/app/pages/register-subject-page/register-subject.service';
+import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import * as moment from 'moment';
+import { RegisterSubjectService } from 'src/app/dashboard/assign-course/assign-course.service';
 
 @Component({
+  standalone:true,
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.css']
+  styleUrls: ['./schedule.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports:[CommonModule,FormsModule ]
 })
 export class ScheduleComponent implements OnInit {
 
