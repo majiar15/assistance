@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/auth/login/login.service';
 import { decodedAccessToken } from 'src/app/util/decodedToken';
 import { items_admin, items_teacher } from 'src/app/util/list_sidebar';
-import { SidebarItemComponent } from "./sidebar-item/sidebar-item.component";
 import { RouterModule } from '@angular/router';
+import { AppService } from 'src/app/app.service';
 
 @Component({
     standalone: true,
@@ -13,7 +13,6 @@ import { RouterModule } from '@angular/router';
     styleUrls: ['./sidebar.component.css'],
     imports: [
       CommonModule, 
-      SidebarItemComponent,
       RouterModule
     ]
 })
@@ -22,15 +21,15 @@ export class SidebarComponent implements OnInit {
   public showMenu: boolean = false;
   public items:any;
   constructor(
-    public loginService:LoginService
+    public loginService:LoginService,
+    public appService:AppService
   ) { 
 
   }
 
   ngOnInit(): void {
 
-    let token=decodedAccessToken(localStorage.getItem('token')??'')
-    if(token?.isAdmin){
+    if(this.appService.userData?.role=='admin'){
       this.items=items_admin
     }else{
       this.items=items_teacher

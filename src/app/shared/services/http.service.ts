@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 })
 export class HttpService {
 
-  public baseUrl:string=environment.urlBaseMocks;
+  public baseUrl:string=environment.domain;
   public baseRetry: number = 4;
-  static idtoken: string='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2Njk3NTc3NDcuMTYwNzM3LCJ1c2VyX2lkIjoxLCJpc0FkbWluIjp0cnVlfQ.X-bWb5dlNKIMphzQRsfzb1_P0omn5wDC36nKaYg-0aE';
+  static idtoken: string='';
 
   constructor(
     public http: HttpClient,
@@ -33,7 +33,7 @@ export class HttpService {
   }
 
   public get(path:string, header?:any) {
-    header = header !== false ? (header || this.getHeadersGET()) : header;
+    header = header !== false ? (header || this.getHeaders()) : header;
     console.log("🚀 ~ HttpService ~ get ~ header:", header)
     return this.http.get(this.baseUrl+path, header);
   }

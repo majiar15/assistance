@@ -22,7 +22,7 @@ const routes: Routes = [
   { 
     path: 'dashboard',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-    // canActivate:[AuthGuard, AdminGuard]
+    canActivate:[AuthGuard, AdminGuard]
   },
   // { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard, TeacherGuard]},
   // { path: 'register-subject',component: RegisterSubjectPageComponent,canActivate:[AuthGuard, TeacherGuard]},

@@ -9,16 +9,26 @@
 
         </div>
         <div class="row">
-            <p class="d-flex  hello-hand">Bienvenido </p>
+            <p class="d-flex  hello-hand">Iniciar sesión </p>
         </div>
         <form class="form-login">
-            <div class="input2-css d-flex flex-column">
-                <label class="label-css">Email</label>
-                <input class="input-css" type="text" placeholder="Ingresa tu correo" name='cc' [(ngModel)]="dni">
+            <div class="item-input d-flex flex-column">
+                <label class="label-css">Usuario</label>
+                <input class="input-custom" type="text" placeholder="Escribe tu usuario" name='cc' [(ngModel)]="dni">
+                <div class="error" *ngIf="errorMessages.length>=1 && errorMessages[0].field === 'username'">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span >{{errorMessages[0].message}}</span>
+                  </div>
+              
             </div>
-            <div class="input2-css d-flex flex-column">
+            <div class="item-input d-flex flex-column">
                 <label class="label-css">Contraseña</label>
-                <input class="input-css" type="password" placeholder="Ingresa tu contraseña" name='contraseña' [(ngModel)]="password">
+                <input class="input-custom" type="password" placeholder="Digite tu contraseña" name='contraseña' [(ngModel)]="password">
+                <div class="error" *ngIf="errorMessages.length>=1 && errorMessages[errorMessages.length-1].field === 'password'">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span >{{errorMessages[errorMessages.length-1].message}}</span>
+                  </div>
+              
             </div>
             <div  *ngIf="message.text!=''" >
                 <div class="alert-error">
@@ -26,7 +36,7 @@
                 </div>
                 
             </div>
-            <button class="button-login" (click)="login()" [disabled]="loading">
+            <button class="button-login" [disabled]="loading" (click)="signIn()">
                 <div *ngIf="loading" class="spinner-border" role="status"></div>    
                 <span *ngIf="!loading"> Ingresar</span> 
             </button>

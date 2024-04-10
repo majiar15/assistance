@@ -38,6 +38,15 @@ nav ul{
 .sidebar-responsive > i{
     font-size: 30px;
 }
+.item{
+    display: flex;
+    justify-content: space-evenly;
+    width: 120px;
+    cursor: pointer;
+}
+.item-active {
+    color: #EA0029;
+}
 
 @media  screen and (max-width: 720px) {
     .sidebar{

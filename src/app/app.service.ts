@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { decodedAccessToken } from './util/decodedToken';
 import { HttpService } from './shared/services/http.service';
+import { User } from './shared/interfaces/users';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AppService {
   public course_teacher:any[]=[];
   public courses:any[]=[];
   public student_assitance:any[]=[];
+  public userData?:User;
   constructor(
     private httpSeervice: HttpService,
   ) { }

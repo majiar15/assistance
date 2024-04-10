@@ -1,19 +1,21 @@
-
 <div class="sidebar" [ngClass]="!showMenu ? 'hidden-sidebar' : 'show-sidebar'">
 
     <div>
         <header>
             <div class="logo">
                 <img src="./assets/unilibre.png" alt="logo unilibre" id="logo-login" routerLink="/home">
-    
+
             </div>
             <div class="title">Control de asistencia</div>
         </header>
-    
+
         <nav>
             <ul>
-                
-                <app-sidebar-item *ngFor="let item of items" [classIcono]="item.class" [title]="item.title"  [routerLink]="['/', item.link]"  routerLinkActive="item-active"></app-sidebar-item>
+                <div class="item" *ngFor="let item of items" [routerLink]="['/', item.link]"
+                    routerLinkActive="item-active">
+                    <i [ngClass]="item.class"></i>
+                    <p>{{item.title}}</p>
+                </div>
             </ul>
         </nav>
     </div>
@@ -22,7 +24,7 @@
     <div class="logout" routerLink="/login" (click)="logout()">
         <i class="bi bi-box-arrow-right"></i>
         <p>Cerrar sesion</p>
-        
+
     </div>
 </div>
 <div class="sidebar-responsive">

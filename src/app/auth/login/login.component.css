@@ -10,6 +10,7 @@
     width: 520px;
     background: rgb(255, 255, 255);
     border: 1px solid rgb(223, 224, 235);
+    box-shadow: 0px 0px 20px #dfe0eb;
     box-sizing: border-box;
     border-radius: 8px;
 }
@@ -29,28 +30,15 @@
 .form-login{
     width: 85%;
 }
-.input-css{
-    border: 1px solid rgb(173, 188, 206);
-    box-sizing: border-box;
-    border-radius: 6px;
-    padding: 12px;
-    width: 100%;
-    background: none;
-    margin-top: 4px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 150%;
-}
+
 .label-css{
-    font-weight: 600;
     font-size: 14px;
     margin-bottom: 4px;
     color: rgb(37, 42, 49);
 }
-.input2-css{
+.item-input{
     text-align: left;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     font-family: "Source Sans Pro";
     font-style: normal;
     position: relative;
@@ -65,7 +53,7 @@
     -webkit-box-pack: center;
     justify-content: center;
     color: rgb(255, 255, 255);
-    background: rgb(234, 0, 41);
+    background: #FF0000;
     border: 1px solid rgb(234, 0, 41);
     text-decoration: none;
     font-style: normal;
@@ -74,4 +62,12 @@
     line-height: 100%;
     letter-spacing: -0.02em;
     border-radius: 30px;
+}
+
+.item-input .error{
+    color: #FF0000;
+    font-size: 13px;
+}
+.item-input .error span{
+    margin-left: 3px;
 }

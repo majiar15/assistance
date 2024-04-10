@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  domain:'http://localhost:5000/api',
+  domain:'http://localhost:3000/api',
   urlBaseMocks:'https://7ffbe5d4-9719-42c4-8711-543699a7a94d.mock.pstmn.io',
 };
 

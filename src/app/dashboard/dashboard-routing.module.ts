@@ -7,7 +7,7 @@ import { TeacherComponent } from "./teacher/teacher.component";
 import { AssignCourseComponent } from "./assign-course/assign-course.component";
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent,
+    { path: '', component: HomeCoursesComponent,
         children:[
             { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
             { path: 'student', component: StudentsComponent },
