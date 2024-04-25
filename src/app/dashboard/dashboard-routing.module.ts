@@ -4,17 +4,10 @@ import { DashboardComponent } from "./dashboard.component";
 import { HomeCoursesComponent } from "./home-courses/home-courses.component";
 import { StudentsComponent } from "./students/students.component";
 import { TeacherComponent } from "./teacher/teacher.component";
-import { AssignCourseComponent } from "./assign-course/assign-course.component";
+import { CoursesComponent } from "./courses/courses.component";
 
 const routes: Routes = [
-    { path: '', component: HomeCoursesComponent,
-        children:[
-            { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
-            { path: 'student', component: StudentsComponent },
-            { path: 'teacher', component: TeacherComponent },
-            { path: 'assistance', component: AssignCourseComponent },
-        ]
-    },
+    
     
   ];
   

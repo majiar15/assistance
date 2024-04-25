@@ -5,24 +5,38 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AssistancePageComponent } from './dashboard/assistance-page/assistance-page.component';
 import { AssistanceViewPageComponent } from './dashboard/assistance-view-page/assistance-view-page.component';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { LoggedGuard } from './shared/guards/logged.guard';
 import { EnrollPageComponent } from './dashboard/enroll-page/enroll-page.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { TeacherGuard } from './shared/guards/teacher.guard';
+import { ValidSessionGuard } from './shared/guards/valid-session.guard';
+import { HomeCoursesComponent } from './dashboard/home-courses/home-courses.component';
+import { StudentsComponent } from './dashboard/students/students.component';
+import { CoursesComponent } from './dashboard/courses/courses.component';
+import { TeacherComponent } from './dashboard/teacher/teacher.component';
 
 
 const routes: Routes = [
+
   { 
     path: 'login', 
     loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent),
-    // canActivate:[LoggedGuard]
+    
+    canActivate:[AuthGuard]
   },
   
   
   { 
     path: 'dashboard',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate:[AuthGuard, AdminGuard]
+    children:[
+      { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
+      { path: 'students', component: StudentsComponent },
+      { path: 'courses', component: CoursesComponent },
+      { path: 'teachers', component: TeacherComponent },
+      // { path: 'assistance', component: AssignCourseComponent },
+      { path: '', redirectTo: '', pathMatch: 'full' }
+  ],
+    canActivate:[ValidSessionGuard]
   },
   // { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard, TeacherGuard]},
   // { path: 'register-subject',component: RegisterSubjectPageComponent,canActivate:[AuthGuard, TeacherGuard]},
@@ -32,8 +46,8 @@ const routes: Routes = [
   // { path: 'enroll',component:EnrollPageComponent,canActivate:[AuthGuard, TeacherGuard]},
   // { path: 'modal',component:ModalComponent,canActivate:[AuthGuard]},
   
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

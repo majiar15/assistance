@@ -11,7 +11,7 @@
 
         <nav>
             <ul>
-                <div class="item" *ngFor="let item of items" [routerLink]="['/', item.link]"
+                <div class="item" *ngFor="let item of items" [routerLink]="[item.link]"
                     routerLinkActive="item-active">
                     <i [ngClass]="item.class"></i>
                     <p>{{item.title}}</p>

@@ -4,22 +4,22 @@ export const items_admin = [
     {
         title: 'Matriculas',
         class: 'bi bi-book',
-        link: 'enroll'
+        link: 'enrollments'
     },
     {
-        title: 'Asignatura',
+        title: 'Cursos',
         class: 'bi bi-book',
-        link: 'register-subject'
+        link: 'courses'
     },
     {
-        title: 'Alumnos',
+        title: 'Estudiantes',
         class: 'bi bi-person',
-        link: 'register'
+        link: 'students'
     },
     {
         title: 'Profesores',
         class: 'bi bi-book',
-        link: 'register-teacher'
+        link: 'teachers'
     }
 ];
 

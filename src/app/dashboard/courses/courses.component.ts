@@ -4,12 +4,12 @@ import { SubjectsComponent } from 'src/app/components/subjects/subjects.componen
 
 @Component({
     standalone: true,
-    selector: 'app-assign-course',
-    templateUrl: './assign-course.component.html',
-    styleUrls: ['./assign-course.component.css'],
+    selector: 'app-courses',
+    templateUrl: './courses.component.html',
+    styleUrls: ['./courses.component.css'],
     imports: [SubjectsComponent]
 })
-export class AssignCourseComponent implements OnInit {
+export class CoursesComponent implements OnInit {
 
   constructor() { }
 

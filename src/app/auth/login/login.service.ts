@@ -36,11 +36,12 @@ export class LoginService {
   }
 
 
-  fetchAuthSession(){
+  fetchAuthSession():boolean{
+    
     if(localStorage.getItem('token') && localStorage.getItem('token')  != null ){
 
       const payload = decodedAccessToken( localStorage.getItem('token') || '');
-      if (!payload) return;
+      if (!payload) return false;
 
       console.log("verificando...", (payload && payload.exp  < new Date().getTime()));
       console.log(payload);
@@ -51,14 +52,24 @@ export class LoginService {
         this.isLogged=false;
         this.modal=true;
         localStorage.removeItem('token');
-        return;
+        return false;
       }
-
+      
+      this.appService.userData={
+        name:payload.name,
+        email:payload.email,
+        dni:payload.dni,
+        phone:payload.phone,
+        role:payload.role,
+        _id:payload.id,
+      };
 
 
       this.isLogged=true;
       this.appService.token=localStorage.getItem('token')||'';
-    } 
+      return true;
+    }
+    return false;
   }
   validAdmin(): boolean{
     if(localStorage.getItem('token') && localStorage.getItem('token')  != null ){

@@ -4,7 +4,7 @@ import { AppService } from 'src/app/app.service';
 import * as moment from 'moment';
 import { DurationPipe } from 'src/app/shared/pipe/home.pipe';
 import { CommonModule } from '@angular/common';
-import { RegisterSubjectService } from 'src/app/dashboard/assign-course/assign-course.service';
+import { RegisterSubjectService } from 'src/app/dashboard/courses/courses.service';
 import { ScheduleComponent } from '../schedule/schedule.component';
 
 
@@ -108,7 +108,7 @@ export class SubjectsComponent implements OnInit {
           this.subjectService.schedule=[];
           this.message = { text: 'Profesor registrado correctamente', status: true }
         },
-        error: (error) => {
+        error: (error:any) => {
           this.loading = false;
           console.log(error);
           this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }

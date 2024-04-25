@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as moment from 'moment';
-import { RegisterSubjectService } from 'src/app/dashboard/assign-course/assign-course.service';
+import { RegisterSubjectService } from 'src/app/dashboard/courses/courses.service';
 
 @Component({
   standalone:true,

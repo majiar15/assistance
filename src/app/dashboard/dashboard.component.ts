@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
     standalone: true,
@@ -17,7 +18,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
       CardComponent, 
       CommonModule, 
       ModalComponent,
-      DashboardRoutingModule
+      RouterModule 
     ]
 })
 export class DashboardComponent implements OnInit {

@@ -7,4 +7,5 @@ export interface Itoken {
     name:string;
     email:string;
     id:string;
+    phone:number;
 }
