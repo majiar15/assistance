@@ -1,12 +1,4 @@
-<!-- <p>home works!</p> -->
-<!-- <div *ngFor="let item of items" >
 
-    <app-card></app-card>
-</div> -->
-
-<!-- 
-<app-subjects></app-subjects>
-<app-schedule></app-schedule> -->
 
 <!--(closeModalEvent)="showModal()-->
 
@@ -17,6 +9,15 @@
 <div class="d-flex container-page">
     
     <app-sidebar></app-sidebar>
-    <router-outlet></router-outlet>
+    <div class="content">
+        <div class="nav-back">
+            <button>
+                <i class="bi bi-arrow-left"></i>
+                <span>Volver</span>
+            </button>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+    
 </div>
 

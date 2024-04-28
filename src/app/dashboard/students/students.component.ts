@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterStudentComponent } from "../../components/register-student/register-student.component";
-import { SidebarComponent } from 'src/app/core/sidebar/sidebar.component';
+import { RegisterStudentComponent } from './register-student/register-student.component';
 
 @Component({
     standalone: true,

@@ -7,6 +7,7 @@ import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
+import { HttpUtilsService } from '../shared/services/http-utils.service';
 
 @Component({
     standalone: true,
@@ -29,28 +30,29 @@ export class DashboardComponent implements OnInit {
 
  
   constructor(
-    public appService: AppService
+    public appService: AppService,
+    private httpUtis: HttpUtilsService
   ) { }
 
   ngOnInit(): void {
     // let tokenEncript = localStorage.getItem('token') ?? '';
     // let token = decodedAccessToken(tokenEncript)
     //console.log("Token decodificado: ", token);
-    if (this.appService.course_teacher.length == 0) {
-      console.log("ENTRO EN EL IF PRIMERO");
-      this.loading=true;
-      this.appService.getItem(`/api/courses/byTeacher/ndkjadknakddasdsa`).subscribe(
-        (response: any) => {
-          if (response.valid) {
-            console.log("ENTRO EN EL IF");
+    // if (this.appService.course_teacher.length == 0) {
+    //   console.log("ENTRO EN EL IF PRIMERO");
+    //   this.loading=true;
+    //   this.httpUtis.getItem(`/api/courses/byTeacher/ndkjadknakddasdsa`).subscribe(
+    //     (response: any) => {
+    //       if (response.valid) {
+    //         console.log("ENTRO EN EL IF");
 
-            this.appService.course_teacher = response.data;
-            this.loading=false;
-          }
+    //         this.appService.course_teacher = response.data;
+    //         this.loading=false;
+    //       }
 
-        }
-      )
-    }
+    //     }
+    //   )
+    // }
 
   }
 

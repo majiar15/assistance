@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
+import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 
 @Component({
   standalone:true,
@@ -18,12 +19,13 @@ export class EnrollComponent implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     public appService:AppService,
+    private httpUtis: HttpUtilsService,
   ) { }
 
   ngOnInit(): void {
 
     if(this.appService.courses.length==0){
-      this.appService.getItem('/api/cursos').subscribe((response:any)=>{
+      this.httpUtis.getItem('/api/cursos').subscribe((response:any)=>{
         if(response.valid){
           this.appService.courses=response.data
         }
@@ -45,7 +47,7 @@ export class EnrollComponent implements OnInit {
     if(this.form.valid){
 
       this.loading=true;
-      this.appService.postItem('/api/admin/enroll',this.form.value).subscribe({
+      this.httpUtis.postItem('/api/admin/enroll',this.form.value).subscribe({
         next:(response:any)=>{
           this.loading=false;
           this.message={text:'Estudiante matriculado correctamente',status:true}

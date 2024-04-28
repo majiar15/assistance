@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SubjectsComponent } from 'src/app/components/subjects/subjects.component';
+import { CreateCourseComponent } from './create-course/create-course.component';
 
 
 @Component({
@@ -7,7 +7,7 @@ import { SubjectsComponent } from 'src/app/components/subjects/subjects.componen
     selector: 'app-courses',
     templateUrl: './courses.component.html',
     styleUrls: ['./courses.component.css'],
-    imports: [SubjectsComponent]
+    imports: [CreateCourseComponent]
 })
 export class CoursesComponent implements OnInit {
 

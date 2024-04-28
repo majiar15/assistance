@@ -1,18 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RegisterTeacherComponent } from "../../components/register-teacher/register-teacher.component";
+import { TeacherService } from './teacher.service';
+import { RegisterTeacherComponent } from "./register-teacher/register-teacher.component";
 
 @Component({
     standalone: true,
     selector: 'app-teacher',
     templateUrl: './teacher.component.html',
     styleUrls: ['./teacher.component.css'],
-    imports: [RegisterTeacherComponent]
+    imports: [CommonModule, RegisterTeacherComponent]
 })
 export class TeacherComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public teacherService:TeacherService,
+  ) { }
 
   ngOnInit(): void {
+  console.log("🚀 ~ TeacherComponent ~ ngOnInit ~ ngOnInit:", )
+    
   }
 
 }

@@ -54,7 +54,7 @@ export class LoginService {
         localStorage.removeItem('token');
         return false;
       }
-      
+      HttpService.idtoken=localStorage.getItem('token')||'';
       this.appService.userData={
         name:payload.name,
         email:payload.email,

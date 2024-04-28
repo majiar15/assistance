@@ -1,0 +1,60 @@
+<div class="card-global ">
+    <h4>Informacion del curso</h4>
+    <hr>
+    <form [formGroup]="form" class="p-4" (submit)="registerSchedule()" >
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre del curso*</label>
+            <input type="text" class="form-control" name="name" id="name" formControlName="name" >
+        </div>
+        <div class="input-group mb-3 date-space-between">
+            <div class="date-expanded">
+                <label for="date_start" class="form-label">Fecha Inicio*</label>
+                <input type="date" class="form-control" name="date_start" id="date_start" formControlName="date_start">
+
+            </div>
+            <div class="date-expanded">
+                <label for="date_end" class="form-label">Fecha Fin*</label>
+                <input type="date" class="form-control" name="date_end" id="date_end" formControlName="date_end">
+
+            </div>
+               
+        </div>
+
+        <div class="mb-3">
+            <label type="teacher" class="form-label">Profesores</label>
+            <select name="teacher" class="form-select" id="teacher" formControlName="teacher_id">
+                <option [value]="teacher._id" *ngFor="let teacher of teacherService.teachers" >{{teacher.name}}</option>
+                
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="hour">Intencidad de horas</label>
+            <input type="number" class="form-control" name="hour" id="hour" (keyup)="showSchedule($event)">
+        </div>
+
+        <div class="mb-3">
+            <label for="name-subjects" class="form-label">  Descripcion*</label>
+            <textarea class="form-control" name="name-subjects" id="name-subjects" rows="4" formControlName="description"></textarea>
+        </div>
+
+        <div *ngIf="message" >
+            <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
+                {{message.text}}
+            </div>
+            
+        </div>
+
+        <div class="button-wrapper">
+            <button class="button" type="submit" [disabled]="loading || coursesService.intensity!=0"  [ngClass]="coursesService.intensity!=0?'button-disable':''">
+                <div *ngIf="loading" class="spinner-border" role="status"></div>    
+                <span *ngIf="!loading">Asignar materia</span> 
+                
+            </button>
+        </div>
+    </form>
+
+
+</div>
+
+
+ <app-schedule  *ngIf="coursesService.schedule.length" ></app-schedule>

@@ -15,8 +15,8 @@ export class AuthGuard implements CanActivate {
       
     }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log("🚀 ~ AuthGuard ~ canActivate ~ state:", state)
-    console.log("🚀 ~ AuthGuard ~ canActivate ~ next:", next)
+    console.log("🚀 ~ AuthGuard:")
+
     const isSession=this.loginService.fetchAuthSession();
     if(isSession &&state.url.includes('login')){
       this.router.navigate(['/dashboard']);
