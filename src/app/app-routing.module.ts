@@ -27,15 +27,8 @@ const routes: Routes = [
   
   { 
     path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-    children:[
-      { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
-      { path: 'students', component: StudentsComponent },
-      { path: 'courses', component: CoursesComponent },
-      { path: 'teachers', component: TeacherComponent },
-      // { path: 'assistance', component: AssignCourseComponent },
-      { path: '', redirectTo: '', pathMatch: 'full' }
-  ],
+    loadChildren: () => import('./dashboard/dashboard-routing.module'),
+  
     canActivate:[ValidSessionGuard]
   },
   // { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard, TeacherGuard]},

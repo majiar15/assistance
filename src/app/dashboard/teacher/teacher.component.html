@@ -1,49 +1,6 @@
 <div class="main">
     
-
-
     <h1>Registro de profesor</h1>
-    <!-- <div class="content-table-teachers">
-        <div class="content-filter card-global">
-            <div class="filter ">
-                
-                <label class="form-label">Ingrese el nombre*</label>
-                <input type="text" class="form-control" id="filter" >
-            </div>
-            <button class="button">Registrar profesor</button>
-
-        </div>
-        <table class="table table-teacher table-hover">
-            <thead>
-                <tr >
-                    <th>Documento de identidad</th>
-                    <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Email</th>
-                    <th>Accion</th>
-            
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let teacher of teacherService.teachers" >
-                    <td>{{teacher.dni}}</td>
-                    <td>{{teacher.name}}</td>
-                    <td>{{teacher.phone}}</td>
-                    <td>{{teacher.email}}</td>
-                    <td>
-                        <i class="bi bi-pencil-square"></i>
-
-                        <i class="bi bi-trash"></i>
-
-                    </td>
-                    
-                </tr>
-                
-            </tbody>
-            
-        </table>
-    </div> -->
-    <register-teacher></register-teacher>
-
+    <router-outlet></router-outlet>
 
 </div>

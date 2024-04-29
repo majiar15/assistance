@@ -34,14 +34,14 @@ export class ScheduleComponent implements OnInit {
   }
 
   saveSchedule(index:number){
-    debugger
-    let i =index
     
-    if(this.coursesService.schedule[i].day=='' ||this.coursesService.schedule[i].time_initial=='' || this.coursesService.schedule[i].time_end=='' ){
+    if(
+      this.coursesService.schedule[index].week_day=='' || this.coursesService.schedule[index].room==''
+      ||this.coursesService.schedule[index].hour_start=='' || this.coursesService.schedule[index].hour_end=='' ){
       this.message={text:'Existen campos vacios',status:false}
     }else{
-      let hrentrada = moment(this.coursesService.schedule[i].time_initial, 'hh:mm A');
-      let hrsalida = moment(this.coursesService.schedule[i].time_end, 'hh:mm A');
+      let hrentrada = moment(this.coursesService.schedule[index].hour_start, 'hh:mm A');
+      let hrsalida = moment(this.coursesService.schedule[index].hour_end, 'hh:mm A');
       
       console.log(hrsalida.diff(hrentrada),' -- ',this.coursesService.intensity );
 
@@ -54,7 +54,7 @@ export class ScheduleComponent implements OnInit {
 
           this.coursesService.schedule[index].disabled=true
 
-          this.coursesService.schedule.push({ day: '', time_initial: "", time_end: "", disabled: false })
+          this.coursesService.schedule.push({ week_day: '', hour_start: "", hour_end: "",room:"", disabled: false })
           
         }else if(hrsalida.diff(hrentrada)==this.coursesService.intensity ) {
           this.coursesService.intensity=0

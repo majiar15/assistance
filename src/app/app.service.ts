@@ -8,6 +8,7 @@ import { HttpService } from './shared/services/http.service';
 import { User } from './shared/interfaces/interfaces';
 import { TeacherService } from './dashboard/teacher/teacher.service';
 import { StudentsService } from './dashboard/students/students.service';
+import { CoursesService } from './dashboard/courses/courses.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,13 @@ export class AppService {
     
     private teacherService: TeacherService,
     private studentsService: StudentsService,
+    private coursesService: CoursesService,
   ) { }
 
   startApp(){
     console.log("🚀 ~ AppService ~ startApp ~ startApp:")
     //Cargar Los cursos
+    this.coursesService.start();
     //CARGAR LOS ESTUDIANTES
     this.studentsService.start();
     //CARGAR LOS PRFESORES

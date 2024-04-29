@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CreateCourseComponent } from './create-course/create-course.component';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
@@ -7,7 +8,7 @@ import { CreateCourseComponent } from './create-course/create-course.component';
     selector: 'app-courses',
     templateUrl: './courses.component.html',
     styleUrls: ['./courses.component.css'],
-    imports: [CreateCourseComponent]
+    imports: [CreateCourseComponent,RouterModule]
 })
 export class CoursesComponent implements OnInit {
 

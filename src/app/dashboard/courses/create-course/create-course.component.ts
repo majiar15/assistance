@@ -10,11 +10,11 @@ import { ScheduleComponent } from './schedule/schedule.component';
 
 
 @Component({
-    standalone: true,
-    selector: 'create-course',
-    templateUrl: './create-course.component.html',
-    styleUrls: ['./create-course.component.css'],
-    imports: [ScheduleComponent,CommonModule,ReactiveFormsModule]
+  standalone: true,
+  selector: 'create-course',
+  templateUrl: './create-course.component.html',
+  styleUrls: ['./create-course.component.css'],
+  imports: [ScheduleComponent, CommonModule, ReactiveFormsModule]
 })
 export class CreateCourseComponent implements OnInit {
 
@@ -26,7 +26,7 @@ export class CreateCourseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private httpUtis: HttpUtilsService,
     public coursesService: CoursesService,
-    public teacherService:TeacherService,
+    public teacherService: TeacherService,
 
   ) { }
 
@@ -42,12 +42,12 @@ export class CreateCourseComponent implements OnInit {
 
 
     this.form = this.formBuilder.group({
-      
+
       "name": new FormControl('', [Validators.required]),
       "date_start": new FormControl('', [Validators.required]),
       "date_end": new FormControl('', [Validators.required]),
       "teacher_id": new FormControl('', [Validators.required]),
-      
+      "description": new FormControl('')
 
     })
   }
@@ -62,9 +62,9 @@ export class CreateCourseComponent implements OnInit {
     } else {
       this.coursesService.intensity = Number(event.target.value) * 3600000
       this.coursesService.intensityBefore = Number(event.target.value) * 3600000
-      
+
       if (this.coursesService.schedule.length == 0 && event.target.value != '') {
-        this.coursesService.schedule.push({ day: '', time_initial: "", time_end: "", disabled: false })
+        this.coursesService.schedule.push({ week_day: '', hour_start: "", hour_end: "", room: "", disabled: false })
       }
       if (event.target.value == '') {
         this.coursesService.schedule = []
@@ -79,53 +79,58 @@ export class CreateCourseComponent implements OnInit {
 
     if (this.form.valid) {
       console.log("ENVIAR CURSO");
-      
-    //   this.loading = true;
-    //   let duration=new DurationPipe().transform(this.form.value.fecha_inicial,this.form.value.fecha_fin)
-    //   console.log(' -- ',duration);
-    //   for (let index = 0; index < this.subjectService.schedule.length; index++) {
-        
-    //     delete this.subjectService.schedule[index]['active']
-        
-    //   }
-      
-    //   let data = {
-    //     profesor_id: this.form.value.profesor_id,
-    //     duracion: duration,
-    //     nombre: this.form.value.nombre,
-    //     fecha_inicial: this.form.value.fecha_inicial,
-    //     fecha_fin: this.form.value.fecha_fin,
-    //     horarios:this.subjectService.schedule
-    //   }
-      
-    //   console.log(' -- ',data);
-      
-    //   this.subjectService.asignarCourse(data).subscribe({
-    //     next: (response: any) => {
-    //       this.loading = false;
-    //       this.form.reset()
-    //       this.subjectService.intensity=0;
-          
-    //       this.subjectService.schedule=[];
-    //       this.message = { text: 'Profesor registrado correctamente', status: true }
-    //     },
-    //     error: (error:any) => {
-    //       this.loading = false;
-    //       console.log(error);
-    //       this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
-    //     }
-    //   })
+
+      this.loading = true;
+      let duration = new DurationPipe().transform(this.form.value.fecha_inicial, this.form.value.fecha_fin)
+      console.log(' -- ', duration);
+      for (let index = 0; index < this.coursesService.schedule.length; index++) {
+
+        delete this.coursesService.schedule[index]['disabled']
+
+      }
+
+      let data = {
+        teacher_id: this.form.value.teacher_id,
+
+        name: this.form.value.name,
+        date_start: this.form.value.date_start,
+        date_end: this.form.value.date_end,
+        description: this.form.value.description,
+        schedules: this.coursesService.schedule
+      }
+      console.log("🚀 ~ DATA:", data)
+
+      console.log(' -- ', data);
+
+      this.httpUtis.postItem('/courses', data).subscribe({
+        next: (response: any) => {
+          this.loading = false;
+          if (response.valid) {
+            this.coursesService.courses.unshift(response.data)
+            this.form.reset()
+            this.coursesService.intensity = 0;
+            this.coursesService.intensityBefore = 0;
+
+            this.coursesService.schedule = [];
+            this.message = { text: 'Profesor registrado correctamente', status: true }
+          }else{
+            this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
+          }
 
 
-    // }else{
-    //   this.message = { text: 'Existen campos vacios.', status: false }
-    // }
+        },
+        error: (error: any) => {
+          this.loading = false;
+          console.log(error);
+          this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
+        }
+      })
 
-    // setTimeout(() => {
-    //   this.message=null;  
-    // }, 3000);
-    }else{
-      this.message={text:'Existes campos vacios',status:false}
+
+    } else {
+      this.message = { text: 'Existen campos vacios.', status: false }
     }
+
+
   }
 }

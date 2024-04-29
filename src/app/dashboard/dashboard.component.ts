@@ -5,7 +5,6 @@ import { CardComponent } from "../components/card/card.component";
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
-import { DashboardRoutingModule } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
 import { HttpUtilsService } from '../shared/services/http-utils.service';
 
@@ -22,7 +21,7 @@ import { HttpUtilsService } from '../shared/services/http-utils.service';
       RouterModule 
     ]
 })
-export class DashboardComponent implements OnInit {
+export default class DashboardComponent implements OnInit {
   course_active:any;
   loading = false;
   modal = false
@@ -31,7 +30,8 @@ export class DashboardComponent implements OnInit {
  
   constructor(
     public appService: AppService,
-    private httpUtis: HttpUtilsService
+    private httpUtis: HttpUtilsService,
+  
   ) { }
 
   ngOnInit(): void {
