@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterStudentComponent } from './register-student/register-student.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
     standalone: true,
     selector: 'app-students',
     templateUrl: './students.component.html',
     styleUrls: ['./students.component.css'],
-    imports: [RegisterStudentComponent]
+    imports: [RouterModule]
 })
 export class StudentsComponent implements OnInit {
 

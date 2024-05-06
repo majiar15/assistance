@@ -9,6 +9,8 @@ import { TeacherListComponent } from "./teacher/teacher-list/teacher-list.compon
 import { RegisterTeacherComponent } from "./teacher/register-teacher/register-teacher.component";
 import { CoursesListComponent } from "./courses/courses-list/courses-list.component";
 import { CreateCourseComponent } from "./courses/create-course/create-course.component";
+import { StudentsListComponent } from "./students/students-list/students-list.component";
+import { RegisterStudentComponent } from "./students/register-student/register-student.component";
 
 const routes: Routes = [
   { 
@@ -16,7 +18,15 @@ const routes: Routes = [
     loadComponent: () => import('./dashboard.component'),
     children:[
       { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
-      { path: 'students', component: StudentsComponent },
+      { 
+        path: 'students', component: StudentsComponent ,
+        children:[
+          { path: '', component: StudentsListComponent },
+          { path: 'create', component: RegisterStudentComponent },
+          { path: ':id', component: RegisterStudentComponent },
+        ] 
+
+      },
       { path: 'courses', component: CoursesComponent,
         children:[
         { path: '', component: CoursesListComponent },
@@ -34,6 +44,7 @@ const routes: Routes = [
       // { path: 'assistance', component: AssignCourseComponent },
       { path: '', redirectTo: '', pathMatch: 'full' }
   ],
+  
     canActivate:[ValidSessionGuard]
   },
     

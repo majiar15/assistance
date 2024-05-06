@@ -6,3 +6,7 @@ export interface User {
     role:string;
     _id:string;
 }
+
+export interface AcademicProgram {
+    
+}

@@ -21,6 +21,7 @@ export class AppService {
   public course_teacher:any[]=[];
   public courses:any[]=[];
   public student_assitance:any[]=[];
+  public academic_programs:any[]=[];
   public userData?:User;
   constructor(
     
@@ -41,6 +42,10 @@ export class AppService {
 
 
   }
+
+
+
+
 
 
   
