@@ -1,0 +1,21 @@
+<table class="table table-teacher table-hover">
+  <thead>
+    <tr>
+      <th *ngFor="let title of titles">{{ title }}</th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of data">
+      <td
+        *ngFor="let property of getObjectKeys(record)"
+        [routerLink]="[record._id]"
+      >
+        {{ record[property] }}
+      </td>
+      <td>
+        <i class="bi bi-trash"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>

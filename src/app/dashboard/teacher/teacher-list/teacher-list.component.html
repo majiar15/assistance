@@ -8,31 +8,6 @@
             <button class="button" [routerLink]="['create']" >Registrar profesor</button>
 
         </div>
-        <table class="table table-teacher table-hover">
-            <thead>
-                <tr >
-                    <th>Documento de identidad</th>
-                    <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Email</th>
-                    <th>Accion</th>
-            
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let teacher of teacherService.teachers" [routerLink]="[teacher._id]" >
-                    <td>{{teacher.dni}}</td>
-                    <td>{{teacher.name}}</td>
-                    <td>{{teacher.phone}}</td>
-                    <td>{{teacher.email}}</td>
-                    <td>
-                        <i class="bi bi-trash"></i>
+        <app-table [data]="data" [titles]="titles"></app-table>
 
-                    </td>
-                    
-                </tr>
-                
-            </tbody>
-            
-        </table>
     </div>
