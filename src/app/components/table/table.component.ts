@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 export class TableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() titles: string[] = [];
+  @Input() filters: string[] = [];
 
   constructor() { }
 
@@ -25,6 +26,8 @@ export class TableComponent implements OnInit {
     delete newObject._id;
     return Object.keys(newObject);
   }
+
+
 
 
 }
