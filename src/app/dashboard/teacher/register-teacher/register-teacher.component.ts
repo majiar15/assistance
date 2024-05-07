@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { TeacherService } from '../teacher.service';
@@ -29,10 +29,10 @@ export class RegisterTeacherComponent implements OnInit {
 
   ngOnInit(): void {
     this.form=this.formBuilder.group({
-      "dni":new FormControl('',[Validators.required,Validators.minLength(6)]),
+      "dni":new FormControl('',[Validators.required,Validators.min(100000)]),
       "name":new FormControl('',[Validators.required]),
       "surnames":new FormControl('',[Validators.required]),
-      "phone":new FormControl('',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]),
+      "phone":new FormControl('',[Validators.required,Validators.max(9000000000),Validators.min(1000000000)]),
       "email":new FormControl('',[Validators.required,Validators.email]),
       "password":new FormControl('',[Validators.required,Validators.minLength(6)]),
       
@@ -40,6 +40,13 @@ export class RegisterTeacherComponent implements OnInit {
     })
   }
 
+  getControlError(controlName: string, errorName: string): boolean {
+    const control = this.form.get(controlName);
+    if(!control){
+      return false;
+    }
+    return control.hasError(errorName) && control.touched;
+  }
   registerTeacher(){
     
     if(this.form.valid){

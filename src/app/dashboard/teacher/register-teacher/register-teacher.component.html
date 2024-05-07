@@ -5,38 +5,81 @@
         <div class="input-group mb-3 info-space-between">
             <div class="date-expanded">
                 <label for="CC" class="form-label">Cedula*</label>
-                <input type="number" class="form-control" name="CC" id="CC" formControlName="dni">
+                <input
+                    type="number"
+                    class="form-control"
+                    name="CC"
+                    id="CC"
+                    formControlName="dni"
+                    [class]="(form.get('dni')?.invalid && form.get('dni')?.touched) ? 'is-invalid' :''"
+                >
+                <div  *ngIf="getControlError('dni', 'min')" class="invalid-feedback">
+                    debe tener minimo 6 numeros
+                </div>
             </div>
 
-            <!-- <div class="date-expanded">
-                <label for="card-code" class="form-label">Codigo de carnet*</label>
-                <input type="number" class="form-control" name="card-code" id="card-code">
-
-            </div> -->
 
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">Nombre*</label>
-            <input type="text" class="form-control" name="name" id="name" formControlName="name">
-
+            <input 
+                type="text" 
+                class="form-control" 
+                name="name" 
+                id="name" 
+                formControlName="name"
+                [class]="(form.get('name')?.invalid && form.get('name')?.touched) ? 'is-invalid' :''"
+            >
+            <div *ngIf="getControlError('name', 'required')" class="invalid-feedback">
+                el nombre es requerido
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="surnames" class="form-label">Apellidos*</label>
-            <input type="text" class="form-control" name="surnames" id="surnames" formControlName="surnames">
+            <input
+                type="text"
+                class="form-control"
+                name="surnames"
+                id="surnames"
+                formControlName="surnames"
+                [class]="(form.get('surnames')?.invalid && form.get('surnames')?.touched) ? 'is-invalid' :''"
 
+            >
+            <div *ngIf="getControlError('surnames', 'required')" class="invalid-feedback">
+                el apellido es requerido
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="phone" class="form-label">Telefono*</label>
-            <input type="number" class="form-control" name="phone" id="phone" formControlName="phone">
-
+            <input
+                type="number"
+                class="form-control"
+                name="phone"
+                id="phone"
+                formControlName="phone"
+                [class]="(form.get('phone')?.invalid && form.get('phone')?.touched) ? 'is-invalid' :''"
+            >
+            <div *ngIf="form.get('phone')?.invalid" class="invalid-feedback">
+                ingrese un telefono valido
+            </div>
         </div>
-        
+
         <div class="mb-3">
             <label for="email" class="form-label">Correo electronico*</label>
-            <input type="email" class="form-control" name="email" id="email" formControlName="email">
+            <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            formControlName="email"
+            [class]="(form.get('email')?.invalid && form.get('email')?.touched) ? 'is-invalid' :''"
 
+            >
+            <div *ngIf="getControlError('email', 'email')" class="invalid-feedback">
+                ingrese un email valido
+            </div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña*</label>
