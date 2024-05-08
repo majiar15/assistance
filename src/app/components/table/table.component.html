@@ -1,4 +1,4 @@
-<table class="table table-teacher table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
       <th *ngFor="let title of titles">{{ title }}</th>
@@ -14,8 +14,13 @@
         {{ record[property] }}
       </td>
       <td>
-        <i class="bi bi-trash"></i>
+        <i (click)="deleteConfirmProperty(record)" class="bi bi-trash"></i>
       </td>
     </tr>
   </tbody>
 </table>
+
+<modal-dialog 
+[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
+(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>
+

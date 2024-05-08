@@ -5,6 +5,7 @@ export interface Itoken {
     role:string
     dni:number;
     name:string;
+    surnames:string;
     email:string;
     id:string;
     phone:number;

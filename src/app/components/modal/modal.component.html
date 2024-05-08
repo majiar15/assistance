@@ -2,14 +2,22 @@
     <div class="modal-container">
         <div class="modal-header">
             <i class="bi bi-check-circle-fill"></i>
-            <h4 class="modal-title">Seleccione una opcion</h4>
+            <h4 class="modal-title">{{defaults_modal[modal_type].title}}</h4>
         </div>
         <div class="modal-body">
-            <p>Seleccione el proceso que desea realizar.</p>
+            <p>{{defaults_modal[modal_type].description}}</p>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-danger primary" type="submit" (click)="viewAssistance()" >Ver asistencias</button>
-            <button class="btn btn-outline-danger primary" (click)="addAsistance()" >Agregar asistencia</button>
+
+            <button *ngIf="buttons.length && buttons[0]" class="button" type="submit"
+                (click)="buttonPrimary()" >
+                {{buttons[0].name}}
+            </button>
+            <button *ngIf="buttons.length==2 && buttons[1]" class="btn btn-outline-danger primary" 
+                (click)="buttonSecondary()" >
+                {{buttons[1].name}}
+            </button>
+
         </div>
 
     </div>

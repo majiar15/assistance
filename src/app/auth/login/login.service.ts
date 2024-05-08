@@ -42,10 +42,7 @@ export class LoginService {
 
       const payload = decodedAccessToken( localStorage.getItem('token') || '');
       if (!payload) return false;
-
-      console.log("verificando...", (payload && payload.exp  < new Date().getTime()));
-      console.log(payload);
-      console.log(payload.exp < new Date().getTime());
+      
       if(payload.exp < (new Date().getTime() / 1000)){
         console.log("vencido");
         
@@ -57,6 +54,7 @@ export class LoginService {
       HttpService.idtoken=localStorage.getItem('token')||'';
       this.appService.userData={
         name:payload.name,
+        surnames:payload.surnames,
         email:payload.email,
         dni:payload.dni,
         phone:payload.phone,

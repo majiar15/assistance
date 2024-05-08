@@ -1,12 +1,13 @@
-<div class="content-table-teachers">
-        <div class="content-filter card-global">
-            <div class="filter ">
-                <label class="form-label">Ingrese el nombre*</label>
-                <input type="text" class="form-control" id="filter" (input)="filterData()" [(ngModel)]="searchText" >
-            </div>
-            <button class="button" [routerLink]="['create']" >Registrar profesor</button>
 
+<div class="content-table-teachers">
+    <div class="content-filter card-global">
+        <div class="filter ">
+            <label class="form-label">Ingrese el nombre*</label>
+            <input type="text" class="form-control" id="filter" (input)="filterData()" [(ngModel)]="searchText">
         </div>
-        <app-table [data]="data" [titles]="titles"></app-table>
+        <button class="button" [routerLink]="['create']">Registrar profesor</button>
 
     </div>
+    <app-table [data]="data" [titles]="titles"></app-table>
+
+</div>

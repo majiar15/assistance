@@ -23,7 +23,7 @@
 }
 i{
     font-size: 30px;
-    color: green;
+    color: #3DC627;
 
 }
 .modalc .modal-container .modal-header{
@@ -32,7 +32,7 @@ i{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 32px;
+    padding: 25px 32px;
     background-color: #ffff;
     background-size: cover;
     background-position: center;
@@ -42,9 +42,10 @@ i{
 
 .modalc .modal-header .modal-title{
 
-    font-size: 22px;
+    font-size: 18px;
     font-weight: bold;
     color: #2E3B4C;
+    text-align: center;
 
 
 }
@@ -54,20 +55,20 @@ i{
     padding: 2px 20px;
     background: #ffff;
    
-    font-size: 15;
-    color: #000;
+    font-size: 15px;
+    color: #334D6E;
 
 }
 
 .modalc .modal-footer{
     display: flex;
     justify-content: space-around;
-    padding: 20px 20px 50px;
+    padding: 5px 18px 20px;
     background: #ffff;
     border-radius: 0 0 10px 10px;
-    font-size: 15;
+    font-size: 15px;
     color: #000;
-
+    flex-direction: row-reverse;
 }
 
 

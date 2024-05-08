@@ -34,7 +34,6 @@ export class HttpService {
 
   public get(path:string, header?:any) {
     header = header !== false ? (header || this.getHeaders()) : header;
-    console.log("🚀 ~ HttpService ~ get ~ header:", header)
     return this.http.get(this.baseUrl+path, header);
   }
 

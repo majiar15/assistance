@@ -81,7 +81,7 @@
                 ingrese un email valido
             </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="teacher_id==''">
             <label for="password" class="form-label">Contraseña*</label>
             <input type="password" class="form-control" name="password" id="password" formControlName="password">
 
@@ -95,7 +95,7 @@
         <div class="button-wrapper">
             <button class="button" type="submit" [disabled]="loading">
                 <div *ngIf="loading" class="spinner-border" role="status"></div>    
-                <span *ngIf="!loading">Registrar profesor</span> 
+                <span *ngIf="!loading">{{teacher_id==''? 'Registrar':'Actualizar'+ ' profesor'}}</span> 
                 
             </button>
         </div>

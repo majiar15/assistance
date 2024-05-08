@@ -22,8 +22,6 @@ export class TeacherService {
       if(response.valid){
         this.teachers=response.data;
       }
-      console.log("🚀 ~ TeacherService :", response)
-
     })
   }
 

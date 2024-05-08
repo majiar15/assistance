@@ -56,6 +56,10 @@ export default class DashboardComponent implements OnInit {
 
   }
 
+  goBack(): void {
+    window.history.back();
+  }
+
   
 
 }

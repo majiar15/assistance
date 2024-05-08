@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
@@ -5,16 +6,19 @@ import { AppService } from 'src/app/app.service';
 
 @Component({
   standalone:true,
-  selector: 'app-modal',
+  selector: 'modal-dialog',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
+  imports:[CommonModule]
   
 })
 export class ModalComponent implements OnInit {
 
-  @Input() show: string = '';
+  @Input() modal_type:number = 0;
   @Input() course_ID: string = '';
-  @Output() closeModalEvent = new EventEmitter<boolean>();
+  @Input() buttons:Array<any> =[];
+  @Output() button1Event = new EventEmitter<any>();
+  @Output() button2Event = new EventEmitter<any>();
 
   constructor(
     private appService:AppService,
@@ -28,16 +32,33 @@ export class ModalComponent implements OnInit {
   }
 
   close(): void {
-    this.closeModalEvent.emit(false);
+    //this.closeModalEvent.emit(false);
   }
-  viewAssistance(){
-    this.router.navigate([`/view-assistance/${this.course_ID}`,])
-    
+  buttonPrimary(){
+    console.log("🚀 ~ buttonPrimary:",)
+    //this.router.navigate([`/view-assistance/${this.course_ID}`,])
+    this.button1Event.emit()
   }
-  addAsistance(){
-    console.log("Navgaraaaa");
-    this.router.navigate([`/assistance/${this.course_ID}`,])
+  buttonSecondary(){
+    console.log("buttonSecondary");
+    this.button2Event.emit()
+    //this.router.navigate([`/assistance/${this.course_ID}`,])
     
   }
 
+
+
+  defaults_modal=[
+    {
+      title:'Seleccione una opcion',
+      description:'Seleccione el proceso que desea realizar.',
+      btn:2
+    },
+    {
+      title:'¿Está seguro que desea eliminar a este profesor?',
+      description:`Toda la información del profesor será eliminada permanentemente. Esta acción no se puede deshacer. ¿Confirmar eliminación?`,
+      btn:1
+    },
+    
+  ]
 }

@@ -2,16 +2,14 @@
 
 <!--(closeModalEvent)="showModal()-->
 
-<div *ngIf="modal==true">
-    <app-modal [course_ID]="course_active.course_id"></app-modal>
-</div>
+<!-- <modal-dialog [hidden]="!appService.showModal"></modal-dialog> -->
 
 <div class="d-flex container-page">
     
     <app-sidebar></app-sidebar>
     <div class="content">
         <div class="nav-back">
-            <button routerLink="/">
+            <button (click)="goBack()">
                 <i class="bi bi-arrow-left"></i>
                 <span>Volver</span>
             </button>

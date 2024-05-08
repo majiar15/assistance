@@ -4,17 +4,18 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from "../../../components/modal/modal.component";
 
 @Component({
-  selector: 'app-teacher-list',
-  standalone: true,
-  imports: [CommonModule,RouterLink, TableComponent, FormsModule],
-  templateUrl: './teacher-list.component.html',
-  styleUrl: './teacher-list.component.css'
+    selector: 'app-teacher-list',
+    standalone: true,
+    templateUrl: './teacher-list.component.html',
+    styleUrl: './teacher-list.component.css',
+    imports: [CommonModule, RouterLink, TableComponent, FormsModule, ModalComponent]
 })
 export class TeacherListComponent {
 
-  titles = ["dni","name","phone","email"];
+  titles = ["Documento de identidad","Nombre","Telefono","Email"];
   data: any[] = [];
   searchText: string = '';
   constructor(
@@ -28,7 +29,7 @@ export class TeacherListComponent {
     return teachers.map((teacher)=>{
       return {
         dni: teacher.dni,
-        name: teacher.name,
+        name: teacher.name+' '+teacher.surnames||'',
         phone: teacher.phone,
         email: teacher.email,
         _id: teacher._id

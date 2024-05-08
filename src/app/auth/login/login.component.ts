@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
 
       next: (response) => {
         if (response.valid) {
-          console.log("La respuesta es: ", response);
           this.loginService.isLogged = true;
           this.appService.userData=response.data;
           this.loading = false;
@@ -59,12 +58,9 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate(['/dashboard'])
           }
-
-
         }
       },
       error: (err) => {
-        console.log("🚀 ~ LoginComponent ~ this.loginService.signIn ~ error:", err)
         const error =handleLoginError(err.error)
         this.loginService.isLogged = false;
         this.loading = false;
@@ -95,8 +91,6 @@ export class LoginComponent implements OnInit {
  
 
   showModal() {
-
-    console.log("F");
     this.loginService.modal = false;
     console.log(this.loginService.modal);
 

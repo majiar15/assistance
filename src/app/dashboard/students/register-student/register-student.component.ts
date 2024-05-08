@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { AppService } from 'src/app/app.service';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { StudentsService } from '../students.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone:true,
@@ -16,12 +17,7 @@ export class RegisterStudentComponent implements OnInit {
 
 
   public form:FormGroup=new FormGroup({});
-  public academic_programs=[
-    'Ingenieria de sistemas',
-    'Ingenieria industrial',
-    'Contaduria publica',
-    'Administracion de empresas'
-  ]
+  
   
   loading=false
   message:any
@@ -29,19 +25,30 @@ export class RegisterStudentComponent implements OnInit {
     private formBuilder:FormBuilder,
     private httpUtis: HttpUtilsService,
     private studentsService: StudentsService,
+    public appService: AppService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.paramMap
+    console.log("🚀 ~ROUTE:", this.route)
+    // if(){
+
+    // }
+
+
+
     this.form=this.formBuilder.group({
       "dni":new FormControl('',[Validators.required,Validators.minLength(6)]),
       "name":new FormControl('',[Validators.required]),
       "surnames":new FormControl('',[Validators.required]),
       "email":new FormControl('',[Validators.required,Validators.email]),
       "student_code":new FormControl('',[Validators.required,Validators.minLength(6)]),
-      "academic_program":new FormControl('',[Validators.required]),
+      "academic_program_id":new FormControl('',[Validators.required]),
       "phone":new FormControl('',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]),
     })
   }
+    
 
   registerStudent(){
 
@@ -50,10 +57,11 @@ export class RegisterStudentComponent implements OnInit {
       let data={
         email: this.form.value.email,
         dni: this.form.value.dni,
-        nombre: `${this.form.value.name} ${this.form.value.surnames}`,
+        name: this.form.value.name,
+        surnames: this.form.value.surnames,
         student_code: this.form.value.student_code,
-        academic_program:this.form.value.academic_program,
-        password:this.form.value.dni,
+        academic_program_id:this.form.value.academic_program_id,
+        password:`${this.form.value.dni}`,
         phone:this.form.value.phone
       }
       console.log("🚀 ~  data:", data)
@@ -61,7 +69,7 @@ export class RegisterStudentComponent implements OnInit {
       this.httpUtis.postItem('/students',data).subscribe({
         next:(response:any)=>{
           if(response.valid){
-            this.message={text:'Estudiante registrado correctamente',status:false}
+            this.message={text:'Estudiante registrado correctamente',status:true}
             this.studentsService.students.unshift(response.data);
             this.form.reset()
           }else{
