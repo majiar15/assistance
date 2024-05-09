@@ -7,6 +7,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { CommonModule } from '@angular/common';
 import { ModalSessionExpiredComponent } from "./components/modalSessionExpired/modalSessionExpired.component";
+import {ToastModule} from 'primeng/toast';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+
 
 @NgModule({
     declarations: [
@@ -21,7 +25,9 @@ import { ModalSessionExpiredComponent } from "./components/modalSessionExpired/m
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        ModalSessionExpiredComponent
+        ModalSessionExpiredComponent,
+        ToastModule,
+        BrowserAnimationsModule
     ]
 })
 export class AppModule { }

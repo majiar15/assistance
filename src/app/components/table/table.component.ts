@@ -47,13 +47,12 @@ export class TableComponent implements OnInit {
       {
         name:'Cancelar'
       }, 
-    ]
-    console.log("DATA DELETE: ",data);
-    
+    ]    
   }
 
   deleteProperty(){
-    this.deleteItem.emit(this.data_delete)
+    this.deleteItem.emit(this.data_delete),
+    this.cancel();
   }
 
   cancel(){

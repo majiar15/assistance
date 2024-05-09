@@ -1,3 +1,6 @@
+<p-toast></p-toast>
+
+
 
 <div class="content-table-teachers">
     <div class="content-filter card-global">
@@ -8,6 +11,6 @@
         <button class="button" [routerLink]="['create']">Registrar profesor</button>
 
     </div>
-    <app-table [data]="data" [titles]="titles"></app-table>
+    <app-table [data]="data" [titles]="titles" (deleteItem)="deleteTeacher($event)"></app-table>
 
 </div>
