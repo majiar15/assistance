@@ -1,7 +1,3 @@
-.content-table-teachers{
-    
-}
-
 .content-filter{
     
     display: flex;
@@ -18,48 +14,4 @@
 
 .form-control{
     height: 34px;
-}
-
-.table-student{
-    
-    width: 95%;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
-    display: table;
-}
-
-th{
-    color:#334D6E;
-    font-weight: 600;
-    font-size: 14px;
-}
-tr{
-    height: 50px;
-   
-   
-}
-td{
-    color: #707683;
-    font-size: 14px;
-}
-td i{
-    display: block;
-   
-    font-size: 20px;
-    text-align: center;
-}
-.bi-hand-thumbs-up-fill{
-    color: #4cc764;
-}
-.bi-hand-thumbs-down-fill{
-    color: red;
-}
-
-
-@media  screen and (max-width: 720px) {
-    .table-student{
-        width: 50%;
-        overflow-x: scroll;
-    }
 }

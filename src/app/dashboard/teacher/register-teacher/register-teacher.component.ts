@@ -33,7 +33,7 @@ export class RegisterTeacherComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("🚀 ~ROUTE:", this.route.snapshot.paramMap.get('id'))
+   
     if (this.route.snapshot.paramMap.get('id')) {
       this.teacher_id = this.route.snapshot.paramMap.get('id') || '';
 

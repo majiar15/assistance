@@ -18,10 +18,6 @@ export class TableComponent implements OnInit {
   @Input() filters: string[] = [];
   @Output () deleteItem: EventEmitter<any> = new EventEmitter();
 
-  showModal:boolean = false;
-  modal_type:number = 0;
-  modal_buttons:Array<any> = [];
-  data_delete:any;
   constructor(
     private appService:AppService,
 
@@ -36,31 +32,14 @@ export class TableComponent implements OnInit {
     return Object.keys(newObject);
   }
 
-  deleteConfirmProperty(data:any){
-    this.data_delete=data;
-    this.modal_type=1;
-    this.showModal=true;
-    this.modal_buttons=[
-      {
-        name:'Eliminar'
-      },
-      {
-        name:'Cancelar'
-      }, 
-    ]    
+ 
+
+  deleteProperty(data:any){
+    this.deleteItem.emit(data);
+    
   }
 
-  deleteProperty(){
-    this.deleteItem.emit(this.data_delete),
-    this.cancel();
-  }
 
-  cancel(){
-    this.data_delete=null;
-    this.modal_type=0;
-    this.showModal=false;
-    this.modal_buttons=[]
-  }
 
 
 

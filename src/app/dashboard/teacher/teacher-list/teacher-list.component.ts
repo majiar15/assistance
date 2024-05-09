@@ -16,7 +16,7 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './teacher-list.component.html',
   styleUrl: './teacher-list.component.css',
   imports: [CommonModule, RouterLink, TableComponent, FormsModule, ModalComponent,
-    ToastModule
+    ToastModule,ModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MessageService]
@@ -26,6 +26,12 @@ export class TeacherListComponent {
   titles = ["Documento de identidad", "Nombre", "Telefono", "Email"];
   data: any[] = [];
   searchText: string = '';
+
+  showModal:boolean = false;
+  modal_type:number = 0;
+  modal_buttons:Array<any> = [];
+  data_delete:any;
+
   constructor(
     public teacherService: TeacherService,
     private httpUtis: HttpUtilsService,
@@ -89,6 +95,32 @@ export class TeacherListComponent {
       }
 
     })
+  }
+
+  deleteConfirmProperty(data:any){
+    this.data_delete=data;
+    this.modal_type=1;
+    this.showModal=true;
+    this.modal_buttons=[
+      {
+        name:'Eliminar'
+      },
+      {
+        name:'Cancelar'
+      }, 
+    ]    
+  }
+
+  deleteProperty(){
+    this.deleteTeacher(this.data_delete);
+    this.cancel();
+  }
+
+  cancel(){
+    this.data_delete=null;
+    this.modal_type=0;
+    this.showModal=false;
+    this.modal_buttons=[]
   }
 
 }

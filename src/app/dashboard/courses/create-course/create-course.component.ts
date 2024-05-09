@@ -32,13 +32,13 @@ export class CreateCourseComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.teacherService.teachers.length == 0) {
-      this.httpUtis.getItem('/teachers').subscribe((response: any) => {
-        if (response.valid) {
-          this.teacherService.teachers = response.data
-        }
-      })
-    }
+    // if (this.teacherService.teachers.length == 0) {
+    //   this.httpUtis.getItem('/teachers').subscribe((response: any) => {
+    //     if (response.valid) {
+    //       this.teacherService.teachers = response.data
+    //     }
+    //   })
+    // }
 
 
     this.form = this.formBuilder.group({

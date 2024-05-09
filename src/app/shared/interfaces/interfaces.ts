@@ -8,6 +8,10 @@ export interface User {
     _id: string;
 }
 
+export interface Student extends User {
+    academic_program_id:string
+}
+
 export interface AcademicProgram {
     faculty: string
     name: string

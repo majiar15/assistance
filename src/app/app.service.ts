@@ -34,6 +34,8 @@ export class AppService {
   ) { }
 
   startApp(){
+    console.log("SE EJECUTO EL START");
+    
     //Cargar Los cursos
     //this.coursesService.start();
     //CARGAR LOS ESTUDIANTES
@@ -48,7 +50,6 @@ export class AppService {
 
   getAcademicProgram(){
     this.httpUtis.getItem('/academic-program').subscribe((response) => {
-    console.log("🚀 ~ StudentsService ~ this.httpUtis.getItem ~ response:", response)
     if(response.valid){
       this.academic_programs=response.data;
     }

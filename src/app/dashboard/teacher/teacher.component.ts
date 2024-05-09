@@ -17,9 +17,6 @@ export class TeacherComponent implements OnInit {
     public teacherService:TeacherService,
   ) { }
 
-  ngOnInit(): void {
-  console.log("🚀 ~ TeacherComponent ~ ngOnInit ~ ngOnInit:", )
-    
-  }
+  ngOnInit(): void {}
 
 }

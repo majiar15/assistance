@@ -14,3 +14,7 @@
     <app-table [data]="data" [titles]="titles" (deleteItem)="deleteTeacher($event)"></app-table>
 
 </div>
+
+<modal-dialog 
+[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
+(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>

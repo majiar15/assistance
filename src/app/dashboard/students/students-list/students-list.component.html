@@ -1,38 +1,18 @@
+<p-toast></p-toast>
+
 <div class="content-table-teachers">
     <div class="content-filter card-global">
         <div class="filter ">
             
             <label class="form-label">Ingrese el nombre*</label>
-            <input type="text" class="form-control" id="filter" >
+            <input type="text" class="form-control" id="filter" (input)="filterData()" [(ngModel)]="searchText">
         </div>
-        <button class="button" [routerLink]="['create']" >Registrar profesor</button>
+        <button class="button" [routerLink]="['create']" >Registrar estudiante</button>
 
     </div>
-    <table class="table table-teacher table-hover">
-        <thead>
-            <tr >
-                <th>Documento de identidad</th>
-                <th>Nombre</th>
-                <th>Telefono</th>
-                <th>Email</th>
-                <th>Accion</th>
-        
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let student of studentsService.students" [routerLink]="[student._id]" >
-                <td>{{student.dni}}</td>
-                <td>{{student.name}}</td>
-                <td>{{student.phone}}</td>
-                <td>{{student.email}}</td>
-                <td>
-                    <i class="bi bi-trash"></i>
-
-                </td>
-                
-            </tr>
-            
-        </tbody>
-        
-    </table>
+    <app-table [data]="data" [titles]="titles" (deleteItem)="deleteConfirmProperty($event)"></app-table>
 </div>
+
+<modal-dialog 
+[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
+(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>

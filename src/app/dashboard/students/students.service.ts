@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/shared/interfaces/interfaces';
+import { Student, User } from 'src/app/shared/interfaces/interfaces';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 })
 export class StudentsService {
 
-  public students:User[]=[];
+  public students:Student[]=[];
 
   constructor(private httpUtis: HttpUtilsService) { }
 
@@ -17,8 +17,6 @@ export class StudentsService {
       if(response.valid){
         this.students=response.data;
       }
-      console.log("🚀 ~ StudentsService :", response)
-
     })
    
   }

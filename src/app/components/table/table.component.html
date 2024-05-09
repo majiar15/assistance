@@ -14,13 +14,9 @@
         {{ record[property] }}
       </td>
       <td>
-        <i (click)="deleteConfirmProperty(record)" class="bi bi-trash"></i>
+        <i (click)="deleteProperty(record)" class="bi bi-trash"></i>
       </td>
     </tr>
   </tbody>
 </table>
-
-<modal-dialog 
-[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
-(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>
 
