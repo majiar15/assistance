@@ -1,3 +1,9 @@
+<p-toast></p-toast>
+
+
+
+
+
 <div class="content-table-teachers">
     <div class="content-filter card-global">
         <div class="filter ">
@@ -8,31 +14,8 @@
         <button class="button" [routerLink]="['create']" >Crear curso</button>
 
     </div>
-    <table class="table table-teacher table-hover">
-        <thead>
-            <tr >
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Fecha de Inicio</th>
-                <th>Fecha de finalización</th>
-                <th>Accion</th>
-        
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let course of coursesService.courses" [routerLink]="[course._id]" >
-                <td>{{course._id}}</td>
-                <td>{{course.name}}</td>
-                <td>{{course.date_start}}</td>
-                <td>{{course.date_end}}</td>
-                <td>
-                    <i class="bi bi-trash"></i>
-
-                </td>
-                
-            </tr>
-            
-        </tbody>
-        
-    </table>
+    <app-table [data]="data" [titles]="titles" (deleteItem)="deleteConfirmProperty($event)"></app-table>
 </div>
+<modal-dialog 
+[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
+(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>

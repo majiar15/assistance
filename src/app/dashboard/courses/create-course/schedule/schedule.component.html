@@ -7,14 +7,8 @@
                 <label type="schedule" class="form-label">Horarios</label>
                 <select name="schedule" class="form-select" id="schedule" [disabled]="coursesService.schedule[index].disabled"
                     [(ngModel)]="coursesService.schedule[index].week_day" >
-                    <option value="lunes">Lunes</option>
-    
-                    <option value="martes">Martes</option>
-                    <option value="miercoles">Miercoles</option>
-                    <option value="jueves">Jueves</option>
-                    <option value="viernes">Viernes</option>
-                    <option value="sabado">Sabado</option>
-    
+                    <option [value]="item.value" *ngFor="let item of weekdays" >{{item.title}}</option>
+       
                 </select>
             </div>
            
@@ -41,9 +35,10 @@
             </div>
             <div class="mb-3">
                 <label for="room" class="form-label">Aula*</label>
-                <input type="text" class="form-control" name="room" id="room"  [(ngModel)]="coursesService.schedule[index].room" >
+                <input type="text" class="form-control" name="room" id="room" 
+                 [(ngModel)]="coursesService.schedule[index].room" [disabled]="coursesService.schedule[index].disabled" >
             </div>
-            <div *ngIf="message" >
+            <div *ngIf="message && message.index==index" >
                 <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
                     {{message.text}}
                 </div>

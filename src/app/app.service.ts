@@ -37,7 +37,7 @@ export class AppService {
     console.log("SE EJECUTO EL START");
     
     //Cargar Los cursos
-    //this.coursesService.start();
+    this.coursesService.start();
     //CARGAR LOS ESTUDIANTES
     this.studentsService.start();
     //CARGAR LOS PRFESORES

@@ -7,6 +7,7 @@ import { CoursesService } from 'src/app/dashboard/courses/courses.service';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { TeacherService } from 'src/app/dashboard/teacher/teacher.service';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -22,23 +23,22 @@ export class CreateCourseComponent implements OnInit {
   message: any;
   loading = false;
 
+  course_id: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
-    private httpUtis: HttpUtilsService,
+    private httpUtils: HttpUtilsService,
     public coursesService: CoursesService,
     public teacherService: TeacherService,
-
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
 
-    // if (this.teacherService.teachers.length == 0) {
-    //   this.httpUtis.getItem('/teachers').subscribe((response: any) => {
-    //     if (response.valid) {
-    //       this.teacherService.teachers = response.data
-    //     }
-    //   })
-    // }
+    if (this.route.snapshot.paramMap.get('id')) {
+      this.course_id = this.route.snapshot.paramMap.get('id') || '';
+
+    }
 
 
     this.form = this.formBuilder.group({
@@ -50,7 +50,29 @@ export class CreateCourseComponent implements OnInit {
       "description": new FormControl('')
 
     })
+
+    if (this.course_id) this.loadCourseData();
   }
+
+  loadCourseData() {
+    const course = this.coursesService.courses.find(item => item._id == this.course_id)
+    if (course) {
+
+      this.form.patchValue({
+
+        'name': course.name,
+        'date_start': course.date_start,
+        'date_end': course.date_end,
+        'teacher_id': course.teacher_id,
+        'description': course.description,
+      });
+    }
+    this.coursesService.schedule = (course?.schedules_ids || []).map((item, index, array) => ({
+      ...item,
+      disabled: index === array.length - 1 ? false : true
+    }));
+  }
+
   showSchedule(event: any) {
     console.log(typeof event.target.value);
     if (Number(event.target.value) > 5) {
@@ -74,63 +96,71 @@ export class CreateCourseComponent implements OnInit {
   }
 
 
-
   registerSchedule() {
 
-    if (this.form.valid) {
-      console.log("ENVIAR CURSO");
+    if (!this.form.valid) {
 
-      this.loading = true;
-      let duration = new DurationPipe().transform(this.form.value.fecha_inicial, this.form.value.fecha_fin)
-      console.log(' -- ', duration);
-      for (let index = 0; index < this.coursesService.schedule.length; index++) {
-
-        delete this.coursesService.schedule[index]['disabled']
-
-      }
-
-      let data = {
-        teacher_id: this.form.value.teacher_id,
-
-        name: this.form.value.name,
-        date_start: this.form.value.date_start,
-        date_end: this.form.value.date_end,
-        description: this.form.value.description,
-        schedules: this.coursesService.schedule
-      }
-      console.log("🚀 ~ DATA:", data)
-
-      console.log(' -- ', data);
-
-      this.httpUtis.postItem('/courses', data).subscribe({
-        next: (response: any) => {
-          this.loading = false;
-          if (response.valid) {
-            this.coursesService.courses.unshift(response.data)
-            this.form.reset()
-            this.coursesService.intensity = 0;
-            this.coursesService.intensityBefore = 0;
-
-            this.coursesService.schedule = [];
-            this.message = { text: 'Profesor registrado correctamente', status: true }
-          }else{
-            this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
-          }
-
-
-        },
-        error: (error: any) => {
-          this.loading = false;
-          console.log(error);
-          this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
-        }
-      })
-
-
-    } else {
       this.message = { text: 'Existen campos vacios.', status: false }
+      return;
     }
 
+    this.loading = true;
 
+    for (let index = 0; index < this.coursesService.schedule.length; index++) {
+
+      delete this.coursesService.schedule[index]['disabled']
+
+    }
+
+    let data = {
+      teacher_id: this.form.value.teacher_id,
+      name: this.form.value.name,
+      date_start: this.form.value.date_start,
+      date_end: this.form.value.date_end,
+      description: this.form.value.description,
+      schedules: this.coursesService.schedule
+    }
+
+    const endpoint = this.course_id ? `/courses/${this.course_id}` : '/courses';
+
+    this.httpUtils[this.course_id ? 'updateItem' : 'postItem'](endpoint, data).subscribe({
+      next: (response: any) => {
+        this.handleResponse(response);
+      },
+      error: (error) => {
+
+        this.loading = false;
+        console.log(error);
+
+        this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
+      }
+    })
+  }
+
+  handleResponse(response: any) {
+
+    if (response.valid) {
+
+      if (this.course_id) {
+
+        const courseIndex = this.coursesService.courses.findIndex(item => item._id === response.data._id);
+        
+        if (courseIndex > -1) {
+          this.coursesService.courses[courseIndex] = response.data;
+        }
+
+      } else {
+        this.coursesService.courses.unshift(response.data);
+      }
+
+      this.form.reset();
+      this.coursesService.intensity = 0;
+      this.coursesService.intensityBefore = 0;
+      this.coursesService.schedule = [];
+      
+      this.message = { text: this.course_id ? 'El curso ha sido actualizado correctamente' : 'El curso ha sido registrado correctamente', status: true };
+    } else {
+      this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false };
+    }
   }
 }

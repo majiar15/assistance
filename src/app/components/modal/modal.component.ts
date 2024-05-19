@@ -59,6 +59,11 @@ export class ModalComponent implements OnInit {
       description:`Toda la información del profesor será eliminada permanentemente. Esta acción no se puede deshacer. ¿Confirmar eliminación?`,
       btn:1
     },
+    {
+      title:'¿Está seguro que desea eliminar este curso?',
+      description:`Toda la información del curso será eliminada permanentemente. Esta acción no se puede deshacer. ¿Confirmar eliminación?`,
+      btn:1
+    },
     
   ]
 }

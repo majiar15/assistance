@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppService } from 'src/app/app.service';
+import { Course } from 'src/app/shared/interfaces/interfaces';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 })
 export class CoursesService {
 
-  courses:any[] = [];
+  courses:Course[] = [];
   schedule:any[]=[];
   intensity=0;
   intensityBefore=0

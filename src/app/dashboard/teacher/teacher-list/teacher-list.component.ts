@@ -16,8 +16,7 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './teacher-list.component.html',
   styleUrl: './teacher-list.component.css',
   imports: [CommonModule, RouterLink, TableComponent, FormsModule, ModalComponent,
-    ToastModule,ModalComponent
-  ],
+    ToastModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MessageService]
 })
