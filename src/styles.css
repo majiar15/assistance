@@ -10,6 +10,7 @@
 
 .background-application {
     background-color: #F5F6F8;
+    overflow: hidden;
 }
 
 * {
@@ -18,7 +19,25 @@
     font-family: 'Fira Sans',Arial, sans-serif;
     outline: none !important;
 }
-
+/* Aplica a todo el documento */
+::-webkit-scrollbar {
+    width: 10px;  /* Ancho de la barra de scroll vertical */
+    height: 8px; /* Altura de la barra de scroll horizontal */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;  /* Fondo del track de la scrollbar */
+    border-radius: 10px;  /* Bordes redondeados */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #9e9e9e;  /* Color del "pulgar" de la scrollbar */
+    border-radius: 10px;  /* Bordes redondeados */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;  /* Color del "pulgar" de la scrollbar cuando se pasa el ratón por encima */
+  }
 
 .card-global {
 
@@ -112,6 +131,8 @@ label {
 
 .main {
     height: 100vh;
+    /* overflow-y: hidden; */
+    /*overflow-y: auto;*/
     width: 80%;
     display: flex;
     padding-left: 60px;
