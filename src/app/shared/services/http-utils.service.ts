@@ -35,7 +35,7 @@ export class HttpUtilsService {
     }))
   }
 
-  getItem(path:any){
+  getItem(path:any):Observable<any>{
     return this.httpService.get(path).pipe(map((response:any)=>{
 
       if(response.status){
@@ -47,7 +47,7 @@ export class HttpUtilsService {
     }))
   }
 
-  deleteItem(path:any){
+  deleteItem(path:any):Observable<any>{
     return this.httpService.delete(path).pipe(map((response:any)=>{
 
       if(response.status){

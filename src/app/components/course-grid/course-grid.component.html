@@ -1,0 +1,20 @@
+<div class="wrap-card">
+    <div class="w-100" *ngIf="courses.length==0 && !loading" >
+        <div class="alert alert-danger">
+            <h3>Usted no tiene cursos disponibles.</h3>
+        </div>
+    </div>
+    <div *ngIf="loading" class="spinner-border" role="status"></div>  
+    <div *ngFor="let course of courses;let i =index">
+        <!-- <app-card  [title]="" [classStyle]=""></app-card> -->
+        <div (click)="showModal(course)" class="card" style="width: 19rem;">
+    
+            <div class="cardColor" [ngClass]="colors[i]"></div>
+            <div class="card-body">
+              <h5 class="card-title">{{course.name}}</h5>
+              
+            </div>
+          </div>
+    </div>
+    
+</div>

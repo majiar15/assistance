@@ -1,0 +1,53 @@
+<div class="content-filter card-global">
+    <div class="filter">
+        <label class="form-label">Ingrese el nombre del estudiante o documento de identidad*</label>
+        <input type="text" class="form-control" id="filter" placeholder="Ej. 0.000.000.000"
+            [(ngModel)]="searchText" (ngModelChange)="searchSubject.next($event)" (input)="onInput($event)">
+    </div>
+    <button class="button" (click)="enroll()" [disabled]="loading">
+        <div *ngIf="loading" class="spinner-border" role="status"></div>
+        <span *ngIf="!loading">Matricular</span>
+    </button>
+
+</div>
+
+
+<div  class="table-grid">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th *ngFor="let title of titles">{{ title }}</th>
+                <th>Seleccionar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of students">
+                <td *ngFor="let property of getObjectKeys(record)">
+                    {{ record[property] }}
+                </td>
+                <td (click)="addEnrolledStudent(record)">
+                    <i class="bi bi-plus-circle"></i>
+                    <!-- <input type="checkbox" [(ngModel)]="record.check" /> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th *ngFor="let title of titles">{{ title }}</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of enrolledStudents">
+                <td *ngFor="let property of getObjectKeys(record)">
+                    {{ record[property] }}
+                </td>
+                <td>
+                    <i (click)="removeEnrolledStudent(record)" class="bi bi-trash"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -11,44 +11,57 @@ import { CoursesListComponent } from "./courses/courses-list/courses-list.compon
 import { CreateCourseComponent } from "./courses/create-course/create-course.component";
 import { StudentsListComponent } from "./students/students-list/students-list.component";
 import { RegisterStudentComponent } from "./students/register-student/register-student.component";
+import { EnrollComponent } from "./enroll/enroll.component";
+import { SelectCourseComponent } from "./enroll/select-course/select-course.component";
+import { SelectStudentsComponent } from "./enroll/select-students/select-students.component";
 
 const routes: Routes = [
-  { 
+  {
     path: '',
     loadComponent: () => import('./dashboard.component'),
-    children:[
+    children: [
       { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
-      { 
-        path: 'students', component: StudentsComponent ,
-        children:[
+      {
+        path: 'students', component: StudentsComponent,
+        children: [
           { path: '', component: StudentsListComponent },
           { path: 'create', component: RegisterStudentComponent },
           { path: ':id', component: RegisterStudentComponent },
-        ] 
+        ]
 
       },
-      { path: 'courses', component: CoursesComponent,
-        children:[
-        { path: '', component: CoursesListComponent },
-        { path: 'create', component: CreateCourseComponent },
-        { path: ':id', component: CreateCourseComponent },
-      ] 
-       },
-      { path: 'teachers', component: TeacherComponent,
-      children:[
-        { path: '', component: TeacherListComponent },
-        { path: 'create', component: RegisterTeacherComponent },
-        { path: ':id', component: RegisterTeacherComponent },
-      ] 
-    },
+      {
+        path: 'courses', component: CoursesComponent,
+        children: [
+          { path: '', component: CoursesListComponent },
+          { path: 'create', component: CreateCourseComponent },
+          { path: ':id', component: CreateCourseComponent },
+        ]
+      },
+      {
+        path: 'teachers', component: TeacherComponent,
+        children: [
+          { path: '', component: TeacherListComponent },
+          { path: 'create', component: RegisterTeacherComponent },
+          { path: ':id', component: RegisterTeacherComponent },
+        ]
+      },
+      {
+        path: 'enroll', component: EnrollComponent,
+        children: [
+          { path: '', component: SelectCourseComponent },
+          { path: ':id', component: SelectStudentsComponent },
+          // { path: '**', redirectTo: 'select-course', pathMatch: 'full' },
+        ]
+      },
+      
       // { path: 'assistance', component: AssignCourseComponent },
       { path: '', redirectTo: '', pathMatch: 'full' }
-  ],
-  
-    canActivate:[ValidSessionGuard]
-  },
-    
-  ];
+    ],
 
-  export default routes;
-  
+    canActivate: [ValidSessionGuard]
+  },
+
+];
+
+export default routes;

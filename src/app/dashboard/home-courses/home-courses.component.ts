@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { AppService } from 'src/app/app.service';
-import { CardComponent } from 'src/app/components/card/card.component';
 
 @Component({
   selector: 'app-home-courses',
   standalone: true,
-  imports: [CardComponent, CommonModule],
+  imports: [ CommonModule],
   templateUrl: './home-courses.component.html',
   styleUrl: './home-courses.component.css',
 

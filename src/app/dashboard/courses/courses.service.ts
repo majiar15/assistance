@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { Course } from 'src/app/shared/interfaces/interfaces';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
@@ -7,6 +8,8 @@ import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
   providedIn: 'root'
 })
 export class CoursesService {
+
+  coursesSubject = new Subject<Course[]>();
 
   courses:Course[] = [];
   schedule:any[]=[];
@@ -22,9 +25,8 @@ export class CoursesService {
     this.httpUtis.getItem('/courses').subscribe((response) => {
       if(response.valid){
         this.courses=response.data;
+        this.coursesSubject.next(this.courses);
       }
-      console.log("🚀 ~ TeacherService :", response)
-
     })
   }
 

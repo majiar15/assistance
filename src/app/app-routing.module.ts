@@ -1,18 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { ModalComponent } from './components/modal/modal.component';
-import { AssistancePageComponent } from './dashboard/assistance-page/assistance-page.component';
-import { AssistanceViewPageComponent } from './dashboard/assistance-view-page/assistance-view-page.component';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { EnrollPageComponent } from './dashboard/enroll-page/enroll-page.component';
-import { AdminGuard } from './shared/guards/admin.guard';
-import { TeacherGuard } from './shared/guards/teacher.guard';
 import { ValidSessionGuard } from './shared/guards/valid-session.guard';
-import { HomeCoursesComponent } from './dashboard/home-courses/home-courses.component';
-import { StudentsComponent } from './dashboard/students/students.component';
-import { CoursesComponent } from './dashboard/courses/courses.component';
-import { TeacherComponent } from './dashboard/teacher/teacher.component';
+
 
 
 const routes: Routes = [

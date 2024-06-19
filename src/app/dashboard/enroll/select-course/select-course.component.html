@@ -1,0 +1,12 @@
+<div class="content-filter card-global">
+    <div class="filter">
+        <label class="form-label">Ingrese el nombre del curso*</label>
+        <input type="text" class="form-control" id="filter" placeholder="Ej. Catedra unilibrista"
+            [(ngModel)]="searchText" (ngModelChange)="searchSubject.next($event)" (input)="onInput($event)">
+    </div>
+    <button class="button" (click)="filterData()">Buscar</button>
+
+</div>
+
+<course-grid [courses]="courses" (courseEvent)="navigateToSelectStudents($event)"
+    ></course-grid>

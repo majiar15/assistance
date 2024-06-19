@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
-import { decodedAccessToken } from 'src/app/util/decodedToken';
-import { CardComponent } from "../components/card/card.component";
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
@@ -15,7 +13,7 @@ import { HttpUtilsService } from '../shared/services/http-utils.service';
     styleUrls: ['./dashboard.component.css'],
     imports: [
       SidebarComponent, 
-      CardComponent, 
+       
       CommonModule, 
       ModalComponent,
       RouterModule 

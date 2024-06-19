@@ -1,3 +1,13 @@
+.wrap-card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    overflow-y: scroll;
+}
+
+/* ===== CARD =====*/
+
 
 .cardColor{
     height: 150px;

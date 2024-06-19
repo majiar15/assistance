@@ -43,7 +43,7 @@ export class RegisterStudentComponent implements OnInit {
       "surnames": new FormControl('', [Validators.required]),
       "email": new FormControl('', [Validators.required, Validators.email]),
       "student_code": new FormControl('', [Validators.required, Validators.minLength(6)]),
-      "academic_program_id": new FormControl('', [Validators.required]),
+      "academic_program": new FormControl('', [Validators.required]),
       "phone": new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
     })
 
@@ -59,7 +59,7 @@ export class RegisterStudentComponent implements OnInit {
         'surnames': student.surnames,
         'email': student.email,
         'student_code': student.phone,
-        'academic_program_id': student.academic_program_id,
+        'academic_program': student.academic_program,
         'phone': student.phone
       });
     }
@@ -78,7 +78,7 @@ export class RegisterStudentComponent implements OnInit {
         name: this.form.value.name,
         surnames: this.form.value.surnames,
         student_code: this.form.value.student_code,
-        academic_program_id: this.form.value.academic_program_id,
+        academic_program: this.form.value.academic_program,
         password: `${this.form.value.dni}`,
         phone: this.form.value.phone
       }

@@ -9,7 +9,7 @@ export interface User {
 }
 
 export interface Student extends User {
-    academic_program_id: string
+    academic_program: any
 }
 
 export interface AcademicProgram {

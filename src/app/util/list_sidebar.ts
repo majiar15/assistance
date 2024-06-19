@@ -4,7 +4,7 @@ export const items_admin = [
     {
         title: 'Matriculas',
         class: 'bi bi-book',
-        link: 'enrollments'
+        link: 'enroll'
     },
     {
         title: 'Cursos',
