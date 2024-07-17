@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { ValidSessionGuard } from './shared/guards/valid-session.guard';
 
 
 
@@ -19,7 +18,6 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard-routing.module'),
   
-    canActivate:[ValidSessionGuard]
   },
   // { path: 'register',component: RegisterStudentsPageComponent,canActivate:[AuthGuard, TeacherGuard]},
   // { path: 'register-subject',component: RegisterSubjectPageComponent,canActivate:[AuthGuard, TeacherGuard]},

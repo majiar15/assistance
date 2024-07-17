@@ -8,6 +8,7 @@ import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { ModalType } from "src/app/shared/enum/modalType";
 
 @Component({
     selector: 'app-students-list',
@@ -26,7 +27,7 @@ export class StudentsListComponent {
   searchText: string = '';
 
   showModal:boolean = false;
-  modal_type:number = 0;
+  modal_type:number = ModalType.SELECT_OPTIONS;
   modal_buttons:Array<any> = [];
   data_delete:any;
 
@@ -98,7 +99,7 @@ export class StudentsListComponent {
 
   deleteConfirmProperty(data:any){
     this.data_delete=data;
-    this.modal_type=1;
+    this.modal_type=ModalType.DELETE_STUDENT;
     this.showModal=true;
     this.modal_buttons=[
       {
@@ -117,7 +118,7 @@ export class StudentsListComponent {
 
   cancel(){
     this.data_delete=null;
-    this.modal_type=0;
+    this.modal_type=ModalType.SELECT_OPTIONS;
     this.showModal=false;
     this.modal_buttons=[]
   }

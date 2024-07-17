@@ -133,7 +133,7 @@ label {
     height: 100vh;
     /* overflow-y: hidden; */
     /*overflow-y: auto;*/
-    width: 80%;
+    width: 100%;
     display: flex;
     padding-left: 60px;
     flex-direction: column;

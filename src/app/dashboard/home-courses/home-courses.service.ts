@@ -1,28 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AppService } from 'src/app/app.service';
 import { User } from 'src/app/shared/interfaces/interfaces';
 import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeacherService {
+export class HomeCoursesService {
 
-  public teachers:User[]=[];
+
 
   constructor(
     private httpUtis: HttpUtilsService
   ) { }
 
 
-  start(){
+  fetchCourses(){
 
-    this.httpUtis.getItem('/courses').subscribe((response) => {
-      if(response.valid){
-        this.teachers=response.data;
-      }
-    })
+    return this.httpUtis.getItem('/courses');
   }
 
 
