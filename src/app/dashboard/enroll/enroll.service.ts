@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { CoursesService } from '../courses/courses.service';
-import { Course } from 'src/app/shared/interfaces/interfaces';
+import { Course, Student,Response } from 'src/app/shared/interfaces/interfaces';
 import { StudentsService } from '../students/students.service';
 
 @Injectable({
@@ -11,6 +10,8 @@ import { StudentsService } from '../students/students.service';
 })
 export class EnrollService {
 
+  enrolledStudents?: Response<Student>;
+  unenrolledStudents?: Response<Student>;
   courses: Course[] = [];
 
   constructor(
@@ -29,40 +30,30 @@ export class EnrollService {
   }
 
   searchCourse(name:string):Observable<any>{
-    return this.httpService.get(`/courses/search?name=${name}`).pipe(map((response:any)=>{
-
-      if(response.status){
-
-        return {valid:true,data:response.data,message:''}
-      }else{
-        return {valid:false,data:null,message:''}
-      }
-    }))
+    return this.httpService.getItem(`/courses/search?name=${name}`)
   }
 
   searchStudents(name:string):Observable<any>{
     
-    return this.httpService.get(`/students/search?name=${name}`).pipe(map((response:any)=>{
-
-      if(response.status){
-
-        return {valid:true,data:response.data,message:''}
-      }else{
-        return {valid:false,data:null,message:''}
-      }
-    }))
+    return this.httpService.getItem(`/students/search?name=${name}`)
   }
 
   enrollStudents(data:any):Observable<any>{
     
-    return this.httpService.post('/enroll',data).pipe(map((response:any)=>{
+    return this.httpService.postItem('/enroll',data)
+  }
 
-      if(response.status){
+  getStudentsEnrolled(course_id:string):Observable<Response<Student>>{
+    
+    return this.httpService.getItem(`/students/enrolled?course_id=${course_id}`)
+  }
+  getUnenrolledStudents(course_id:string):Observable<Response<Student>>{
+    
+    return this.httpService.getItem(`/students/not-enrolled?course_id=${course_id}`)
+  }
 
-        return {valid:true,data:response.data,message:''}
-      }else{
-        return {valid:false,data:null,message:''}
-      }
-    }))
+  default(){
+    this.enrolledStudents = undefined;
+    this.unenrolledStudents = undefined;
   }
 }

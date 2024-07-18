@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { AppService } from 'src/app/app.service';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 @Component({
   standalone:true,
@@ -22,8 +22,8 @@ export class StudentTableComponent implements OnInit {
 
   constructor(
     public appService:AppService,
-    private httpUtis: HttpUtilsService,
-    private route:ActivatedRoute 
+    private httpService: HttpService,
+    private route:ActivatedRoute,
   ) {
     let fecha=Date.now();
     this.fecha_actual=moment(fecha).format('YYYY-MM-DD');
@@ -34,13 +34,13 @@ export class StudentTableComponent implements OnInit {
     this.course_id=this.route.snapshot.paramMap.get('id');
     console.log("fecha actual ",this.fecha_actual);
 
-    this.httpUtis.getItem(`/api/estudiante/asistencia/${this.course_id}`).subscribe(
+    this.httpService.getItem(`/api/estudiante/asistencia/${this.course_id}`).subscribe(
       (response:any)=>{
 
         if(response.valid){
           this.appService.student_assitance=response.data;
 
-          this.httpUtis.getItem(`/api/assistance/${this.fecha_actual}/${this.course_id}`).subscribe(
+          this.httpService.getItem(`/api/assistance/${this.fecha_actual}/${this.course_id}`).subscribe(
             (response:any)=>{
               if(response.valid){
                 response.data.forEach((element:any) => {
@@ -72,7 +72,7 @@ export class StudentTableComponent implements OnInit {
       course_id:this.course_id
     }
 
-    this.httpUtis.postItem('/api/assistance',data).subscribe(
+    this.httpService.postItem('/api/assistance',data).subscribe(
       (response:any)=>{
         if(response.valid){
           this.appService.student_assitance.map((item:any)=>{

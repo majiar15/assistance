@@ -5,9 +5,9 @@ import { CourseGridComponent } from 'src/app/components/course-grid/course-grid.
 import { StudentsService } from '../../students/students.service';
 import { EnrollService } from '../enroll.service';
 import { CoursesService } from '../../courses/courses.service';
-import { Student } from 'src/app/shared/interfaces/interfaces';
+import { Student, Response } from 'src/app/shared/interfaces/interfaces';
 import { ActivatedRoute } from '@angular/router';
-import { debounceTime, Subject } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'select-students',
@@ -19,14 +19,15 @@ import { debounceTime, Subject } from 'rxjs';
 })
 export class SelectStudentsComponent {
 
-
   titles = ["Documento de identidad", "Nombre", "Facultad", "Programa"];
-  students: any[]=[]
-  enrolledStudents: any[]=[];
+  students: any[] = []
+  enrolledStudents: any[] = [];
   course_id: string = '';
+  searchText: string = '';
+  loading: boolean = false;
   searchSubject: Subject<any> = new Subject();
-  public searchText: string = '';
-  loading:boolean = false;
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private coursesService: CoursesService,
     private enrollService: EnrollService,
@@ -36,41 +37,85 @@ export class SelectStudentsComponent {
 
 
   ngOnInit(): void {
-    console.log("🚀 ~ EnrollComponent ~ ngOnInit ~ ngOnInit:",this.route.snapshot.paramMap.get('id'))
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.course_id = this.route.snapshot.paramMap.get('id') || '';
 
-    }
+    this.course_id = this.route.snapshot.paramMap.get('id') || '';
 
-    if (this.studentsService.students.length) {
-       
-       this.students = this.formatData(this.studentsService.students)
-    } else {
-      this.studentsService.studentsSubject.subscribe((student) => {
-        this.students = this.filterEnrolledStudent(student)
-      })
-    }
 
     this.searchSubject.pipe(debounceTime(300)).subscribe((response) => {
-
       this.filterData();
     })
+
+    this.start();
   }
 
-  formatData(students: Student[]): any[] {
-    console.log("🚀 ~ EnrollComponent ~ formatData ~ students:", students)
-    return students.map((student) => {
-      return {
-        dni: student.dni,
-        name: student.name + ' ' + student.surnames || '',
-        faculty: student.academic_program.faculty,
-        program: student.academic_program.name,
-        _id: student._id,
-      };
+  ngOnDestroy(): void {
+    console.log("ON DESTROY");
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.enrollService.default();
+  }
+
+  private start(): void {
+    const loadPromises = [
+      this.loadEnrolledStudents(),
+      this.loadUnenrolledStudents()
+    ];
+
+    Promise.all(loadPromises).then(responses => {
+      console.log("🚀 All promises resolved with:", responses);
     });
   }
 
-  
+  private loadEnrolledStudents(): Promise<boolean> {
+    return new Promise(resolve => {
+      this.subscriptions.push(
+        this.enrollService.getStudentsEnrolled(this.course_id).subscribe({
+          next: (response: Response<Student>) => {
+            if (response.valid) {
+              this.enrollService.enrolledStudents = response;
+              this.enrolledStudents = this.formatData(response.data);
+            }
+            resolve(true);
+          },
+          error: (error) => {
+            console.error('Error fetching enrolled students:', error);
+            resolve(false);
+          }
+        })
+      );
+    });
+  }
+
+  private loadUnenrolledStudents(): Promise<boolean> {
+    return new Promise(resolve => {
+      this.subscriptions.push(
+        this.enrollService.getUnenrolledStudents(this.course_id).subscribe({
+          next: (response: Response<Student>) => {
+            if (response.valid) {
+              this.enrollService.unenrolledStudents = response;
+              this.students = this.formatData(response.data);
+            }
+            resolve(true);
+          },
+          error: (error) => {
+            console.error('Error fetching unenrolled students:', error);
+            resolve(false);
+          }
+        })
+      );
+    });
+  }
+
+  formatData(students: Student[]): any[] {
+    return students.map((student) => ({
+      dni: student.dni,
+      name: student.name + ' ' + student.surnames || '',
+      faculty: student.academic_program.faculty,
+      program: student.academic_program.name,
+      _id: student._id,
+    }));
+  }
+
+
 
   getObjectKeys(obj: any): string[] {
     const newObject = { ...obj }; // se utiliza desestructuracion para romper el enlace con el objeto origial
@@ -86,66 +131,71 @@ export class SelectStudentsComponent {
     }
   }
 
-  filterData() {
+  filterData(): void {
     if (!this.searchText) {
       return;
     }
 
-    this.enrollService.searchStudents(this.searchText).subscribe({
-      next: (response: any) => {
-        if (response.valid && response.data.length) {
-          this.students = this.filterEnrolledStudent(response.data)
-          
+    this.subscriptions.push(
+      this.enrollService.searchStudents(this.searchText).subscribe({
+        next: (response: any) => {
+          if (response.valid && response.data.length) {
+            this.students = this.filterEnrolledStudent(response.data)
+          }
+        },
+        error: (error) => {
+          console.error("🚀 ~ SEARCH COURSE ERROR:", error)
+          this.students = []
         }
-      },
-      error: (error) => {
-        console.error("🚀 ~ SEARCH COURSE ERROR:", error)
-        this.students = []
-      }
-
-    })
-
+      })
+    );
   }
 
-  addEnrolledStudent(student:any){
-    console.log("🚀 ~ ADD STUDENT:", student)
-    
+  addEnrolledStudent(student: any): void {
+
     this.enrolledStudents.push(student);
-    this.students = this.students.filter(item=>item._id != student._id)
+    this.students = this.students.filter(item => item._id != student._id)
   }
 
-  removeEnrolledStudent(student:any){
- 
-  this.enrolledStudents = this.enrolledStudents.filter(item=>item._id != student._id)
-  this.students.push(student);
+  removeEnrolledStudent(student: any): void {
+
+    this.enrolledStudents = this.enrolledStudents.filter(item => item._id != student._id)
+    this.students.push(student);
 
   }
 
-  filterEnrolledStudent(students:Student[]) {
+  filterEnrolledStudent(students: Student[]): any[] {
 
     const ids = this.enrolledStudents.map(item => item._id);
     const filter = students.filter(obj => !ids.includes(obj._id));
     return this.formatData(filter)
   }
-  
-  enroll(){
+
+  enroll(): void {
+
     this.loading = true;
-    if(!this.enrolledStudents.length){
+    if (!this.enrolledStudents.length) {
       return;
     }
 
     const ids = this.enrolledStudents.map(item => item._id);
-    console.log("🚀 ~ SelectStudentsComponent ~ enroll ~ ids:", ids)
-    const data ={
-      course_id:this.course_id,
-      students:ids
+    const data = {
+      course_id: this.course_id,
+      students: ids
     }
-    this.enrollService.enrollStudents(data).subscribe((response:any) => {
-      console.log("🚀 ~ SelectStudentsComponent ~ this.enrollService.enrollStudents ~ response:", response)
-      
-    })
 
-
+    this.subscriptions.push(
+      this.enrollService.enrollStudents(data).subscribe({
+        next:(response: any) => {
+        console.log("🚀 ~ SelectStudentsComponent ~ this.enrollService.enrollStudents ~ response:", response)
+        this.loading = false;
+      },
+      error:(err)=>{
+        console.error("ERROR enrollStudents: ",err);
+        
+      }
+    }),
+    )
   }
 
 }

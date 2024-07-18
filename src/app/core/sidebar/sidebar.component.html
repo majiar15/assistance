@@ -11,19 +11,23 @@
 
         <nav>
             <ul>
-                <div class="item" *ngFor="let item of items" [routerLink]="[item.link]"
-                    routerLinkActive="item-active">
+                <li class="sidebar-item" *ngFor="let item of items" [routerLink]="[item.link]"
+                    routerLinkActive="active">
                     <i [ngClass]="item.class"></i>
-                    <p>{{item.title}}</p>
-                </div>
+                    <span>{{item.title}}</span>
+                    <i class="bi bi-chevron-right"></i>
+                </li>
             </ul>
         </nav>
     </div>
 
 
     <div class="logout" routerLink="/login" (click)="logout()">
-        <i class="bi bi-box-arrow-right"></i>
-        <p>Cerrar sesion</p>
+        <div class="sidebar-item">
+            <i class="bi bi-box-arrow-right"></i>
+        <span>Cerrar sesion</span>
+        </div>
+        
 
     </div>
 </div>

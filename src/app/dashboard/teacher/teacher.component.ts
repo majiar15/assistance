@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TeacherService } from './teacher.service';
-import { RegisterTeacherComponent } from "./register-teacher/register-teacher.component";
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,13 +7,11 @@ import { RouterModule } from '@angular/router';
     selector: 'app-teacher',
     templateUrl: './teacher.component.html',
     styleUrls: ['./teacher.component.css'],
-    imports: [CommonModule, RegisterTeacherComponent,RouterModule]
+    imports: [CommonModule,RouterModule]
 })
 export class TeacherComponent implements OnInit {
 
-  constructor(
-    public teacherService:TeacherService,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {}
 

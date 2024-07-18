@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AppService } from 'src/app/app.service';
 import { Course } from 'src/app/shared/interfaces/interfaces';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +15,12 @@ export class CoursesService {
   intensity=0;
   intensityBefore=0
   constructor(
-    
-    private httpUtis: HttpUtilsService
+    private httpService: HttpService
   ) { }
 
   start(){
 
-    this.httpUtis.getItem('/courses').subscribe((response) => {
+    this.httpService.getItem('/courses').subscribe((response) => {
       if(response.valid){
         this.courses=response.data;
         this.coursesSubject.next(this.courses);
@@ -32,6 +30,6 @@ export class CoursesService {
 
 
   asignarCourse(data:any){
-    return this.httpUtis.postItem('/courses',data)
+    return this.httpService.postItem('/courses',data)
   }
 }

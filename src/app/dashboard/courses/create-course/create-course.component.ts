@@ -4,10 +4,10 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { DurationPipe } from 'src/app/shared/pipe/home.pipe';
 import { CommonModule } from '@angular/common';
 import { CoursesService } from 'src/app/dashboard/courses/courses.service';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { TeacherService } from 'src/app/dashboard/teacher/teacher.service';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { ActivatedRoute } from '@angular/router';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class CreateCourseComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpUtils: HttpUtilsService,
+    private httpService: HttpService,
     public coursesService: CoursesService,
     public teacherService: TeacherService,
     private route: ActivatedRoute,
@@ -123,7 +123,7 @@ export class CreateCourseComponent implements OnInit {
 
     const endpoint = this.course_id ? `/courses/${this.course_id}` : '/courses';
 
-    this.httpUtils[this.course_id ? 'updateItem' : 'postItem'](endpoint, data).subscribe({
+    this.httpService[this.course_id ? 'updateItem' : 'postItem'](endpoint, data).subscribe({
       next: (response: any) => {
         this.handleResponse(response);
       },
@@ -152,12 +152,12 @@ export class CreateCourseComponent implements OnInit {
       } else {
         this.coursesService.courses.unshift(response.data);
       }
-
+      
       this.form.reset();
       this.coursesService.intensity = 0;
       this.coursesService.intensityBefore = 0;
       this.coursesService.schedule = [];
-      
+      this.loading = false;
       this.message = { text: this.course_id ? 'El curso ha sido actualizado correctamente' : 'El curso ha sido registrado correctamente', status: true };
     } else {
       this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false };

@@ -1,4 +1,4 @@
-.sidebar{
+.sidebar {
     background-color: white;
     height: 100vh;
     width: 250px;
@@ -6,55 +6,111 @@
     flex-direction: column;
     justify-content: space-between;
     position: sticky;
+    transition: transform 0.3s ease;
 }
-.sidebar header{
+
+.sidebar header {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 45px;   
+    padding-top: 45px;
 }
-.logo > img{
+
+.sidebar .logo img {
     width: 80px;
     padding-bottom: 20px;
     cursor: pointer;
 }
 
-nav ul{
- padding-top: 60px;
+.sidebar .title {
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
-.logout{
- display: flex;
- justify-content: space-evenly;
- width: 170px;
- cursor: pointer;
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.item-active {
-    color: #EA0029;
+
+/* .sidebar nav ul li {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #9197B3;
+} */
+
+.sidebar-item {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    color: #707683;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    position: relative;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
-.sidebar-responsive{
+
+.sidebar-item i:first-child {
+    margin-right: 15px;
+}
+
+.sidebar-item i:last-child {
+    margin-left: auto;
+}
+
+.sidebar-item:hover {
+    background-color: #f1f1f1;
+    color: #000000;
+}
+
+.sidebar-item.active {
+    background-color: #EA0029;
+    color: #ffffff;
+}
+
+.sidebar-item.active i {
+    color: #ffffff;
+}
+
+
+.sidebar .logout {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+
+.sidebar .logout:hover {
+    background-color: #f1f1f1;
+    color: #000000;
+}
+
+.sidebar-responsive {
     display: none;
 }
-.sidebar-responsive > i{
+
+.sidebar-responsive>i {
     font-size: 30px;
 }
-.item{
-    display: flex;
-    justify-content: space-evenly;
-    width: 120px;
-    cursor: pointer;
-}
-.item-active {
-    color: #EA0029;
-}
 
-@media  screen and (max-width: 720px) {
-    .sidebar{
+
+@media screen and (max-width: 720px) {
+    .sidebar {
         position: absolute;
         z-index: 100;
         transition: all 600ms;
     }
-    .sidebar-responsive{
+
+    .sidebar-responsive {
         display: flex;
         background-color: white;
         height: 70px;
@@ -64,23 +120,27 @@ nav ul{
         padding-right: 30px;
         padding-left: 20px;
     }
-    .logo > img{
+
+    .logo>img {
         width: 50px;
-        
+
         cursor: pointer;
         padding: 0px;
     }
-    header{
+
+    header {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         gap: 10px;
     }
-    .hidden-sidebar{
+
+    .hidden-sidebar {
         transform: translate(-250px);
     }
-    .show-sidebar{
-        transform: translate( 0px);
+
+    .show-sidebar {
+        transform: translate(0px);
     }
 }

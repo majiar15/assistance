@@ -4,10 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TableComponent } from "../../../components/table/table.component";
 import { FormsModule } from '@angular/forms';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 @Component({
     selector: 'app-students-list',
@@ -32,7 +31,7 @@ export class StudentsListComponent {
 
   constructor(
     public studentsService:StudentsService,
-    private httpUtis: HttpUtilsService,
+    private httpService: HttpService,
     private messageService: MessageService
 
   ){
@@ -70,7 +69,7 @@ export class StudentsListComponent {
 
   deleteStudent(data: any) {
 
-    this.httpUtis.deleteItem(`/students/${data._id}`).subscribe((response: any) => {  
+    this.httpService.deleteItem(`/students/${data._id}`).subscribe((response: any) => {  
 
       if (response.valid && response.data.deletedCount > 0) {
 

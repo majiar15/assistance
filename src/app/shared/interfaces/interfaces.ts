@@ -40,3 +40,18 @@ export interface Schedule {
 
 
 }
+
+export interface Response<T>{
+    valid: boolean;
+    data:T[];
+    metadata?:Metadata;
+}
+
+export interface Metadata{
+    page: number; 
+    limit: number; 
+    itemCount: number; 
+    pageCount: number; 
+    hasPreviousPage: boolean; 
+    hasNextPage: boolean; 
+}

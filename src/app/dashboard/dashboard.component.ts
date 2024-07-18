@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
-import { HttpUtilsService } from '../shared/services/http-utils.service';
 
 @Component({
     standalone: true,
@@ -28,8 +27,6 @@ export default class DashboardComponent implements OnInit {
  
   constructor(
     public appService: AppService,
-    private httpUtis: HttpUtilsService,
-  
   ) { }
 
   ngOnInit(): void {

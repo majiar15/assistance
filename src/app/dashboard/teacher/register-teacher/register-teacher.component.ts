@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AppService } from 'src/app/app.service';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TeacherService } from '../teacher.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,7 +23,6 @@ export class RegisterTeacherComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpUtis: HttpUtilsService,
     public teacherService: TeacherService,
     private route: ActivatedRoute,
     public router: Router,
@@ -88,7 +85,7 @@ export class RegisterTeacherComponent implements OnInit {
       if (this.teacher_id != '') {
         delete data.password;
 
-        this.httpUtis.updateItem(`/teachers/${this.teacher_id}`, data).subscribe({
+        this.teacherService.updateTeacher(this.teacher_id, data).subscribe({
           next: (response: any) => {
 
             this.loading = false;
@@ -120,7 +117,7 @@ export class RegisterTeacherComponent implements OnInit {
 
       }
 
-      this.httpUtis.postItem('/teachers', data).subscribe({
+      this.teacherService.createTeacher(data).subscribe({
         next: (response: any) => {
 
           this.loading = false;

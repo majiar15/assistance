@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { StudentTableComponent } from "../../components/student-table/student-table.component";
 import { SidebarComponent } from 'src/app/core/sidebar/sidebar.component';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 @Component({
     standalone: true,
     selector: 'app-assistance-view-page',
     templateUrl: './assistance-view-page.component.html',
     styleUrls: ['./assistance-view-page.component.css'],
-    imports: [SidebarComponent, StudentTableComponent]
+    imports: [SidebarComponent]
 })
 export class AssistanceViewPageComponent implements OnInit {
 
@@ -20,7 +19,7 @@ export class AssistanceViewPageComponent implements OnInit {
   constructor(
     public appService:AppService,
     private route:ActivatedRoute,
-    private httpUtis: HttpUtilsService,
+    private httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +32,7 @@ export class AssistanceViewPageComponent implements OnInit {
     let fecha=event.target.value
     console.log("Datos de la fecha: ",);
 
-    this.httpUtis.getItem(`/api/assistance/${fecha}/${this.course_id}`).subscribe(
+    this.httpService.getItem(`/api/assistance/${fecha}/${this.course_id}`).subscribe(
       (response:any)=>{
         if(response.valid){
           this.appService.student_assitance=response.data

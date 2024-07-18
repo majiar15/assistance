@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from 'src/app/app.service';
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { StudentsService } from '../students.service';
 import { ActivatedRoute } from '@angular/router';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 @Component({
   standalone: true,
@@ -24,7 +24,7 @@ export class RegisterStudentComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpUtis: HttpUtilsService,
+    private httpService: HttpService,
     private studentsService: StudentsService,
     public appService: AppService,
     private route: ActivatedRoute
@@ -86,7 +86,7 @@ export class RegisterStudentComponent implements OnInit {
       if (this.student_id != '') {
         delete data.password;
 
-        this.httpUtis.updateItem(`/students/${this.student_id}`, data).subscribe({
+        this.httpService.updateItem(`/students/${this.student_id}`, data).subscribe({
           next: (response: any) => {
 
             this.loading = false;
@@ -115,7 +115,7 @@ export class RegisterStudentComponent implements OnInit {
         return;
       }
 
-      this.httpUtis.postItem('/students', data).subscribe({
+      this.httpService.postItem('/students', data).subscribe({
         next: (response: any) => {
           if (response.valid) {
             this.message = { text: 'Estudiante registrado correctamente', status: true }

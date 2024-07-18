@@ -5,11 +5,12 @@
 .table-grid{
     display: flex;
     justify-content: space-between;
+    width: 90%;
 }
 
 .table-grid table {
     border-collapse: collapse;
-    width: 45%; /* Ajusta el ancho de las tablas */
+    /* width: 45%; Ajusta el ancho de las tablas */
     margin: 10px;
   }
 

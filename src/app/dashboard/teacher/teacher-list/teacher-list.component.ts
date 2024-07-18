@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from "../../../components/modal/modal.component";
-import { HttpUtilsService } from 'src/app/shared/services/http-utils.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
@@ -33,7 +32,6 @@ export class TeacherListComponent {
 
   constructor(
     public teacherService: TeacherService,
-    private httpUtis: HttpUtilsService,
     private messageService: MessageService
   ) {
     // formatear objeto para darle la estructura
@@ -71,7 +69,7 @@ export class TeacherListComponent {
 
   deleteTeacher(data: any) {
 
-    this.httpUtis.deleteItem(`/teachers/${data._id}`).subscribe((response: any) => {  
+    this.teacherService.deleteTeacher(data._id).subscribe((response: any) => {  
 
       if (response.valid && response.data.deletedCount > 0) {
 

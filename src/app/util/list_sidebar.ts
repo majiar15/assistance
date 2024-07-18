@@ -3,22 +3,22 @@ export const items_admin = [
     
     {
         title: 'Matriculas',
-        class: 'bi bi-book',
+        class: 'bi bi-card-checklist',
         link: 'enroll'
     },
     {
         title: 'Cursos',
-        class: 'bi bi-book',
+        class: 'bi bi-journal-bookmark',
         link: 'courses'
     },
     {
         title: 'Estudiantes',
-        class: 'bi bi-person',
+        class: 'bi bi-people',
         link: 'students'
     },
     {
         title: 'Profesores',
-        class: 'bi bi-book',
+        class: 'bi bi-person-badge-fill',
         link: 'teachers'
     }
 ];

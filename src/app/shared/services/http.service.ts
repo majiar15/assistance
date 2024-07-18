@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class HttpService {
     public http: HttpClient,
   ) { }
 
-  getHeaders(): any {
+  private getHeaders(): any {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + HttpService.idtoken
@@ -24,7 +25,7 @@ export class HttpService {
     return ({ headers });
   }
 
-  getHeadersGET(): any {
+  private getHeadersGET(): any {
     let headers = new HttpHeaders({
       'Authorization': 'Bearer ' + HttpService.idtoken
     })
@@ -54,15 +55,48 @@ export class HttpService {
   }
 
 
+  public postItem(path:any,data:any):Observable<any>{
+    
+    return this.post(`${path}`,data).pipe(
+      map(response => this.resValid(response)),
+      catchError(this.handleError)
+    );
+  }
+
+  public updateItem(path:any,data:any):Observable<any>{
+    return this.put(`${path}`,data).pipe(
+      map(response => this.resValid(response)),
+      catchError(this.handleError)
+    );
+  }
+
+  public getItem(path:any):Observable<any>{
+    return this.get(path).pipe(
+      map(response => this.resValid(response)),
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteItem(path:any):Observable<any>{
+    return this.delete(path).pipe(
+      map(response => this.resValid(response)),
+      catchError(this.handleError)
+    );
+  }
+
+
   public resValid(resData: any): any {
+    
     if (this.isJsonString(JSON.stringify(resData))) {
       if (resData == null || resData == undefined) {
-        return { is: false, msg: 'Respond with null or undefined' };
-      } else if (resData.hasOwnProperty('statusCode')) {
-        if (resData.statusCode) {
-          if (resData.hasOwnProperty('data')) {
-            return { valid: true, print: resData };
-          } else {
+        return { valid: false, msg: 'Respond with null or undefined' };
+      } else if (resData.hasOwnProperty('status')) {
+        if (resData.status) {
+          if (resData.hasOwnProperty('data') && resData.hasOwnProperty('metadata')) {
+            return { valid: true, data: resData.data, metadata:resData.metadata };
+          } else if(resData.hasOwnProperty('data')){
+            return { valid: true, data: resData.data, };
+          }else {
             return { valid: false, msg: 'Response does not contain the [data] property' };
           }
         } else {
@@ -84,5 +118,10 @@ export class HttpService {
       return false;
     }
     return true;
+  }
+
+
+  public handleError(error: any): Observable<never> {
+    return throwError(() => new Error(error.message || 'Server Error'));
   }
 }
