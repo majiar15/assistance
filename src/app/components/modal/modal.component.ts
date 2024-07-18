@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-
+import { ModalType } from "src/app/shared/enum/modalType";
 
 @Component({
   standalone:true,
@@ -13,8 +13,8 @@ import { AppService } from 'src/app/app.service';
   
 })
 export class ModalComponent implements OnInit {
-
-  @Input() modal_type:number = 0;
+  
+  @Input() modal_type:ModalType = ModalType.SELECT_OPTIONS;
   @Input() course_ID: string = '';
   @Input() buttons:Array<any> =[];
   @Output() button1Event = new EventEmitter<any>();
@@ -62,6 +62,11 @@ export class ModalComponent implements OnInit {
     {
       title:'¿Está seguro que desea eliminar este curso?',
       description:`Toda la información del curso será eliminada permanentemente. Esta acción no se puede deshacer. ¿Confirmar eliminación?`,
+      btn:1
+    },
+    {
+      title:'¿Está seguro que desea eliminar a este Estudiante?',
+      description:`Toda la información del estudiante será eliminada permanentemente. Esta acción no se puede deshacer. ¿Confirmar eliminación?`,
       btn:1
     },
     

@@ -36,7 +36,7 @@ export default class DashboardComponent implements OnInit {
     // if (this.appService.course_teacher.length == 0) {
     //   console.log("ENTRO EN EL IF PRIMERO");
     //   this.loading=true;
-    //   this.httpUtis.getItem(`/api/courses/byTeacher/ndkjadknakddasdsa`).subscribe(
+    //   this.httpService.getItem(`/api/courses/byTeacher/ndkjadknakddasdsa`).subscribe(
     //     (response: any) => {
     //       if (response.valid) {
     //         console.log("ENTRO EN EL IF");

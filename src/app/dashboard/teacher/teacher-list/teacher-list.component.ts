@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalComponent } from "../../../components/modal/modal.component";
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-
+import { ModalType } from "src/app/shared/enum/modalType";
 
 @Component({
   selector: 'app-teacher-list',
@@ -26,7 +26,7 @@ export class TeacherListComponent {
   searchText: string = '';
 
   showModal:boolean = false;
-  modal_type:number = 0;
+  modal_type:number = ModalType.SELECT_OPTIONS;
   modal_buttons:Array<any> = [];
   data_delete:any;
 
@@ -96,7 +96,7 @@ export class TeacherListComponent {
 
   deleteConfirmProperty(data:any){
     this.data_delete=data;
-    this.modal_type=1;
+    this.modal_type=ModalType.DELETE_TEACHER;
     this.showModal=true;
     this.modal_buttons=[
       {
@@ -115,7 +115,7 @@ export class TeacherListComponent {
 
   cancel(){
     this.data_delete=null;
-    this.modal_type=0;
+    this.modal_type=ModalType.SELECT_OPTIONS;
     this.showModal=false;
     this.modal_buttons=[]
   }
