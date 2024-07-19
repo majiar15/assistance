@@ -2,8 +2,8 @@
 
 
 
-<div class="content-table-teachers">
-    <div class="content-filter card-global">
+<div class="content-table">
+    <div class="content-filter card-filter">
         <div class="filter ">
             <label class="form-label">Ingrese el nombre*</label>
             <input type="text" class="form-control" id="filter" (input)="filterData()" [(ngModel)]="searchText">
@@ -11,7 +11,9 @@
         <button class="button" [routerLink]="['create']">Registrar profesor</button>
 
     </div>
-    <app-table [data]="data" [titles]="titles" (deleteItem)="deleteConfirmProperty($event)"></app-table>
+    
+    <app-table [data]="data" [metadata]="teacherService.teachers.metadata" [titles]="titles" 
+        (deleteItem)="deleteConfirmProperty($event)" (paginationItem)="getMoreTeacher($event)"></app-table>
 
 </div>
 

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TeacherService } from './teacher.service';
 
 @Component({
     standalone: true,
@@ -11,7 +12,9 @@ import { RouterModule } from '@angular/router';
 })
 export class TeacherComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private teacherService:TeacherService
+  ) { }
 
   ngOnInit(): void {}
 

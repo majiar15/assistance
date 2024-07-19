@@ -35,7 +35,7 @@ export class AppService {
     //CARGAR LOS ESTUDIANTES
     this.studentsService.start();
     //CARGAR LOS PRFESORES
-    this.teacherService.start();
+    
 
     this.getAcademicProgram()
 

@@ -29,7 +29,6 @@ export class RegisterTeacherComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
    
     if (this.route.snapshot.paramMap.get('id')) {
       this.teacher_id = this.route.snapshot.paramMap.get('id') || '';
@@ -51,7 +50,7 @@ export class RegisterTeacherComponent implements OnInit {
   }
 
   loadTeacherData() {
-    const teacher = this.teacherService.teachers.find(item => item._id == this.teacher_id)
+    const teacher = this.teacherService.teachers.data.find(item => item._id == this.teacher_id)
     if (teacher) {
 
       this.form.patchValue({
@@ -65,16 +64,9 @@ export class RegisterTeacherComponent implements OnInit {
     }
   }
 
-  getControlError(controlName: string, errorName: string): boolean {
-    const control = this.form.get(controlName);
-    if (!control) {
-      return false;
-    }
-    return control.hasError(errorName) && control.touched;
-  }
 
   registerTeacher() {
-    console.log("🚀 ~ this.form:", this.form)
+
     if (this.form.valid) {
 
       this.loading = true;
@@ -91,9 +83,9 @@ export class RegisterTeacherComponent implements OnInit {
             this.loading = false;
 
             if (response.valid) {
-              const teacher_index = this.teacherService.teachers.findIndex((item) => item._id == response.data._id)
+              const teacher_index = this.teacherService.teachers.data.findIndex((item) => item._id == response.data._id)
               if (teacher_index > -1) {
-                this.teacherService.teachers[teacher_index] = response.data;
+                this.teacherService.teachers.data[teacher_index] = response.data;
               }
 
               this.message = { text: 'Profesor ha sido actualizado correctamente', status: true }
@@ -104,15 +96,13 @@ export class RegisterTeacherComponent implements OnInit {
           error: (error) => {
 
             this.loading = false;
-            console.log(error);
+            console.log("Error al actualizar profesor",error);
 
             this.message = { text: 'Ha ocurrido un error al actualizar, por favor intente nuevamente.', status: false }
           }
         });
         this.form.reset()
-        setTimeout(() => {
-          
-        }, 5000)
+        
         return;
 
       }
@@ -125,7 +115,7 @@ export class RegisterTeacherComponent implements OnInit {
           if (response.valid) {
 
             this.message = { text: 'Profesor registrado correctamente', status: true }
-            this.teacherService.teachers.unshift(response.data)
+            this.teacherService.teachers.data.unshift(response.data)
             this.form.reset()
 
           } else {
@@ -136,18 +126,25 @@ export class RegisterTeacherComponent implements OnInit {
         error: (error) => {
 
           this.loading = false;
-          console.log(error);
+          console.log("Error al crear profesor",error);
 
           this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
         }
       })
 
     } else {
+      this.form.markAllAsTouched();
       this.message = { text: 'Existes campos vacios', status: false }
     }
     // setTimeout(()=>{
     //   this.message =null;
     // },5000)
   }
+
+  isControlInvalid(controlName: string) {
+    const control = this.form.get(controlName);
+    return control?.invalid && (control.touched || control.dirty);
+  }
+
 
 }

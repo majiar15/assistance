@@ -1,103 +1,80 @@
-<div class="card-global">
+<div class="card-register">
+
     <h4>Información del profesor</h4>
     <hr>
+
     <form [formGroup]="form" class="p-4" (submit)="registerTeacher()">
+
         <div class="input-group mb-3 info-space-between">
             <div class="date-expanded">
                 <label for="CC" class="form-label">Cedula*</label>
-                <input
-                    type="number"
-                    class="form-control"
-                    name="CC"
-                    id="CC"
-                    formControlName="dni"
-                    [class]="(form.get('dni')?.invalid && form.get('dni')?.touched) ? 'is-invalid' :''"
-                >
-                <div  *ngIf="getControlError('dni', 'min')" class="invalid-feedback">
-                    debe tener minimo 6 numeros
+                <input type="number" class="form-control" name="CC" id="CC" formControlName="dni"
+                    [class]="isControlInvalid('dni') ? 'is-invalid' :''">
+                <div *ngIf="isControlInvalid('dni')" class="invalid-feedback">
+                    Debe tener minimo 6 numeros
                 </div>
             </div>
-
-
         </div>
+
         <div class="mb-3">
             <label for="name" class="form-label">Nombre*</label>
-            <input 
-                type="text" 
-                class="form-control" 
-                name="name" 
-                id="name" 
-                formControlName="name"
-                [class]="(form.get('name')?.invalid && form.get('name')?.touched) ? 'is-invalid' :''"
-            >
-            <div *ngIf="getControlError('name', 'required')" class="invalid-feedback">
-                el nombre es requerido
+            <input type="text" class="form-control" name="name" id="name" formControlName="name"
+                [class]="isControlInvalid('name') ? 'is-invalid' :''">
+            <div *ngIf="isControlInvalid('name')" class="invalid-feedback">
+                El nombre es requerido
             </div>
         </div>
 
         <div class="mb-3">
             <label for="surnames" class="form-label">Apellidos*</label>
-            <input
-                type="text"
-                class="form-control"
-                name="surnames"
-                id="surnames"
-                formControlName="surnames"
-                [class]="(form.get('surnames')?.invalid && form.get('surnames')?.touched) ? 'is-invalid' :''"
-
-            >
-            <div *ngIf="getControlError('surnames', 'required')" class="invalid-feedback">
-                el apellido es requerido
+            <input type="text" class="form-control" name="surnames" id="surnames" formControlName="surnames"
+                [class]="isControlInvalid('surnames') ? 'is-invalid' :''">
+            <div *ngIf="isControlInvalid('surnames')" class="invalid-feedback">
+                El apellido es requerido
             </div>
         </div>
 
         <div class="mb-3">
             <label for="phone" class="form-label">Telefono*</label>
-            <input
-                type="number"
-                class="form-control"
-                name="phone"
-                id="phone"
-                formControlName="phone"
-                [class]="(form.get('phone')?.invalid && form.get('phone')?.touched) ? 'is-invalid' :''"
-            >
-            <div *ngIf="form.get('phone')?.invalid" class="invalid-feedback">
-                ingrese un telefono valido
+            <input type="number" class="form-control" name="phone" id="phone" formControlName="phone" [class]="isControlInvalid('phone') 
+                    ? 'is-invalid' :''">
+            <div *ngIf="isControlInvalid('phone')" class="invalid-feedback">
+                Ingrese un telefono valido
             </div>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Correo electronico*</label>
-            <input
-            type="email"
-            class="form-control"
-            name="email"
-            id="email"
-            formControlName="email"
-            [class]="(form.get('email')?.invalid && form.get('email')?.touched) ? 'is-invalid' :''"
-
-            >
-            <div *ngIf="getControlError('email', 'email')" class="invalid-feedback">
-                ingrese un email valido
+            <input type="email" class="form-control" name="email" id="email" formControlName="email"
+                [class]="isControlInvalid('email') ? 'is-invalid' :''">
+            <div *ngIf="isControlInvalid('email')" class="invalid-feedback">
+                Ingrese un email valido
             </div>
         </div>
+
         <div class="mb-3" *ngIf="teacher_id==''">
             <label for="password" class="form-label">Contraseña*</label>
-            <input type="password" class="form-control" name="password" id="password" formControlName="password">
-
+            <input type="password" class="form-control" name="password" id="password" formControlName="password"
+                [class]="isControlInvalid('password') ? 'is-invalid' :''">
+            <div *ngIf="isControlInvalid('password')" class="invalid-feedback">
+                Ingrese una contraseña con minimo 6 caracteres
+            </div>
         </div>
-        <div *ngIf="message" >
+
+        <div *ngIf="message">
             <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
                 {{message.text}}
             </div>
-            
+
         </div>
+
         <div class="button-wrapper">
             <button class="button" type="submit" [disabled]="loading">
-                <div *ngIf="loading" class="spinner-border" role="status"></div>    
-                <span *ngIf="!loading">{{teacher_id==''? 'Registrar':'Actualizar'+ ' profesor'}}</span> 
-                
+                <div *ngIf="loading" class="spinner-border" role="status"></div>
+                <span *ngIf="!loading">{{teacher_id==''? 'Registrar':'Actualizar'+ ' profesor'}}</span>
+
             </button>
         </div>
+        
     </form>
 </div>

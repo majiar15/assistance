@@ -7,6 +7,7 @@
     border-radius: 7px;
     box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
     display: table;
+    margin-bottom: 0px;
 }
 
 th{
@@ -35,6 +36,34 @@ td i{
 .bi-hand-thumbs-down-fill{
     color: red;
 }
+
+
+
+.table-pagination{
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+.table-pagination span{
+    color: #707683;
+    font-size: 14px;
+}
+
+.table-pagination nav ul{
+    margin: 0px;
+}
+
+.custom-page-link{
+    color: #707683;
+}
+
+.custom-active .page-link {
+    background-color: rgb(234, 0, 41);
+    border-color: rgb(234, 0, 41);
+    color: white;
+  }
 
 
 @media  screen and (max-width: 720px) {

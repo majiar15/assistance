@@ -24,7 +24,7 @@
             <label type="teacher_id" class="form-label">Profesores</label>
             <select name="teacher_id" class="form-select" id="teacher_id" formControlName="teacher_id">
                 <option value="" disabled selected>Selecciona un profesor</option>
-                <option [value]="teacher._id" *ngFor="let teacher of teacherService.teachers" >{{teacher.name}}</option>
+                <option [value]="teacher._id" *ngFor="let teacher of teacherService.teachers.data" >{{teacher.name}}</option>
                 
             </select>
         </div>

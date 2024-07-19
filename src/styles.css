@@ -39,12 +39,33 @@
     background: #555;  /* Color del "pulgar" de la scrollbar cuando se pasa el ratón por encima */
   }
 
-.card-global {
+.card-register {
 
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    width: 80% !important;
 }
+
+.card-register h4{
+    margin-left: 25px;
+    padding: 20px 0px 0px 0px ;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    color: rgb(25, 42, 62);
+    text-align: left;
+}
+
+.card-filter {
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    /* width: 80% !important; */
+}
+
 
 .divider {
     color: gray;
@@ -146,6 +167,10 @@ label {
     font-size: 24px;
     text-align: left;
     line-height: 125%;
+}
+
+.content-table{
+    width: 80% !important;
 }
 
 .alert {

@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { TeacherService } from '../teacher.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -8,6 +8,7 @@ import { ModalComponent } from "../../../components/modal/modal.component";
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ModalType } from "src/app/shared/enum/modalType";
+import { User } from 'src/app/shared/interfaces/interfaces';
 
 @Component({
   selector: 'app-teacher-list',
@@ -19,26 +20,43 @@ import { ModalType } from "src/app/shared/enum/modalType";
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MessageService]
 })
-export class TeacherListComponent {
+export class TeacherListComponent implements OnInit {
 
   titles = ["Documento de identidad", "Nombre", "Telefono", "Email"];
   data: any[] = [];
   searchText: string = '';
 
-  showModal:boolean = false;
-  modal_type:number = ModalType.SELECT_OPTIONS;
-  modal_buttons:Array<any> = [];
-  data_delete:any;
+  showModal: boolean = false;
+  modal_type: number = ModalType.SELECT_OPTIONS;
+  modal_buttons: Array<any> = [];
+  data_delete: any;
 
   constructor(
     public teacherService: TeacherService,
     private messageService: MessageService
-  ) {
-    // formatear objeto para darle la estructura
-    this.data = this.formatData(this.teacherService.teachers)
+  ) { }
+
+  ngOnInit(): void {
+
+    if (this.teacherService.teachers.data.length == 0) {
+      this.teacherService.getTeachers().subscribe({
+        next: (response) => {
+          if (response.valid) {
+            this.teacherService.teachers = response;
+            this.data = this.formatData(this.teacherService.teachers.data)
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching teachers:', err);
+        }
+      });
+    } else {
+      this.data = this.formatData(this.teacherService.teachers.data)
+    }
+
   }
 
-  formatData(teachers: any[]): any[] {
+  formatData(teachers: User[]): any[] {
     return teachers.map((teacher) => {
       return {
         dni: teacher.dni,
@@ -52,11 +70,11 @@ export class TeacherListComponent {
 
   filterData(): void {
     if (this.searchText === "") {
-      this.data = this.formatData(this.teacherService.teachers);
+      this.data = this.formatData(this.teacherService.teachers.data);
     }
     const searchTextLower = this.searchText.toLowerCase().trim();
 
-    const dataFilter = this.teacherService.teachers.filter((item: any) => {
+    const dataFilter = this.teacherService.teachers.data.filter((item: any) => {
       return Object.keys(item).some(key => {
         const value = item[key].toString().toLowerCase();
         return value.includes(searchTextLower);
@@ -69,19 +87,19 @@ export class TeacherListComponent {
 
   deleteTeacher(data: any) {
 
-    this.teacherService.deleteTeacher(data._id).subscribe((response: any) => {  
+    this.teacherService.deleteTeacher(data._id).subscribe((response: any) => {
 
       if (response.valid && response.data.deletedCount > 0) {
 
-        this.teacherService.teachers = this.teacherService.teachers.filter((item) => item._id != data._id)
-        this.data = this.formatData(this.teacherService.teachers);
+        this.teacherService.teachers.data = this.teacherService.teachers.data.filter((item) => item._id != data._id)
+        this.data = this.formatData(this.teacherService.teachers.data);
 
         this.messageService.add({
           severity: 'success',
           summary: 'Eliminado correctamente.',
           detail: 'El profesor ha sido eliminado correctamente.'
         });
-        
+
       } else {
 
         this.messageService.add({
@@ -94,30 +112,49 @@ export class TeacherListComponent {
     })
   }
 
-  deleteConfirmProperty(data:any){
-    this.data_delete=data;
-    this.modal_type=ModalType.DELETE_TEACHER;
-    this.showModal=true;
-    this.modal_buttons=[
+  deleteConfirmProperty(data: any) {
+    this.data_delete = data;
+    this.modal_type = ModalType.DELETE_TEACHER;
+    this.showModal = true;
+    this.modal_buttons = [
       {
-        name:'Eliminar'
+        name: 'Eliminar'
       },
       {
-        name:'Cancelar'
-      }, 
-    ]    
+        name: 'Cancelar'
+      },
+    ]
   }
 
-  deleteProperty(){
+  deleteProperty() {
     this.deleteTeacher(this.data_delete);
     this.cancel();
   }
 
-  cancel(){
-    this.data_delete=null;
-    this.modal_type=ModalType.SELECT_OPTIONS;
-    this.showModal=false;
-    this.modal_buttons=[]
+  cancel() {
+    this.data_delete = null;
+    this.modal_type = ModalType.SELECT_OPTIONS;
+    this.showModal = false;
+    this.modal_buttons = []
+  }
+
+  getMoreTeacher(event: any) {
+
+    const metadata = this.teacherService.teachers.metadata;
+    if (metadata) {
+      const { page, pageCount,limit } = metadata;
+      
+      if (pageCount>page && page<event.page&&pageCount >= event.page) {
+        this.teacherService.getMoreTeachers(event.page,limit).subscribe((response)=>{
+          if(response.valid){
+            this.teacherService.teachers.data.push(...response.data);
+            this.teacherService.teachers.metadata = response.metadata;
+            this.data = this.formatData(this.teacherService.teachers.data)
+          }
+        })
+      }
+    }
+    
   }
 
 }
