@@ -3,11 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import {HomeCoursesService} from './home-courses.service'
 import { Course } from 'src/app/shared/interfaces/interfaces';
 import { CourseGridComponent } from 'src/app/components/course-grid/course-grid.component';
+import { ModalType } from 'src/app/shared/enum/modalType';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
 
 @Component({
   selector: 'app-home-courses',
   standalone: true,
-  imports: [ CommonModule, CourseGridComponent],
+  imports: [ CommonModule, CourseGridComponent, ModalComponent],
   templateUrl: './home-courses.component.html',
   styleUrl: './home-courses.component.css',
 
@@ -15,6 +17,10 @@ import { CourseGridComponent } from 'src/app/components/course-grid/course-grid.
 export class HomeCoursesComponent  implements OnInit{
 
   public courses:Course[]=[];
+  showModal:boolean = false;
+  modal_type:number = ModalType.SELECT_OPTIONS;
+  modal_buttons:Array<any> = [];
+  data_delete:any;
 
   public colors = [
     'colorRed', 'colorBlue', 'colorGreen', 'colorYellow',
@@ -32,10 +38,24 @@ export class HomeCoursesComponent  implements OnInit{
     });
   }
 
-  // showModal(course:any) {
 
-  //   this.course_active=course;
-  //   this.modal = !this.modal;
-  //   console.log('Se ejecuto el click de card desde home', this.modal);
-  // }
+  showModalAction(data:any){
+    this.data_delete=data;
+    this.modal_type=ModalType.SELECT_OPTIONS;
+    this.showModal=true;
+    this.modal_buttons=[
+      {
+        name:'Eliminar'
+      },
+      {
+        name:'Cancelar'
+      },
+    ]
+  }
+  deleteProperty(){
+
+  }
+  cancel(){
+    
+  }
 }

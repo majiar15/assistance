@@ -144,9 +144,8 @@ export class StudentsListComponent implements OnInit {
 
     const metadata = this.studentsService.students.metadata;
     if (metadata) {
-      const { page, pageCount,limit } = metadata;
-      
-      if (pageCount>page && page<event.page&&pageCount >= event.page) {
+      const { limit } = metadata;
+      if (!event.pageFetching.includes(event.page)) {
         this.studentsService.getMoreStudent(event.page,limit).subscribe((response)=>{
           if(response.valid){
             this.studentsService.students.data.push(...response.data);

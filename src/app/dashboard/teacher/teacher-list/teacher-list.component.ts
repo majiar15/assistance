@@ -143,18 +143,17 @@ export class TeacherListComponent implements OnInit {
     const metadata = this.teacherService.teachers.metadata;
     if (metadata) {
       const { page, pageCount,limit } = metadata;
-      
-      if (pageCount>page && page<event.page&&pageCount >= event.page) {
+      if (!event.pageFetching.includes(event.page)) {
         this.teacherService.getMoreTeachers(event.page,limit).subscribe((response)=>{
           if(response.valid){
             this.teacherService.teachers.data.push(...response.data);
             this.teacherService.teachers.metadata = response.metadata;
             this.data = this.formatData(this.teacherService.teachers.data)
           }
-        })
+        });
       }
+
     }
-    
   }
 
 }
