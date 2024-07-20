@@ -127,7 +127,7 @@ export class SelectStudentsComponent {
   onInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     if (inputValue.trim() === '') {
-      this.students = this.filterEnrolledStudent(this.studentsService.students)
+      this.students = this.filterEnrolledStudent(this.studentsService.students.data)
     }
   }
 

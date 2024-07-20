@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { StudentsService } from '../students.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -19,7 +19,7 @@ import { ModalType } from "src/app/shared/enum/modalType";
     providers: [MessageService]
 
 })
-export class StudentsListComponent {
+export class StudentsListComponent implements OnInit {
 
   titles = ["Documento de identidad", "Nombre", "Telefono", "Email"];
   data: any[] = [];
@@ -36,7 +36,25 @@ export class StudentsListComponent {
     private messageService: MessageService
 
   ){
-    this.data = this.formatData(this.studentsService.students)
+  }
+
+  ngOnInit(): void {
+
+    if (this.studentsService.students.data.length == 0) {
+      this.studentsService.getStudent().subscribe({
+        next: (response) => {
+          if (response.valid) {
+            this.studentsService.students = response;
+            this.data = this.formatData(this.studentsService.students.data)
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching students:', err);
+        }
+      });
+    } else {
+      this.data = this.formatData(this.studentsService.students.data)
+    }
   }
 
 
@@ -54,11 +72,11 @@ export class StudentsListComponent {
 
   filterData(): void {
     if (this.searchText === "") {
-      this.data = this.formatData(this.studentsService.students);
+      this.data = this.formatData(this.studentsService.students.data);
     }
     const searchTextLower = this.searchText.toLowerCase().trim();
 
-    const dataFilter = this.studentsService.students.filter((item: any) => {
+    const dataFilter = this.studentsService.students.data.filter((item: any) => {
       return Object.keys(item).some(key => {
         const value = item[key].toString().toLowerCase();
         return value.includes(searchTextLower);
@@ -74,8 +92,8 @@ export class StudentsListComponent {
 
       if (response.valid && response.data.deletedCount > 0) {
 
-        this.studentsService.students = this.studentsService.students.filter((item) => item._id != data._id)
-        this.data = this.formatData(this.studentsService.students);
+        this.studentsService.students.data = this.studentsService.students.data.filter((item) => item._id != data._id)
+        this.data = this.formatData(this.studentsService.students.data);
 
         this.messageService.add({
           severity: 'success',
@@ -120,6 +138,25 @@ export class StudentsListComponent {
     this.modal_type=ModalType.SELECT_OPTIONS;
     this.showModal=false;
     this.modal_buttons=[]
+  }
+
+  getMoreStudent(event: any) {
+
+    const metadata = this.studentsService.students.metadata;
+    if (metadata) {
+      const { page, pageCount,limit } = metadata;
+      
+      if (pageCount>page && page<event.page&&pageCount >= event.page) {
+        this.studentsService.getMoreStudent(event.page,limit).subscribe((response)=>{
+          if(response.valid){
+            this.studentsService.students.data.push(...response.data);
+            this.studentsService.students.metadata = response.metadata;
+            this.data = this.formatData(this.studentsService.students.data)
+          }
+        })
+      }
+    }
+    
   }
 
 }

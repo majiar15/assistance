@@ -32,10 +32,8 @@ export class RegisterStudentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.student_id = this.route.snapshot.paramMap.get('id') || '';
 
-    }
+    this.student_id = this.route.snapshot.paramMap.get('id') || '';
 
     this.form = this.formBuilder.group({
       "dni": new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -51,7 +49,7 @@ export class RegisterStudentComponent implements OnInit {
   }
 
   loadTeacherData() {
-    const student = this.studentsService.students.find(item => item._id == this.student_id)
+    const student = this.studentsService.students.data.find(item => item._id == this.student_id)
     if (student) {
       this.form.patchValue({
         'dni': student.dni,
@@ -72,7 +70,7 @@ export class RegisterStudentComponent implements OnInit {
 
       this.loading = true;
 
-      const data:any = {
+      const data: any = {
         email: this.form.value.email,
         dni: this.form.value.dni,
         name: this.form.value.name,
@@ -82,7 +80,7 @@ export class RegisterStudentComponent implements OnInit {
         password: `${this.form.value.dni}`,
         phone: this.form.value.phone
       }
-      
+
       if (this.student_id != '') {
         delete data.password;
 
@@ -92,16 +90,16 @@ export class RegisterStudentComponent implements OnInit {
             this.loading = false;
 
             if (response.valid) {
-              const student_index = this.studentsService.students.findIndex((item) => item._id == response.data._id)
+              const student_index = this.studentsService.students.data.findIndex((item) => item._id == response.data._id)
               if (student_index > -1) {
-                this.studentsService.students[student_index] = response.data;
+                this.studentsService.students.data[student_index] = response.data;
               }
               this.form.reset()
               this.message = { text: 'El estudiante ha sido actualizado correctamente', status: true }
             } else {
               this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
             }
-            
+
           },
           error: (error) => {
 
@@ -111,7 +109,7 @@ export class RegisterStudentComponent implements OnInit {
             this.message = { text: 'Ha ocurrido un error al actualizar, por favor intente nuevamente.', status: false }
           }
         });
-       
+
         return;
       }
 
@@ -119,7 +117,7 @@ export class RegisterStudentComponent implements OnInit {
         next: (response: any) => {
           if (response.valid) {
             this.message = { text: 'Estudiante registrado correctamente', status: true }
-            this.studentsService.students.unshift(response.data);
+            this.studentsService.students.data.unshift(response.data);
             this.form.reset()
           } else {
             this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
@@ -135,17 +133,15 @@ export class RegisterStudentComponent implements OnInit {
       })
 
     } else {
+      this.form.markAllAsTouched();
       this.message = { text: 'Existes campos vacios', status: false }
     }
   }
 
 
-  getControlError(controlName: string, errorName: string): boolean {
+  isControlInvalid(controlName: string) {
     const control = this.form.get(controlName);
-    if (!control) {
-      return false;
-    }
-    return control.hasError(errorName) && control.touched;
+    return control?.invalid && (control.touched || control.dirty);
   }
 
 }

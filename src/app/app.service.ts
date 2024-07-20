@@ -33,8 +33,7 @@ export class AppService {
     //Cargar Los cursos
     this.coursesService.start();
     //CARGAR LOS ESTUDIANTES
-    this.studentsService.start();
-    //CARGAR LOS PRFESORES
+    
     
 
     this.getAcademicProgram()
