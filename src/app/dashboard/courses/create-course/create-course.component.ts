@@ -8,6 +8,7 @@ import { TeacherService } from 'src/app/dashboard/teacher/teacher.service';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
+import { User } from 'src/app/shared/interfaces/interfaces';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class CreateCourseComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
   message: any;
   loading = false;
-
+  teachers: User[] = [];
   course_id: string = '';
 
   constructor(
@@ -52,6 +53,8 @@ export class CreateCourseComponent implements OnInit {
     })
 
     if (this.course_id) this.loadCourseData();
+
+    this.loadTeacher();
   }
 
   loadCourseData() {
@@ -71,6 +74,11 @@ export class CreateCourseComponent implements OnInit {
       ...item,
       disabled: index === array.length - 1 ? false : true
     }));
+  }
+  loadTeacher() {
+    this.teacherService.getTeachers().subscribe((teachersData)=>{
+      this.teachers = teachersData.data;
+    });
   }
 
   showSchedule(event: any) {
