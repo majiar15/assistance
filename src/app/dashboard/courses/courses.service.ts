@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Course } from 'src/app/shared/interfaces/interfaces';
+import { Observable, Subject } from 'rxjs';
+import { Course, Response } from 'src/app/shared/interfaces/interfaces';
 import { HttpService } from 'src/app/shared/services/http.service';
 
 @Injectable({
@@ -8,9 +8,7 @@ import { HttpService } from 'src/app/shared/services/http.service';
 })
 export class CoursesService {
 
-  coursesSubject = new Subject<Course[]>();
-
-  courses:Course[] = [];
+  courses:Response<Course> = {data:[],valid:false};
   schedule:any[]=[];
   intensity=0;
   intensityBefore=0
@@ -18,18 +16,27 @@ export class CoursesService {
     private httpService: HttpService
   ) { }
 
-  start(){
-
-    this.httpService.getItem('/courses').subscribe((response) => {
-      if(response.valid){
-        this.courses=response.data;
-        this.coursesSubject.next(this.courses);
-      }
-    })
+  asignarCourse(data:any){
+    return this.httpService.postItem('/courses',data)
   }
 
 
-  asignarCourse(data:any){
+  public createCourse(data: any): Observable<any> {
     return this.httpService.postItem('/courses',data)
+  }
+
+  public updateCourse(teacher_id:string,data:any){
+    return this.httpService.updateItem(`/courses/${teacher_id}`,data)
+  }
+
+  public deleteCourse(teacher_id:string){
+    return this.httpService.deleteItem(`/courses/${teacher_id}`)
+  }
+
+  public getCourses(): Observable<Response<Course>>{
+    return this.httpService.getItem('/courses');
+  }
+  public getMoreCourse(page:number,limit:number): Observable<Response<Course>>{
+    return this.httpService.getItem(`/courses?page=${page}&limit=${limit}`);
   }
 }

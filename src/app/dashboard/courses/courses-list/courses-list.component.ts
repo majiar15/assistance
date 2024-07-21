@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CoursesService } from '../courses.service';
 import { TableComponent } from "../../../components/table/table.component";
@@ -21,7 +21,7 @@ import { ModalType } from "src/app/shared/enum/modalType";
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MessageService]
 })
-export class CoursesListComponent {
+export class CoursesListComponent implements OnInit {
 
   titles = ["Id", "Nombre", "Fecha de Inicio", "Fecha de finalización"];
   data: any[] = [];
@@ -33,8 +33,26 @@ export class CoursesListComponent {
 
   constructor(
     public coursesService: CoursesService,
-  ){
-    this.data = this.formatData(this.coursesService.courses)
+  ){}
+
+  ngOnInit(): void {
+
+    if (this.coursesService.courses.data.length == 0) {
+      this.coursesService.getCourses().subscribe({
+        next: (response) => {
+          if (response.valid) {
+            this.coursesService.courses = response;
+            this.data = this.formatData(this.coursesService.courses.data)
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching teachers:', err);
+        }
+      });
+    } else {
+      this.data = this.formatData(this.coursesService.courses.data)
+    }
+    
   }
 
   formatData(courses: any[]): any[] {

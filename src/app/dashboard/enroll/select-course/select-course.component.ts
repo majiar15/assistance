@@ -32,14 +32,9 @@ export class SelectCourseComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("🚀 ~ SelectCourseComponent ~ ngOnInit ~ ngOnInit:")
-    if (this.coursesService.courses.length) {
-      this.courses = this.coursesService.courses;
-    } else {
-      this.coursesService.coursesSubject.subscribe((courses) => {
-        this.courses = courses;
-      })
-    }
-
+    if (this.coursesService.courses.data.length) {
+      this.courses = this.coursesService.courses.data;
+    } 
     this.searchSubject.pipe(debounceTime(300)).subscribe((response) => {
       this.filterData();
     })
@@ -49,7 +44,7 @@ export class SelectCourseComponent implements OnInit {
   onInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     if (inputValue.trim() === '') {
-      this.courses = this.coursesService.courses;
+      this.courses = this.coursesService.courses.data;
     }
   }
 
