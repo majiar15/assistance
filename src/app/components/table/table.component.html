@@ -6,48 +6,44 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let record of paginatedData">
-      <td
-        *ngFor="let property of getObjectKeys(record)"
-        [routerLink]="[record._id]"
-      >
-        {{ record[property] }}
-      </td>
-      <td>
-        <i (click)="deleteProperty(record)" class="bi bi-trash"></i>
-      </td>
-    </tr>
+    <ng-container *ngIf="paginatedData && paginatedData.length > 0; else noData">
+      <tr *ngFor="let record of paginatedData">
+        <td *ngFor="let property of getObjectKeys(record)" [routerLink]="[record._id]">
+          {{ record[property] }}
+        </td>
+        <td>
+          <i (click)="deleteProperty(record)" class="bi bi-trash"></i>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #noData>
+      <tr>
+        <td [attr.colspan]="titles.length + 1" class="text-center">No hay datos disponibles</td>
+      </tr>
+    </ng-template>
   </tbody>
-  
 </table>
 
-  <div class="table-pagination">
-    
-      <span [attr.colspan]=" titles.length "> Mostrando datos {{ paginationInfo.start}} a {{ paginationInfo.end }} de {{ totalItems }} entradas</span>
-      <div>
-        <nav aria-label="Page navigation">
-          <ul class="pagination">
-            <li class="page-item" [class.disabled]="currentPage === 1">
-              <a class="page-link" (click)="setPage(currentPage - 1)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" 
-              [class.active]="currentPage === i + 1" [class.custom-active]="currentPage === i + 1">
-              <a class="page-link custom-page-link" (click)="setPage(i + 1)">{{ i + 1 }}</a>
-            </li>
-            <li class="page-item" [class.disabled]="currentPage === totalPages">
-              <a class="page-link" (click)="setPage(currentPage + 1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-   
+<div class="table-pagination">
+  <span [attr.colspan]="titles.length">Mostrando datos {{ paginationInfo.start }} a {{ paginationInfo.end }} de {{ totalItems }} entradas</span>
+  <div>
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="setPage(currentPage - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" 
+          [class.active]="currentPage === i + 1" [class.custom-active]="currentPage === i + 1">
+          <a class="page-link custom-page-link" (click)="setPage(i + 1)">{{ i + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="setPage(currentPage + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-
-
-
-
-
+</div>

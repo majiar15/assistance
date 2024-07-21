@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import {NgSelectModule} from '@ng-select/ng-select';
 import { DurationPipe } from 'src/app/shared/pipe/home.pipe';
 import { CommonModule } from '@angular/common';
 import { CoursesService } from 'src/app/dashboard/courses/courses.service';
@@ -26,6 +26,7 @@ import { User } from 'src/app/shared/interfaces/interfaces';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
+    NgSelectModule
   ]
 })
 export class CreateCourseComponent implements OnInit {
@@ -34,6 +35,7 @@ export class CreateCourseComponent implements OnInit {
   message: any;
   loading = false;
   teachers: User[] = [];
+  selectedTeacher!: User;
   course_id: string = '';
 
   constructor(
@@ -104,6 +106,7 @@ export class CreateCourseComponent implements OnInit {
     this.teacherService.getTeachers().subscribe((teachersData)=>{
       this.teachers = teachersData.data;
     });
+    this.selectedTeacher = this.teachers[0];
   }
 
   showSchedule(event: any) {

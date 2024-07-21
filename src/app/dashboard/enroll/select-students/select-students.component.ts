@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { CourseGridComponent } from 'src/app/components/course-grid/course-grid.component';
 import { StudentsService } from '../../students/students.service';
 import { EnrollService } from '../enroll.service';
@@ -14,8 +16,9 @@ import { debounceTime, Subject, Subscription } from 'rxjs';
   standalone: true,
   templateUrl: './select-students.component.html',
   styleUrl: './select-students.component.css',
-  imports: [CommonModule, FormsModule, CourseGridComponent],
+  imports: [CommonModule, FormsModule, CourseGridComponent, ToastModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [MessageService]
 })
 export class SelectStudentsComponent {
 
@@ -29,7 +32,7 @@ export class SelectStudentsComponent {
   private subscriptions: Subscription[] = [];
 
   constructor(
-    private coursesService: CoursesService,
+    private messageService: MessageService,
     private enrollService: EnrollService,
     private studentsService: StudentsService,
     private route: ActivatedRoute
@@ -189,10 +192,21 @@ export class SelectStudentsComponent {
         next:(response: any) => {
         console.log("🚀 ~ SelectStudentsComponent ~ this.enrollService.enrollStudents ~ response:", response)
         this.loading = false;
+
+      
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Matricula Exitosa!',
+          detail: 'los estudiantes han sido matriculados correctamente.'
+        });
       },
       error:(err)=>{
         console.error("ERROR enrollStudents: ",err);
-        
+        this.messageService.add({
+          severity: 'Error',
+          summary: 'Error en la matrícula',
+          detail: 'Ocurrió un problema al matricular a los estudiantes. Por favor, intenta nuevamente.'
+        });
       }
     }),
     )
