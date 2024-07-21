@@ -4,18 +4,30 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 15px;
-    width: 95%;
     margin-bottom: 20px;
     align-items: center;
 }
-.filter{
+
+.filter-assistance{
     width: 30%;
     display: flex;
+    flex-direction: row;
     align-items: center;
+
+
+}
+.filter-assistance label{
+    margin: 0px;
+    margin-right: 10px;
 }
 
 .form-control{
     height: 34px;
+}
+
+.container h1{
+    text-align: center;
+
 }
 
 @media  screen and (max-width: 720px) {

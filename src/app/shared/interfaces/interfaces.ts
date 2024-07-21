@@ -55,3 +55,9 @@ export interface Metadata{
     hasPreviousPage: boolean; 
     hasNextPage: boolean; 
 }
+
+export interface SelectedCourse {
+    _id: string,
+    name: string,
+
+}

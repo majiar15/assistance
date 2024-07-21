@@ -104,6 +104,27 @@
     border-radius: 30px;
 }
 
+.button-outline {
+    cursor: pointer;
+    height: 44px;
+    width: 215px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(234, 0, 41);
+    background: rgba(0, 0, 0, 0);
+    border: 2px solid rgb(234, 0, 41);
+    text-decoration: none;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    border-radius: 30px;
+}
+
 .button-disable {
     background: rgba(234, 0, 43, 0.514) !important;
 }

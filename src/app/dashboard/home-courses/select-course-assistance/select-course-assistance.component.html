@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Mis Cursos</h1>
+    <div class="wrap-card">
+        @defer {
+            <course-grid 
+                [courses]="courses"
+                *ngIf="courses.length > 0; else notFound"
+                (courseEvent)="selectCourse($event)"
+            ></course-grid>
+    
+            <ng-template #notFound>
+                <div *ngIf="courses.length==0" >
+                    <div class="alert alert-danger">
+                        <h3>Usted no tiene cursos disponibles.</h3>
+                    </div>
+                </div>
+            </ng-template>
+        } @placeholder (minimum 1000ms) {
+            <div class="spinner-border" role="status"></div>
+    
+        }
+    </div>
+</div>
+

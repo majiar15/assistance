@@ -14,13 +14,24 @@ import { RegisterStudentComponent } from "./students/register-student/register-s
 import { EnrollComponent } from "./enroll/enroll.component";
 import { SelectCourseComponent } from "./enroll/select-course/select-course.component";
 import { SelectStudentsComponent } from "./enroll/select-students/select-students.component";
+import { AssistanceComponent } from "./home-courses/assistance/assistance.component";
+import { SelectCourseAssistanceComponent } from "./home-courses/select-course-assistance/select-course-assistance.component";
 
 const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./dashboard.component'),
     children: [
-      { path: '', component: HomeCoursesComponent, pathMatch: 'full' }, // Ruta hija vacía que carga AboutComponent
+      { 
+        path: '', 
+        component: HomeCoursesComponent, 
+        children: [
+          { path: '', component: SelectCourseAssistanceComponent },
+          { path: 'assistance/:id', component: AssistanceComponent },
+          
+        ],
+      },
+
       {
         path: 'students', component: StudentsComponent,
         children: [
@@ -30,14 +41,7 @@ const routes: Routes = [
         ]
 
       },
-      {
-        path: 'assistance', component: StudentsComponent,
-        children: [
-          { path: '', component: StudentsListComponent },
-          { path: 'create', component: RegisterStudentComponent },
-          { path: ':id', component: RegisterStudentComponent },
-        ]
-      },
+      
       {
         path: 'courses', component: CoursesComponent,
         children: [
@@ -63,7 +67,6 @@ const routes: Routes = [
         ]
       },
       
-      // { path: 'assistance', component: AssignCourseComponent },
       { path: '', redirectTo: '', pathMatch: 'full' }
     ],
 
