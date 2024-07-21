@@ -5,6 +5,7 @@ import { Course } from 'src/app/shared/interfaces/interfaces';
 import { CourseGridComponent } from 'src/app/components/course-grid/course-grid.component';
 import { ModalType } from 'src/app/shared/enum/modalType';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-courses',
@@ -26,7 +27,8 @@ export class HomeCoursesComponent  implements OnInit{
     'colorRed', 'colorBlue', 'colorGreen', 'colorYellow',
     'colorSilver', 'colorWhite', 'colorBlack', 'colorRed', 'colorGreen'];
   constructor(
-    public homeCoursesService:HomeCoursesService
+    public homeCoursesService:HomeCoursesService,
+    public router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -39,23 +41,14 @@ export class HomeCoursesComponent  implements OnInit{
   }
 
 
-  showModalAction(data:any){
-    this.data_delete=data;
-    this.modal_type=ModalType.SELECT_OPTIONS;
-    this.showModal=true;
-    this.modal_buttons=[
-      {
-        name:'Eliminar'
-      },
-      {
-        name:'Cancelar'
-      },
-    ]
+  selectCourse(course:Course){
+    console.log("object");
+    this.router.navigate([`/assistance/`, course._id])
   }
   deleteProperty(){
 
   }
   cancel(){
-    
+
   }
 }

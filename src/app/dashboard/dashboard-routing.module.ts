@@ -31,6 +31,14 @@ const routes: Routes = [
 
       },
       {
+        path: 'assistance', component: StudentsComponent,
+        children: [
+          { path: '', component: StudentsListComponent },
+          { path: 'create', component: RegisterStudentComponent },
+          { path: ':id', component: RegisterStudentComponent },
+        ]
+      },
+      {
         path: 'courses', component: CoursesComponent,
         children: [
           { path: '', component: CoursesListComponent },

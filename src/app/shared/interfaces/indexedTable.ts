@@ -1,4 +1,4 @@
 export interface DataTable {
-    index: number,
+    page: number,
     data: any[],
   }

@@ -1,13 +1,11 @@
 <div class="main">
     <h1>Mis Cursos</h1>
     <div class="wrap-card">
-
-       
         @defer {
             <course-grid 
                 [courses]="courses"
                 *ngIf="courses.length > 0; else notFound"
-                (courseEvent)="showModalAction($event)"
+                (courseEvent)="selectCourse($event)"
             ></course-grid>
 
             <ng-template #notFound>
@@ -21,11 +19,5 @@
             <div class="spinner-border" role="status"></div>
 
         }
-        
-        
     </div>
-
-    <modal-dialog
-[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
-(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>
 </div>

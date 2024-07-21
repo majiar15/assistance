@@ -39,7 +39,7 @@ export class TableComponent implements OnInit {
     if (changes['metadata']!=undefined) {
       if (this.data.length > 0) {
         const dataIndex = {
-          index: this.currentPage,
+          page: this.currentPage,
           data: changes['metadata'].currentValue.hasNextPage
                 ? this.data.slice(- this.metadata!.limit)
                 : this.data.slice( - this.calculateLastItems())
@@ -60,8 +60,14 @@ export class TableComponent implements OnInit {
 
 
 
-  deleteProperty(data: any) {
-    this.deleteItem.emit(data);
+  deleteProperty(item: any) {
+    this.indexedData = this.indexedData.map((findElement)=>{
+      if(findElement.page === this.currentPage){
+        findElement.data = findElement.data.filter((dataItem)=> dataItem !== item);
+      }
+      return findElement;
+    });
+    this.deleteItem.emit(item);
 
   }
 
@@ -69,7 +75,7 @@ export class TableComponent implements OnInit {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
     const dataPaginated = this.indexedData.find( (item)=>
-      item.index == this.currentPage
+      item.page == this.currentPage
     );
     return dataPaginated?.data;
   }
