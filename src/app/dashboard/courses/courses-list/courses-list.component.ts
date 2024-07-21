@@ -7,6 +7,7 @@ import { ModalComponent } from "../../../components/modal/modal.component";
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ModalType } from "src/app/shared/enum/modalType";
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-courses-list',
@@ -56,13 +57,15 @@ export class CoursesListComponent implements OnInit {
   }
 
   formatData(courses: any[]): any[] {
-    return courses.map((courses) => {
+    return courses.map((course) => {
+      const dateStart = moment(course.date_start).format('YYYY-MM-DD');
+      const dateEnd = moment(course.date_end).format('YYYY-MM-DD');
       return {
-        id: courses._id,
-        name: courses.name,
-        date_start: courses.date_start,
-        date_end: courses.date_end,
-        _id: courses._id,
+        id: course._id,
+        name: course.name,
+        date_start: dateStart,
+        date_end: dateEnd,
+        _id: course._id,
       };
     });
   }
@@ -91,6 +94,24 @@ export class CoursesListComponent implements OnInit {
     this.modal_type=ModalType.SELECT_OPTIONS;
     this.showModal=false;
     this.modal_buttons=[]
+  }
+
+  getMoreCourse(event: any) {
+
+    const metadata = this.coursesService.courses.metadata;
+    if (metadata) {
+      const { page, pageCount,limit } = metadata;
+      if (!event.pageFetching.includes(event.page)) {
+        this.coursesService.getMoreCourse(event.page,limit).subscribe((response)=>{
+          if(response.valid){
+            this.coursesService.courses.data.push(...response.data);
+            this.coursesService.courses.metadata = response.metadata;
+            this.data = this.formatData(this.coursesService.courses.data)
+          }
+        });
+      }
+
+    }
   }
 
 }

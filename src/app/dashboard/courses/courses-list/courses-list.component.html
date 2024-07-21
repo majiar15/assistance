@@ -10,7 +10,8 @@
         <button class="button" [routerLink]="['create']" >Crear curso</button>
 
     </div>
-    <app-table [data]="data" [titles]="titles" (deleteItem)="deleteConfirmProperty($event)"></app-table>
+    <app-table [data]="data" [titles]="titles" [metadata]="coursesService.courses.metadata" 
+    (deleteItem)="deleteConfirmProperty($event)" (paginationItem)="getMoreCourse($event)"></app-table>
 </div>
 <modal-dialog 
 [hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
