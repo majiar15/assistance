@@ -1,33 +1,78 @@
-<div class="card-global ">
+<div class="card-register">
+
     <h4>Informacion del curso</h4>
     <hr>
+
     <form [formGroup]="form" class="p-4" (submit)="registerSchedule()" >
+
         <div class="mb-3">
             <label for="name" class="form-label">Nombre del curso*</label>
-            <input type="text" class="form-control" name="name" id="name" formControlName="name" >
+            <input type="text" class="form-control" name="name" id="name" formControlName="name"
+            [class]="isControlInvalid('name') ? 'is-invalid' :''">
+            @if (isControlInvalid('name')) {
+                <div class="invalid-feedback">
+                    El nombre es requerido.
+                </div>
+            }
+                
         </div>
         <div class="input-group mb-3 date-space-between">
             <div class="date-expanded">
                 <label for="date_start" class="form-label">Fecha Inicio*</label>
-                <input type="date" class="form-control" name="date_start" id="date_start" formControlName="date_start">
+                <input type="date" class="form-control" name="date_start" id="date_start" formControlName="date_start"
+                [class]="isControlInvalid('date_start') ? 'is-invalid' :''">
+                @if (isControlInvalid('date_start')) {
+                    <div class="invalid-feedback">
+                        La fecha de inicio es requerida.
+                    </div>
+                }
 
             </div>
             <div class="date-expanded">
                 <label for="date_end" class="form-label">Fecha Fin*</label>
-                <input type="date" class="form-control" name="date_end" id="date_end" formControlName="date_end">
+                <input type="date" class="form-control" name="date_end" id="date_end" formControlName="date_end"
+                [class]="isControlInvalid('date_end') ? 'is-invalid' :''">
+                @if (isControlInvalid('date_end')) {
+                    <div class="invalid-feedback">
+                        La fecha final es requerida.
+                    </div>
+                }
 
             </div>
                
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label type="teacher_id" class="form-label">Profesores</label>
             <select name="teacher_id" class="form-select" id="teacher_id" formControlName="teacher_id">
                 <option value="" disabled selected>Selecciona un profesor</option>
                 <option [value]="teacher._id" *ngFor="let teacher of teacherService.teachers.data" >{{teacher.name}}</option>
                 
             </select>
+            @if (isControlInvalid('teacher_id')) {
+                <div class="invalid-feedback">
+                    El programa academico es requerido.
+                </div>
+                }
+        </div> -->
+        <div class="mb-3">
+            <mat-form-field class="example-full-width">
+                <mat-label>Number</mat-label>
+                <input type="text"
+                       placeholder="Pick one"
+                       aria-label="Number"
+                       matInput
+                       formControlName="teacher_id"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  @for (teacher of teacherService.teachers.data; track teacher) {
+                    <mat-option [value]="teacher._id">{{teacher.name}}</mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
         </div>
+        
+
         <div class="mb-3">
             <label for="hour">Intencidad de horas</label>
             <input type="number" class="form-control" name="hour" id="hour"  (keyup)="showSchedule($event)">

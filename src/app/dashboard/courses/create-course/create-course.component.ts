@@ -8,6 +8,9 @@ import { TeacherService } from 'src/app/dashboard/teacher/teacher.service';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
@@ -15,7 +18,14 @@ import { HttpService } from 'src/app/shared/services/http.service';
   selector: 'create-course',
   templateUrl: './create-course.component.html',
   styleUrls: ['./create-course.component.css'],
-  imports: [ScheduleComponent, CommonModule, ReactiveFormsModule]
+  imports: [
+    ScheduleComponent,
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+  ]
 })
 export class CreateCourseComponent implements OnInit {
 
@@ -27,7 +37,6 @@ export class CreateCourseComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private httpService: HttpService,
     public coursesService: CoursesService,
     public teacherService: TeacherService,
     private route: ActivatedRoute,
@@ -39,7 +48,6 @@ export class CreateCourseComponent implements OnInit {
       this.course_id = this.route.snapshot.paramMap.get('id') || '';
 
     }
-
 
     this.form = this.formBuilder.group({
 
@@ -54,8 +62,25 @@ export class CreateCourseComponent implements OnInit {
     if (this.course_id) this.loadCourseData();
   }
 
+  // getTeachers() {
+  //   let page = 1;
+  //   let limit = 20;
+  //   do {
+  //     this.teacherService.getMoreTeachers(page,limit).subscribe({
+  //       next: (response) => {
+  
+  //       },
+  //       error: (error) => {
+  
+  //       }
+  
+  //     })
+  //   } while (condition);
+    
+  // }
+
   loadCourseData() {
-    const course = this.coursesService.courses.find(item => item._id == this.course_id)
+    const course = this.coursesService.courses.data.find(item => item._id == this.course_id)
     if (course) {
 
       this.form.patchValue({
@@ -99,7 +124,7 @@ export class CreateCourseComponent implements OnInit {
   registerSchedule() {
 
     if (!this.form.valid) {
-
+      this.form.markAllAsTouched();
       this.message = { text: 'Existen campos vacios.', status: false }
       return;
     }
@@ -121,9 +146,7 @@ export class CreateCourseComponent implements OnInit {
       schedules: this.coursesService.schedule
     }
 
-    const endpoint = this.course_id ? `/courses/${this.course_id}` : '/courses';
-
-    this.httpService[this.course_id ? 'updateItem' : 'postItem'](endpoint, data).subscribe({
+    this.coursesService[this.course_id ? 'updateCourse' : 'createCourse'](this.course_id, data).subscribe({
       next: (response: any) => {
         this.handleResponse(response);
       },
@@ -143,16 +166,16 @@ export class CreateCourseComponent implements OnInit {
 
       if (this.course_id) {
 
-        const courseIndex = this.coursesService.courses.findIndex(item => item._id === response.data._id);
-        
+        const courseIndex = this.coursesService.courses.data.findIndex(item => item._id === response.data._id);
+
         if (courseIndex > -1) {
-          this.coursesService.courses[courseIndex] = response.data;
+          this.coursesService.courses.data[courseIndex] = response.data;
         }
 
       } else {
-        this.coursesService.courses.unshift(response.data);
+        this.coursesService.courses.data.unshift(response.data);
       }
-      
+
       this.form.reset();
       this.coursesService.intensity = 0;
       this.coursesService.intensityBefore = 0;
@@ -162,5 +185,10 @@ export class CreateCourseComponent implements OnInit {
     } else {
       this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false };
     }
+  }
+
+  isControlInvalid(controlName: string) {
+    const control = this.form.get(controlName);
+    return control?.invalid && (control.touched || control.dirty);
   }
 }
