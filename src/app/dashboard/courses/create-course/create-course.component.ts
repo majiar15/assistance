@@ -11,6 +11,7 @@ import { HttpService } from 'src/app/shared/services/http.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { User } from 'src/app/shared/interfaces/interfaces';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class CreateCourseComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
   message: any;
   loading = false;
-
+  teachers: User[] = [];
   course_id: string = '';
 
   constructor(
@@ -60,6 +61,8 @@ export class CreateCourseComponent implements OnInit {
     })
 
     if (this.course_id) this.loadCourseData();
+
+    this.loadTeacher();
   }
 
   // getTeachers() {
@@ -96,6 +99,11 @@ export class CreateCourseComponent implements OnInit {
       ...item,
       disabled: index === array.length - 1 ? false : true
     }));
+  }
+  loadTeacher() {
+    this.teacherService.getTeachers().subscribe((teachersData)=>{
+      this.teachers = teachersData.data;
+    });
   }
 
   showSchedule(event: any) {

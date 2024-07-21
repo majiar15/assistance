@@ -4,7 +4,11 @@
 
        
         @defer {
-            <course-grid [courses]="courses" *ngIf="courses.length > 0; else notFound" ></course-grid>
+            <course-grid 
+                [courses]="courses"
+                *ngIf="courses.length > 0; else notFound"
+                (courseEvent)="showModalAction($event)"
+            ></course-grid>
 
             <ng-template #notFound>
                 <div *ngIf="courses.length==0" >
@@ -20,5 +24,8 @@
         
         
     </div>
-    
+
+    <modal-dialog
+[hidden]="!showModal" [modal_type]="modal_type" [buttons]="modal_buttons"
+(button1Event)="deleteProperty()" (button2Event)="cancel()"></modal-dialog>
 </div>

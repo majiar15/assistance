@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { ModalComponent } from "../modal/modal.component";
 import { Metadata } from 'src/app/shared/interfaces/interfaces';
+import { DataTable } from 'src/app/shared/interfaces/indexedTable';
 
 @Component({
   standalone: true,
@@ -20,7 +21,8 @@ export class TableComponent implements OnInit {
   @Input() filters: string[] = [];
   @Output() deleteItem: EventEmitter<any> = new EventEmitter();
   @Output() paginationItem: EventEmitter<any> = new EventEmitter();
-
+  indexedData: DataTable[] = [];
+  pageFetching: number[] = [];
   currentPage = 1;
   pageSize = 10;
   totalItems = 0;
@@ -35,9 +37,18 @@ export class TableComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['metadata']!=undefined) {
-      console.log("🚀 ~ TableComponent ~ ngOnChanges ~ changes['metadata']:", changes['metadata'])
-      this.pageSize=changes['metadata'].currentValue.limit;
-      this.totalItems=changes['metadata'].currentValue.itemCount;
+      if (this.data.length > 0) {
+        const dataIndex = {
+          index: this.currentPage,
+          data: changes['metadata'].currentValue.hasNextPage
+                ? this.data.slice(- this.metadata!.limit)
+                : this.data.slice( - this.calculateLastItems())
+        };
+        this.indexedData.push(dataIndex);
+        this.pageFetching.push(this.currentPage);
+        this.pageSize=this.metadata!.limit;
+        this.totalItems=this.metadata!.itemCount;
+      }
     }
   }
 
@@ -57,7 +68,10 @@ export class TableComponent implements OnInit {
   get paginatedData() {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    return this.data.slice(start, end);
+    const dataPaginated = this.indexedData.find( (item)=>
+      item.index == this.currentPage
+    );
+    return dataPaginated?.data;
   }
 
   get paginationInfo() {
@@ -70,12 +84,22 @@ export class TableComponent implements OnInit {
   setPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.paginationItem.emit({page,limit:this.metadata?.limit})
+      this.paginationItem.emit({
+        page,
+        limit:this.metadata?.limit,
+        pageFetching: this.pageFetching
+      })
     }
   }
 
   get totalPages() {
     return Math.ceil(this.totalItems / this.pageSize);
+  }
+
+  calculateLastItems(): number{
+    const posibleItems = (this.metadata!.limit * this.metadata!.pageCount);
+    const itemsResiduo = posibleItems - this.metadata!.itemCount;
+    return this.metadata!.limit - itemsResiduo;
   }
 }
 
