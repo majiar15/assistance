@@ -3,7 +3,7 @@ import { AppService } from 'src/app/app.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
     standalone: true,
@@ -11,22 +11,20 @@ import { RouterModule } from '@angular/router';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     imports: [
-      SidebarComponent, 
-       
-      CommonModule, 
+      SidebarComponent,
+      CommonModule,
       ModalComponent,
-      RouterModule 
+      RouterModule
     ]
 })
 export default class DashboardComponent implements OnInit {
   course_active:any;
   loading = false;
   modal = false
-  
 
- 
   constructor(
     public appService: AppService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +52,7 @@ export default class DashboardComponent implements OnInit {
   goBack(): void {
     window.history.back();
   }
-
-  
-
+  canBack(): boolean{
+    return this.router.url !== '/dashboard'
+  }
 }

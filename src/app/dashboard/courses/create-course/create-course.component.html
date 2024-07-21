@@ -55,7 +55,7 @@
                 </div>
                 }
         </div> -->
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <mat-form-field class="example-full-width">
                 <mat-label>Number</mat-label>
                 <input type="text"
@@ -70,8 +70,13 @@
                   }
                 </mat-autocomplete>
               </mat-form-field>
+        </div> -->
+        <div class="mb-3">
+            <ng-select >
+                <ng-option *ngFor="let teacher of teachers" [value]="teacher._id">{{teacher.name}}</ng-option>
+             </ng-select>
+
         </div>
-        
 
         <div class="mb-3">
             <label for="hour">Intencidad de horas</label>
