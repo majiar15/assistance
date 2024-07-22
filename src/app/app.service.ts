@@ -15,15 +15,8 @@ export class AppService {
   public userData?: User;
   public showModal: boolean = false;
 
-  public course_teacher: any[] = [];
-  public courses: any[] = [];
-  public student_assitance: any[] = [];
 
   constructor(
-
-    private teacherService: TeacherService,
-    private studentsService: StudentsService,
-    private coursesService: CoursesService,
     private httpService: HttpService,
   ) { }
 

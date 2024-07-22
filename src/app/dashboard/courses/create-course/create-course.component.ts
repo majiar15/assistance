@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {NgSelectModule} from '@ng-select/ng-select';
-import { DurationPipe } from 'src/app/shared/pipe/home.pipe';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CoursesService } from 'src/app/dashboard/courses/courses.service';
 import { TeacherService } from 'src/app/dashboard/teacher/teacher.service';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { ActivatedRoute } from '@angular/router';
-import { HttpService } from 'src/app/shared/services/http.service';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { User } from 'src/app/shared/interfaces/interfaces';
-
-
+import {NgSelectModule} from '@ng-select/ng-select';
+import * as moment from 'moment';
+import { AppService } from 'src/app/app.service';
+import { AcademicProgram } from 'src/app/shared/interfaces/interfaces';
 @Component({
   standalone: true,
   selector: 'create-course',
@@ -23,34 +18,37 @@ import { User } from 'src/app/shared/interfaces/interfaces';
     ScheduleComponent,
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    NgSelectModule
-  ]
+    FormsModule,
+    NgSelectModule,
+
+  ],
+  
 })
 export class CreateCourseComponent implements OnInit {
 
   public form: FormGroup = new FormGroup({});
   message: any;
   loading = false;
-  teachers: User[] = [];
-  selectedTeacher!: User;
   course_id: string = '';
 
+  academic_programs:any[] = [];
+ 
   constructor(
     private formBuilder: FormBuilder,
     public coursesService: CoursesService,
     public teacherService: TeacherService,
+    public appService:AppService,
     private route: ActivatedRoute,
   ) { }
 
+  
+
   ngOnInit(): void {
 
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.course_id = this.route.snapshot.paramMap.get('id') || '';
+    this.course_id = this.route.snapshot.paramMap.get('id') || '';
 
-    }
+
+    this.loadTeacher()
 
     this.form = this.formBuilder.group({
 
@@ -58,56 +56,54 @@ export class CreateCourseComponent implements OnInit {
       "date_start": new FormControl('', [Validators.required]),
       "date_end": new FormControl('', [Validators.required]),
       "teacher_id": new FormControl('', [Validators.required]),
-      "description": new FormControl('')
+      "intensity": new FormControl('', [Validators.required]),
+      "description": new FormControl(''),
+      "academic_program": new FormControl([])
 
     })
 
     if (this.course_id) this.loadCourseData();
 
-    this.loadTeacher();
+    if(this.appService.academic_programs.length){
+      this.academic_programs = this.appService.academic_programs;
+    }else{
+
+    }
   }
 
-  // getTeachers() {
-  //   let page = 1;
-  //   let limit = 20;
-  //   do {
-  //     this.teacherService.getMoreTeachers(page,limit).subscribe({
-  //       next: (response) => {
-  
-  //       },
-  //       error: (error) => {
-  
-  //       }
-  
-  //     })
-  //   } while (condition);
-    
-  // }
+  logSelectedItems(): void {
+    console.log('Selected Items:', this.form.get('academic_program')?.value);
+  }
 
   loadCourseData() {
     const course = this.coursesService.courses.data.find(item => item._id == this.course_id)
+    console.log("🚀 ~ CreateCourseComponent ~ loadCourseData ~ course:", course)
     if (course) {
+      const dateStart = moment(course.date_start).format('YYYY-MM-DD');
+      const dateEnd = moment(course.date_end).format('YYYY-MM-DD');
+      //const academicProgramsIds = course.academic_program.map(program => program._id);
 
       this.form.patchValue({
-
         'name': course.name,
-        'date_start': course.date_start,
-        'date_end': course.date_end,
+        'date_start': dateStart,
+        'date_end': dateEnd,
         'teacher_id': course.teacher_id,
         'description': course.description,
+        'intensity':course.intensity,
+        'academic_program':course.academic_programs
+
       });
+      this.coursesService.intensity =course.intensity;
+      this.coursesService.schedule = (course.schedules || []).map((item, index, array) => ({
+        ...item,
+        disabled: index === array.length - 1 ? false : true
+      }));
     }
-    this.coursesService.schedule = (course?.schedules_ids || []).map((item, index, array) => ({
-      ...item,
-      disabled: index === array.length - 1 ? false : true
-    }));
+
+    
   }
-  loadTeacher() {
-    this.teacherService.getTeachers().subscribe((teachersData)=>{
-      this.teachers = teachersData.data;
-    });
-    this.selectedTeacher = this.teachers[0];
-  }
+  
+
 
   showSchedule(event: any) {
     console.log(typeof event.target.value);
@@ -133,10 +129,14 @@ export class CreateCourseComponent implements OnInit {
 
 
   registerSchedule() {
-
+    
     if (!this.form.valid) {
       this.form.markAllAsTouched();
+     
       this.message = { text: 'Existen campos vacios.', status: false }
+      setTimeout(() => {
+        this.message = null
+      }, 3000)
       return;
     }
 
@@ -157,18 +157,35 @@ export class CreateCourseComponent implements OnInit {
       schedules: this.coursesService.schedule
     }
 
-    this.coursesService[this.course_id ? 'updateCourse' : 'createCourse'](this.course_id, data).subscribe({
-      next: (response: any) => {
-        this.handleResponse(response);
-      },
-      error: (error) => {
+    if(this.course_id){
+      this.coursesService.updateCourse(this.course_id, data).subscribe({
+        next: (response: any) => {
+          this.handleResponse(response);
+        },
+        error: (error) => {
+  
+          this.loading = false;
+          console.log(error);
+  
+          this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
+        }
+      })
+    }else{
+      this.coursesService.createCourse(data).subscribe({
+        next: (response: any) => {
+          this.handleResponse(response);
+        },
+        error: (error) => {
+  
+          this.loading = false;
+          console.log(error);
+  
+          this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
+        }
+      })
+    }
 
-        this.loading = false;
-        console.log(error);
-
-        this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
-      }
-    })
+    
   }
 
   handleResponse(response: any) {
@@ -201,5 +218,39 @@ export class CreateCourseComponent implements OnInit {
   isControlInvalid(controlName: string) {
     const control = this.form.get(controlName);
     return control?.invalid && (control.touched || control.dirty);
+  }
+
+
+  async loadTeacher() {
+    try {
+      let page = 1;
+      const limit = 5; // Según tu metadata, el límite parece ser 5
+      let hasMorePages = true;
+
+      while (hasMorePages) {
+        const response = await this.teacherService.getMoreTeachers(page, limit).toPromise();
+
+        if (response?.valid) {
+          this.coursesService.teachers.push(...response.data);
+
+          const metadata = response.metadata;
+          if (metadata) {
+            page = metadata.page < metadata.pageCount ? metadata.page + 1 : metadata.pageCount;
+            hasMorePages = metadata.page < metadata.pageCount;
+          } else {
+            hasMorePages = false; // No hay metadata, detener la paginación
+          }
+        } else {
+          hasMorePages = false; // Respuesta no válida, detener la paginación
+        }
+      }
+
+      // if (this.teachers.length > 0) {
+      //   this.selectedTeacher = this.teachers[0];
+      // }
+
+    } catch (error) {
+      console.log("🚀 ~ Error loading teachers:", error);
+    }
   }
 }

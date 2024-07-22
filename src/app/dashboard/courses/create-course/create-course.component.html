@@ -3,104 +3,112 @@
     <h4>Informacion del curso</h4>
     <hr>
 
-    <form [formGroup]="form" class="p-4" (submit)="registerSchedule()" >
+    <form [formGroup]="form" class="p-4" (submit)="registerSchedule()">
 
         <div class="mb-3">
             <label for="name" class="form-label">Nombre del curso*</label>
             <input type="text" class="form-control" name="name" id="name" formControlName="name"
-            [class]="isControlInvalid('name') ? 'is-invalid' :''">
+                [class]="isControlInvalid('name') ? 'is-invalid' :''">
             @if (isControlInvalid('name')) {
-                <div class="invalid-feedback">
-                    El nombre es requerido.
-                </div>
+            <div class="invalid-feedback">
+                El nombre es requerido.
+            </div>
             }
-                
+
         </div>
         <div class="input-group mb-3 date-space-between">
             <div class="date-expanded">
                 <label for="date_start" class="form-label">Fecha Inicio*</label>
                 <input type="date" class="form-control" name="date_start" id="date_start" formControlName="date_start"
-                [class]="isControlInvalid('date_start') ? 'is-invalid' :''">
+                    [class]="isControlInvalid('date_start') ? 'is-invalid' :''">
                 @if (isControlInvalid('date_start')) {
-                    <div class="invalid-feedback">
-                        La fecha de inicio es requerida.
-                    </div>
+                <div class="invalid-feedback">
+                    La fecha de inicio es requerida.
+                </div>
                 }
 
             </div>
             <div class="date-expanded">
                 <label for="date_end" class="form-label">Fecha Fin*</label>
                 <input type="date" class="form-control" name="date_end" id="date_end" formControlName="date_end"
-                [class]="isControlInvalid('date_end') ? 'is-invalid' :''">
+                    [class]="isControlInvalid('date_end') ? 'is-invalid' :''">
                 @if (isControlInvalid('date_end')) {
-                    <div class="invalid-feedback">
-                        La fecha final es requerida.
-                    </div>
+                <div class="invalid-feedback">
+                    La fecha final es requerida.
+                </div>
                 }
 
             </div>
-               
+
         </div>
 
         <div class="mb-3">
-            <label type="teacher_id" class="form-label">Profesores</label>
-            <select name="teacher_id" class="form-select" id="teacher_id" formControlName="teacher_id">
-                <option value="" disabled selected>Selecciona un profesor</option>
-                <option [value]="teacher._id" *ngFor="let teacher of teachers" >{{teacher.name}}</option>
-                
-            </select>
+            <label for="teacher" class="form-label">Profesor*</label>
+            <ng-select id="teacher_id" formControlName="teacher_id"
+                [class]="isControlInvalid('teacher_id') ? 'is-invalid' :''">
+                <ng-option *ngFor="let teacher of coursesService.teachers" [value]="teacher._id">{{teacher.name}}
+                    {{teacher.surnames}}</ng-option>
+            </ng-select>
+
             @if (isControlInvalid('teacher_id')) {
-                <div class="invalid-feedback">
-                    El programa academico es requerido.
-                </div>
-                }
-        </div>
-        <!-- <div class="mb-3">
-            <mat-form-field class="example-full-width">
-                <mat-label>Number</mat-label>
-                <input type="text"
-                       placeholder="Pick one"
-                       aria-label="Number"
-                       matInput
-                       formControlName="teacher_id"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  @for (teacher of teacherService.teachers.data; track teacher) {
-                    <mat-option [value]="teacher._id">{{teacher.name}}</mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
-        </div> -->
-        
+            <div class="invalid-feedback">
+                Debe seleccionar un profesor.
+            </div>
+            }
 
-        <div class="mb-3">
-            <label for="hour">Intencidad de horas</label>
-            <input type="number" class="form-control" name="hour" id="hour"  (keyup)="showSchedule($event)">
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">  Descripcion*</label>
-            <textarea class="form-control" name="description" id="description" rows="4" formControlName="description"></textarea>
+            <label for="academic_program" class="form-label">Programa academico*</label>
+            <ng-select [items]="academic_programs" bindLabel="name" bindValue="_id" formControlName="academic_program"
+                [multiple]="true" placeholder="Select multiple items" (change)="logSelectedItems()">
+
+            </ng-select>
+            @if (isControlInvalid('academic_program')) {
+            <div class="invalid-feedback">
+                El programa academico es requerido.
+            </div>
+            }
+
+            <br />
+
         </div>
 
-        <div *ngIf="message" >
+        <div class="mb-3">
+            <label for="intensity">Intencidad de horas</label>
+            <input type="number" class="form-control" name="intensity" id="intensity" formControlName="intensity"
+                (keyup)="showSchedule($event)" [class]="isControlInvalid('teacher_id') ? 'is-invalid' :''">
+            @if (isControlInvalid('teacher_id')) {
+            <div class="invalid-feedback">
+                Debe indicar la intencidad de horas.
+            </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label"> Descripcion*</label>
+            <textarea class="form-control" name="description" id="description" rows="4"
+                formControlName="description"></textarea>
+        </div>
+
+        <div *ngIf="message">
             <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
                 {{message.text}}
             </div>
-            
+
         </div>
 
+        <app-schedule *ngIf="coursesService.schedule.length"></app-schedule>
+
         <div class="button-wrapper">
-            <button class="button" type="submit" [disabled]="loading || coursesService.intensity!=0"  [ngClass]="coursesService.intensity!=0?'button-disable':''">
-                <div *ngIf="loading" class="spinner-border" role="status"></div>    
-                <span *ngIf="!loading">Asignar materia</span> 
-                
+            <button class="button" type="submit" [disabled]="loading || coursesService.intensity!=0"
+                [ngClass]="coursesService.intensity!=0?'button-disable':''">
+                <div *ngIf="loading" class="spinner-border" role="status"></div>
+                <span *ngIf="!loading">{{course_id?"Actualizar ":"Crear "}}curso</span>
+
             </button>
         </div>
     </form>
 
 
 </div>
-
-
- <app-schedule  *ngIf="coursesService.schedule.length" ></app-schedule>

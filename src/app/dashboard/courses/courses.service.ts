@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Course, Response } from 'src/app/shared/interfaces/interfaces';
+import { Course, Response, User } from 'src/app/shared/interfaces/interfaces';
 import { HttpService } from 'src/app/shared/services/http.service';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { HttpService } from 'src/app/shared/services/http.service';
 export class CoursesService {
 
   courses:Response<Course> = {data:[],valid:false};
+  teachers:User[] = [];
   schedule:any[]=[];
   intensity=0;
   intensityBefore=0
