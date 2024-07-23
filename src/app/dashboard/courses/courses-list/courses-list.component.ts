@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ModalType } from "src/app/shared/enum/modalType";
 import * as moment from 'moment';
 import { TeacherService } from '../../teacher/teacher.service';
+import { AppService } from 'src/app/app.service';
 
 @Component({
     selector: 'app-courses-list',
@@ -36,6 +37,7 @@ export class CoursesListComponent implements OnInit {
   constructor(
     public coursesService: CoursesService,
     public teacherService: TeacherService,
+    private appService:AppService,
   ){}
 
   ngOnInit(): void {
@@ -44,8 +46,10 @@ export class CoursesListComponent implements OnInit {
       this.coursesService.getCourses().subscribe({
         next: (response) => {
           if (response.valid) {
+
             this.coursesService.courses = response;
             this.data = this.formatData(this.coursesService.courses.data)
+            console.log("🚀 ~ data:", this.data)
           }
         },
         error: (err) => {
@@ -68,6 +72,7 @@ export class CoursesListComponent implements OnInit {
         date_start: dateStart,
         date_end: dateEnd,
         _id: course._id,
+        page:course.hasOwnProperty('page')?course.page:1
       };
     });
   }

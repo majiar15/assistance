@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared/services/http.service';
-import { AcademicProgram, User } from './shared/interfaces/interfaces';
-import { TeacherService } from './dashboard/teacher/teacher.service';
-import { StudentsService } from './dashboard/students/students.service';
-import { CoursesService } from './dashboard/courses/courses.service';
+import { AcademicProgram, User ,Response } from './shared/interfaces/interfaces';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +20,22 @@ export class AppService {
 
   startApp() {
     console.log("SE EJECUTO EL START");
-    this.getAcademicProgram()
+    this.getAcademicProgram().subscribe((response) => {
+      if (response.valid) {
+        this.academic_programs = response.data;
+      }
+
+    })
 
 
   }
 
   getAcademicProgram() {
-    this.httpService.getItem('/academic-program').subscribe((response) => {
-      if (response.valid) {
-        this.academic_programs = response.data;
-      }
-
-    });
+    return this.httpService.getItem('/academic-program');
   }
+
+
+  
 
 
 

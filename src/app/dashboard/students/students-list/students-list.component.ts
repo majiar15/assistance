@@ -65,7 +65,8 @@ export class StudentsListComponent implements OnInit {
         name: student.name + ' ' + student.surnames || '',
         phone: student.phone,
         email: student.email,
-        _id: student._id
+        _id: student._id,
+        page:student.hasOwnProperty('page')?student.page:1
       };
     });
   }

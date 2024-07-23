@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import {Response} from '../interfaces/interfaces'
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +94,7 @@ export class HttpService {
       } else if (resData.hasOwnProperty('status')) {
         if (resData.status) {
           if (resData.hasOwnProperty('data') && resData.hasOwnProperty('metadata')) {
+            resData = this.mapResponse(resData);
             return { valid: true, data: resData.data, metadata:resData.metadata };
           } else if(resData.hasOwnProperty('data')){
             return { valid: true, data: resData.data, };
@@ -123,5 +125,16 @@ export class HttpService {
 
   public handleError(error: any): Observable<never> {
     return throwError(() => new Error(error.message || 'Server Error'));
+  }
+
+  private mapResponse(response:Response<any>){
+    
+    response.data = response.data.map((value)=>{
+      if(response.metadata){
+        value['page'] = response.metadata.page;
+      }
+      return value;
+    })
+    return response;
   }
 }

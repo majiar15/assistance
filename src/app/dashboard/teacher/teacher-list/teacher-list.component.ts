@@ -56,14 +56,15 @@ export class TeacherListComponent implements OnInit {
 
   }
 
-  formatData(teachers: User[]): any[] {
+  formatData(teachers: any[]): any[] {
     return teachers.map((teacher) => {
       return {
         dni: teacher.dni,
         name: teacher.name + ' ' + teacher.surnames || '',
         phone: teacher.phone,
         email: teacher.email,
-        _id: teacher._id
+        _id: teacher._id,
+        page:teacher.hasOwnProperty('page')?teacher.page:1
       };
     });
   }

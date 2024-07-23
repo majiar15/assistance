@@ -67,7 +67,12 @@ export class CreateCourseComponent implements OnInit {
     if(this.appService.academic_programs.length){
       this.academic_programs = this.appService.academic_programs;
     }else{
-
+      this.appService.getAcademicProgram().subscribe((response) => {
+        if (response.valid) {
+          this.academic_programs = response.data;
+        }
+  
+      })
     }
   }
 
@@ -154,7 +159,9 @@ export class CreateCourseComponent implements OnInit {
       date_start: this.form.value.date_start,
       date_end: this.form.value.date_end,
       description: this.form.value.description,
-      schedules: this.coursesService.schedule
+      schedules: this.coursesService.schedule,
+      intensity:this.form.value.intensity,
+      academic_programs:this.form.value.academic_program
     }
 
     if(this.course_id){

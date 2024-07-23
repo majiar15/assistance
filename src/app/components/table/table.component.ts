@@ -18,14 +18,12 @@ export class TableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() metadata: Metadata | undefined = undefined;
   @Input() titles: string[] = [];
-  @Input() filters: string[] = [];
   @Output() deleteItem: EventEmitter<any> = new EventEmitter();
   @Output() paginationItem: EventEmitter<any> = new EventEmitter();
-  indexedData: DataTable[] = [];
-  pageFetching: number[] = [];
   currentPage = 1;
   pageSize = 10;
   totalItems = 0;
+  pageFetching: number[] = [];
 
   constructor(
     private appService: AppService,
@@ -33,51 +31,39 @@ export class TableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.totalItems = this.data.length;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['metadata']!=undefined) {
-      if (this.data.length > 0) {
-        const dataIndex = {
-          page: this.currentPage,
-          data: changes['metadata'].currentValue.hasNextPage
-                ? this.data.slice(- this.metadata!.limit)
-                : this.data.slice( - this.calculateLastItems())
-        };
-        this.indexedData.push(dataIndex);
-        this.pageFetching.push(this.currentPage);
-        this.pageSize=this.metadata!.limit;
-        this.totalItems=this.metadata!.itemCount;
+    console.log("🚀 ~ Change", changes)
+    if (changes['metadata'].currentValue!=undefined) {
+      
+      this.pageSize=changes['metadata'].currentValue.limit;
+      this.totalItems=changes['metadata'].currentValue.itemCount;
+      this.pageFetching.push(this.currentPage);
       }
-    }
   }
 
   getObjectKeys(obj: any): string[] {
     const newObject = { ...obj }; // se utiliza desestructuracion para romper el enlace con el objeto origial
     delete newObject._id;
+    delete newObject.page;
     return Object.keys(newObject);
   }
 
 
 
-  deleteProperty(item: any) {
-    this.indexedData = this.indexedData.map((findElement)=>{
-      if(findElement.page === this.currentPage){
-        findElement.data = findElement.data.filter((dataItem)=> dataItem !== item);
-      }
-      return findElement;
-    });
-    this.deleteItem.emit(item);
-
+  deleteProperty(data: any) {
+    this.deleteItem.emit(data);
   }
 
   get paginatedData() {
+    console.log("🚀 ~  data:",  this.data)
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    const dataPaginated = this.indexedData.find( (item)=>
-      item.page == this.currentPage
-    );
-    return dataPaginated?.data;
+    let pageDate = this.data.filter((value)=>value.page==this.currentPage);
+    
+    return pageDate
   }
 
   get paginationInfo() {
@@ -102,17 +88,7 @@ export class TableComponent implements OnInit {
     return Math.ceil(this.totalItems / this.pageSize);
   }
 
-  calculateLastItems(): number{
-    const posibleItems = (this.metadata!.limit * this.metadata!.pageCount);
-    const itemsResiduo = posibleItems - this.metadata!.itemCount;
-    return this.metadata!.limit - itemsResiduo;
-  }
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+
 
