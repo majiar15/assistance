@@ -23,6 +23,7 @@ export class TableComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
   totalItems = 0;
+  totalPages = 0;
   pageFetching: number[] = [];
 
   constructor(
@@ -35,11 +36,12 @@ export class TableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("🚀 ~ Change", changes)
+
     if (changes['metadata'].currentValue!=undefined) {
       
       this.pageSize=changes['metadata'].currentValue.limit;
       this.totalItems=changes['metadata'].currentValue.itemCount;
+      this.totalPages=changes['metadata'].currentValue.pageCount;
       this.pageFetching.push(this.currentPage);
       }
   }
@@ -58,7 +60,6 @@ export class TableComponent implements OnInit {
   }
 
   get paginatedData() {
-    console.log("🚀 ~  data:",  this.data)
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
     let pageDate = this.data.filter((value)=>value.page==this.currentPage);
@@ -83,11 +84,7 @@ export class TableComponent implements OnInit {
       })
     }
   }
-
-  get totalPages() {
-    return Math.ceil(this.totalItems / this.pageSize);
-  }
-
+  
 }
 
 
