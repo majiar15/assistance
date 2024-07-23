@@ -33,9 +33,9 @@ export class EnrollService {
     return this.httpService.getItem(`/courses/search?name=${name}`)
   }
 
-  searchStudents(name:string):Observable<any>{
+  searchStudents(name:string,course_id:string):Observable<any>{
     
-    return this.httpService.getItem(`/students/search?name=${name}`)
+    return this.httpService.getItem(`/students/search-not-enrolled?name=${name},course_id=${course_id}`)
   }
 
   enrollStudents(data:any):Observable<any>{

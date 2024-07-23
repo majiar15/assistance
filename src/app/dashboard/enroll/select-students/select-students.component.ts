@@ -140,7 +140,7 @@ export class SelectStudentsComponent {
     }
 
     this.subscriptions.push(
-      this.enrollService.searchStudents(this.searchText).subscribe({
+      this.enrollService.searchStudents(this.searchText,this.course_id).subscribe({
         next: (response: any) => {
           if (response.valid && response.data.length) {
             this.students = this.filterEnrolledStudent(response.data)
