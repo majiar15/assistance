@@ -54,7 +54,7 @@ export class ScheduleComponent implements OnInit {
         this.message = { text: 'Minimo 1 hora de clases', status: false, index: index }
 
       } else {
-
+        
         if (duration < this.coursesService.intensity) {
 
           this.coursesService.intensityBefore = this.coursesService.intensity;

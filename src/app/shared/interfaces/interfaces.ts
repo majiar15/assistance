@@ -25,8 +25,10 @@ export interface Course {
     description: string,
     date_start: string,
     date_end: string,
-    schedules_ids: Array<Schedule>,
-    students_ids: any[],
+    schedules: Array<Schedule>,
+    students?: any[],
+    intensity:number,
+    academic_programs:AcademicProgram[]
 }
 
 export interface Schedule {

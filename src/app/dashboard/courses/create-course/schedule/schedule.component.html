@@ -1,55 +1,58 @@
-
-
 <div class="mt-4 mb-4" *ngFor="let input of coursesService.schedule;let index= index">
     <div class="card-global ">
-        <form class="p-4" (submit)="saveSchedule(index)">
+        <form (submit)="saveSchedule(index)">
             <div class="mb-3">
                 <label type="schedule" class="form-label">Horarios</label>
-                <select name="schedule" class="form-select" id="schedule" [disabled]="coursesService.schedule[index].disabled"
-                    [(ngModel)]="coursesService.schedule[index].week_day" >
-                    <option [value]="item.value" *ngFor="let item of weekdays" >{{item.title}}</option>
-       
+                <select name="schedule" class="form-select" id="schedule"
+                    [disabled]="coursesService.schedule[index].disabled"
+                    [(ngModel)]="coursesService.schedule[index].week_day">
+                    <option [value]="item.value" *ngFor="let item of weekdays">{{item.title}}</option>
+
                 </select>
             </div>
-           
-            <div >
-              
-                
+
+            <div>
+
+
                 <div class="input-group mb-3 time-space-between">
                     <div class="time-expanded">
                         <label for="time-start" class="form-label">Hora Inicio*</label>
-                        <input type="time" class="form-control" name="time-start" id="time-start" [disabled]="coursesService.schedule[index].disabled"
-                            [(ngModel)]="coursesService.schedule[index].hour_start" >
-                        
-        
+                        <input type="time" class="form-control" name="time-start" id="time-start"
+                            [disabled]="coursesService.schedule[index].disabled"
+                            [(ngModel)]="coursesService.schedule[index].hour_start">
+
+
                     </div>
                     <div class="time-expanded">
                         <label for="time-end" class="form-label">Hora Fin*</label>
-                        <input type="time" class="form-control" name="time-end" id="time-end" step="1800" [disabled]="coursesService.schedule[index].disabled"
+                        <input type="time" class="form-control" name="time-end" id="time-end" step="1800"
+                            [disabled]="coursesService.schedule[index].disabled"
                             [(ngModel)]="coursesService.schedule[index].hour_end">
-        
+
                     </div>
-    
+
                 </div>
-    
+
             </div>
             <div class="mb-3">
                 <label for="room" class="form-label">Aula*</label>
-                <input type="text" class="form-control" name="room" id="room" 
-                 [(ngModel)]="coursesService.schedule[index].room" [disabled]="coursesService.schedule[index].disabled" >
+                <input type="text" class="form-control" name="room" id="room"
+                    [(ngModel)]="coursesService.schedule[index].room"
+                    [disabled]="coursesService.schedule[index].disabled">
             </div>
-            <div *ngIf="message && message.index==index" >
+            <div *ngIf="message && message.index==index">
                 <div [ngClass]="message.status?'alert alert-primary':'alert alert-danger'">
                     {{message.text}}
                 </div>
-                
+
             </div>
             <div class="button-wrapper">
-                <button class="button me-1" *ngIf="coursesService.schedule.length-2==index&& coursesService.schedule[index].disabled" 
-                    (click)="editItemSchedule(index)" >Editar</button>
+                <button class="button me-1"
+                    *ngIf="coursesService.schedule.length-2==index&& coursesService.schedule[index].disabled"
+                    (click)="editItemSchedule(index)">Editar</button>
 
-                <button class="button" [ngClass]="coursesService.schedule[index].disabled?'button-disable':''" type="submit" 
-                    [disabled]="coursesService.schedule[index].disabled" >Siguiente</button>
+                <button class="button" [ngClass]="coursesService.schedule[index].disabled?'button-disable':''"
+                    type="submit" [disabled]="coursesService.schedule[index].disabled">Siguiente</button>
             </div>
         </form>
     </div>

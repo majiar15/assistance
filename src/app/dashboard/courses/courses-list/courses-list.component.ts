@@ -8,6 +8,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ModalType } from "src/app/shared/enum/modalType";
 import * as moment from 'moment';
+import { TeacherService } from '../../teacher/teacher.service';
 
 @Component({
     selector: 'app-courses-list',
@@ -34,6 +35,7 @@ export class CoursesListComponent implements OnInit {
 
   constructor(
     public coursesService: CoursesService,
+    public teacherService: TeacherService,
   ){}
 
   ngOnInit(): void {
@@ -54,7 +56,7 @@ export class CoursesListComponent implements OnInit {
       this.data = this.formatData(this.coursesService.courses.data)
     }
     
-  }
+  } 
 
   formatData(courses: any[]): any[] {
     return courses.map((course) => {
@@ -113,5 +115,8 @@ export class CoursesListComponent implements OnInit {
 
     }
   }
+
+
+  
 
 }
