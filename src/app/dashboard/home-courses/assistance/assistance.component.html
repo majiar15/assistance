@@ -5,16 +5,16 @@
         <div class="content-filter card-filter">
             <button class="button-outline" [routerLink]="['create']" >Descargar Reporte</button>
             <div class="filter-assistance ">
-                
-                
+
                 <label class="form-label">FECHA:</label>
-                <input type="date" class="form-control" id="filter" (input)="filterData()" [(ngModel)]="searchText">
+                <input type="date" class="form-control" id="filter" (input)="getAsistanceByDate()" [(ngModel)]="date"  >
             </div>
-            
-    
         </div>
-        <app-table [data]="data" [metadata]="studentsService.students.metadata" [titles]="titles" 
-             (paginationItem)="getMoreStudent($event)"></app-table>
+        <app-table-assistance
+            [data]="data"
+            [titles]="titles"
+            (actionItem)="takeAssist($event)"
+        ></app-table-assistance>
     </div>
 </div>
 

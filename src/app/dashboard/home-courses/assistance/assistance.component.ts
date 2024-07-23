@@ -1,58 +1,52 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { TableComponent } from 'src/app/components/table/table.component';
 import { StudentsService } from '../../students/students.service';
 import { HomeCoursesService } from '../home-courses.service';
+import { Student } from 'src/app/shared/interfaces/interfaces';
+import { TableAssistanceComponent } from 'src/app/components/table-assistance/table-assistance.component';
 
 @Component({
     standalone: true,
     selector: 'app-assistance',
     templateUrl: './assistance.component.html',
     styleUrls: ['./assistance.component.css'],
-    imports: [CommonModule, RouterLink,FormsModule, TableComponent,ModalComponent],
+    imports: [CommonModule, RouterLink,FormsModule, TableAssistanceComponent,ModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [MessageService]
 })
 export class AssistanceComponent implements OnInit {
-  titles = ["DNI - Código", "Nombre", "Programa", "Fecha","Hora","Estado"];
+  id!: string;
+  titles = ["DNI - Código", "Nombre", "email", "programa"];
   data: any[] = [];
-  searchText: string = '';
-
+  date: string = '';
+  students: Student[] = [];
   constructor(
     public studentsService:StudentsService,
     public homeCoursesService:HomeCoursesService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id')!;
+      this.getLastAssist();
+      this.getStudentsEnrolled();
+    });
   }
 
-  filterData(): void {
-    if (this.searchText === "") {
-      this.data = this.formatData(this.studentsService.students.data);
-    }
-    const searchTextLower = this.searchText.toLowerCase().trim();
-
-    const dataFilter = this.studentsService.students.data.filter((item: any) => {
-      return Object.keys(item).some(key => {
-        const value = item[key].toString().toLowerCase();
-        return value.includes(searchTextLower);
-      });
-    });
-
-    this.data = this.formatData(dataFilter);
-  };
 
   formatData(students: any[]): any[] {
     return students.map((student) => {
       return {
         dni: student.dni,
         name: student.name + ' ' + student.surnames || '',
-        phone: student.phone,
         email: student.email,
+        programa: student.academic_program.name,
+        assist: false,
         _id: student._id
       };
     });
@@ -105,5 +99,45 @@ export class AssistanceComponent implements OnInit {
     // }
     
   }
+  getLastAssist() {
+    this.homeCoursesService.getLastAssist(this.id).subscribe((response)=>{
+      this.date = response.data.date;
+    });
+  }
+  getStudentsEnrolled() {
+    this.homeCoursesService.getStudentsEnrolled(this.id).subscribe((response)=>{
+      this.data = this.formatData(response.data.students);
+      this.getAsistanceByDate();
+    });
+  }
+  getAsistanceByDate() {
+    this.homeCoursesService.getAsistanceByDate(this.id, this.date).subscribe((response)=>{
+      const studentIdsWithAttendance = response.data.map((attendance:any) => attendance.student_id);
+      this.data = this.data.map((element)=>{
+        return {
+          ...element,
+          assist: studentIdsWithAttendance.includes(element._id) ? true : false
+        }
+      });
+      console.log(this.data);
+    });
+  }
+  takeAssist(student:Student){
+    console.log("this.isToday()",this.isToday());
+    if(this.isToday()){
+        this.homeCoursesService.takeAssitance(this.id, student._id).subscribe((response)=>{
+          this.getAsistanceByDate();
+        });
+    }
+  }
 
+  isToday(): boolean {
+    const [year, month, day] = this.date.split('-').map(Number);
+    const inputDate = new Date(year, month - 1, day);
+  
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    return inputDate.getTime() === today.getTime();
+  }
 }

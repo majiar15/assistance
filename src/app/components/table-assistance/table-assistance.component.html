@@ -1,0 +1,29 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th *ngFor="let title of titles">{{ title }}</th>
+      <th>Asistencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of data">
+      <ng-container *ngFor="let property of getObjectKeys(record)">
+        <td *ngIf="property !== 'assist'">
+          {{ record[property] }}
+        </td>
+      </ng-container>
+
+      <td
+        [ngClass]="{'text-success': record['assist'], 'text-danger': !record['assist']}"
+        (click)="actionClick(record)"
+      >
+          <i
+            [ngClass]="record['assist'] ? 'bi bi-check-circle' : 'bi bi-x-circle'"
+          >
+          </i>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
