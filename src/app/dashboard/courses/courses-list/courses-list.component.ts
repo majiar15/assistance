@@ -10,6 +10,7 @@ import { ModalType } from "src/app/shared/enum/modalType";
 import * as moment from 'moment';
 import { TeacherService } from '../../teacher/teacher.service';
 import { AppService } from 'src/app/app.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-courses-list',
@@ -19,7 +20,7 @@ import { AppService } from 'src/app/app.service';
     imports: [
         CommonModule, RouterLink,
         TableComponent,ToastModule,
-        ModalComponent
+        ModalComponent,FormsModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MessageService]
@@ -28,7 +29,7 @@ export class CoursesListComponent implements OnInit {
 
   titles = ["Id", "Nombre", "Fecha de Inicio", "Fecha de finalización"];
   data: any[] = [];
-
+  searchText: string = '';
   showModal:boolean = false;
   modal_type:number = ModalType.SELECT_OPTIONS;
   modal_buttons:Array<any> = [];
@@ -76,6 +77,22 @@ export class CoursesListComponent implements OnInit {
       };
     });
   }
+
+  filterData(): void {
+    if (this.searchText === "") {
+      this.data = this.formatData(this.coursesService.courses.data);
+    }
+    const searchTextLower = this.searchText.toLowerCase().trim();
+
+    const dataFilter = this.coursesService.courses.data.filter((item: any) => {
+      return Object.keys(item).some(key => {
+        const value = item[key].toString().toLowerCase();
+        return value.includes(searchTextLower);
+      });
+    });
+
+    this.data = this.formatData(dataFilter);
+  };
 
   deleteConfirmProperty(data:any){
     this.data_delete=data;

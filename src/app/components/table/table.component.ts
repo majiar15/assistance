@@ -37,7 +37,7 @@ export class TableComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if (changes['metadata'].currentValue!=undefined) {
+    if (changes['metadata'] && changes['metadata'].currentValue!=undefined) {
       
       this.pageSize=changes['metadata'].currentValue.limit;
       this.totalItems=changes['metadata'].currentValue.itemCount;
