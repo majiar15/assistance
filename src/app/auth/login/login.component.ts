@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
 
       next: (response) => {
         if (response.valid) {
-          this.loginService.isLogged = true;
           this.appService.userData=response.data;
           this.loading = false;
 
@@ -61,10 +60,10 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (err) => {
-        const error =handleLoginError(err.error)
-        this.loginService.isLogged = false;
+
+        const {error} = err;
         this.loading = false;
-        this.message = { text: error, status: false };
+        this.message = { text: error.message, status: false };
 
       }
     });

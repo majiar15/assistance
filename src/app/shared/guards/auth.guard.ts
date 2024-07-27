@@ -11,18 +11,34 @@ export class AuthGuard implements CanActivate {
   constructor(
     private loginService: LoginService,
     private router: Router
-    ) { 
-      
-    }
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log("🚀 ~ AuthGuard:")
+  ) {
 
-    const isSession=this.loginService.fetchAuthSession();
-    if(isSession &&state.url.includes('login')){
-      this.router.navigate(['/dashboard']);
-      return false;
-    }
-    return true;
   }
-  
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+     
+      try {
+      
+        let isSession = await this.loginService.fetchAuthSession();
+        if (isSession && state.url.includes('login')) {
+          this.router.navigate(['/dashboard']);
+          return false;
+        } else {
+          this.loginService.logout();
+          
+          return true;
+        }
+      } catch (error) {
+        console.error("Error fetching auth session", error);
+        return false;
+      }
+      
+    
+    
+
+
+
+
+  }
+
 }

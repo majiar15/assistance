@@ -42,7 +42,6 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(){
-    this.loginService.isLogged=false;
-    localStorage.clear()
+    this.loginService.logout();
   }
 }

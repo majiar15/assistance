@@ -8,7 +8,6 @@ import { AcademicProgram, User ,Response } from './shared/interfaces/interfaces'
 })
 export class AppService {
 
-  public token: string = '';
   public academic_programs: AcademicProgram[] = [];
   public userData?: User;
   public showModal: boolean = false;
@@ -32,6 +31,13 @@ export class AppService {
 
   getAcademicProgram() {
     return this.httpService.getItem('/academic-program');
+  }
+
+
+
+  default(){
+    this.userData=undefined;
+    this.academic_programs = [];
   }
 
 
