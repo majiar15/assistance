@@ -48,6 +48,7 @@ td i{
     align-items: center;
     justify-content: space-between;
     padding: 5px 10px;
+    margin-bottom: 30px;
 }
 .table-pagination span{
     color: #707683;

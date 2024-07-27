@@ -3,6 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { StudentsService } from '../../students/students.service';
 import { HomeCoursesService } from '../home-courses.service';
@@ -14,7 +15,10 @@ import { TableAssistanceComponent } from 'src/app/components/table-assistance/ta
     selector: 'app-assistance',
     templateUrl: './assistance.component.html',
     styleUrls: ['./assistance.component.css'],
-    imports: [CommonModule, RouterLink,FormsModule, TableAssistanceComponent,ModalComponent],
+    imports: [
+      CommonModule, RouterLink,
+      FormsModule, TableAssistanceComponent,
+      ModalComponent,ToastModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [MessageService]
 })

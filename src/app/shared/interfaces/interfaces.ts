@@ -6,6 +6,7 @@ export interface User {
     phone: number;
     role: string;
     _id: string;
+    page?:number;
 }
 
 export interface Student extends User {

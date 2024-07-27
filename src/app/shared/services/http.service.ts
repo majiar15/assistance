@@ -34,7 +34,7 @@ export class HttpService {
     return ({ headers });
   }
 
-  public get(path:string, header?:any) {
+  private get(path:string, header?:any) {
     header = header !== false ? (header || this.getHeaders()) : header;
     return this.http.get(this.baseUrl+path, header);
   }
@@ -45,12 +45,12 @@ export class HttpService {
     return this.http.post(this.baseUrl+path, data, header);
   }
 
-  public put(path: string, data: any,header?:any) {
+  private put(path: string, data: any,header?:any) {
     header = header !== false ? (header || this.getHeaders()) : header;
     return this.http.put(this.baseUrl+path, data, header);
   }
 
-  public delete(path: string, header?:any) {
+  private delete(path: string, header?:any) {
     header = header !== false ? (header || this.getHeaders()) : header;
     return this.http.delete(this.baseUrl+path, header);
   }
@@ -123,8 +123,21 @@ export class HttpService {
   }
 
 
-  public handleError(error: any): Observable<never> {
-    return throwError(() => new Error(error.message || 'Server Error'));
+  public handleError(err: any): Observable<never> {
+    
+    let message ='';
+    if (err?.error?.message) {
+      if (Array.isArray(err?.error?.message)) {
+        message = err?.error?.message[0];
+      } else {
+        message = err?.error?.message;
+      }
+    }else{
+      message = err?.error?.message;
+    }
+
+
+    return throwError(() => new Error(message || 'Server Error'));
   }
 
   private mapResponse(response:Response<any>){

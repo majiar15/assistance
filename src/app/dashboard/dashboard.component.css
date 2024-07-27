@@ -23,7 +23,7 @@
     display: flex;
     overflow-y: auto;
     flex-direction: column;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
 }
 .content h1{
  padding: 30px 0px 30px 0px;

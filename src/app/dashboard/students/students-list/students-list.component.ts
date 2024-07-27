@@ -5,18 +5,27 @@ import { RouterLink } from '@angular/router';
 import { TableComponent } from "../../../components/table/table.component";
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { ModalType } from "src/app/shared/enum/modalType";
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-students-list',
-    standalone: true,
-    templateUrl: './students-list.component.html',
-    styleUrl: './students-list.component.css',
-    imports: [CommonModule, RouterLink,FormsModule, TableComponent,ModalComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    providers: [MessageService]
+  selector: 'app-students-list',
+  standalone: true,
+  templateUrl: './students-list.component.html',
+  styleUrl: './students-list.component.css',
+  imports: [
+    CommonModule,
+    RouterLink,
+    FormsModule,
+    TableComponent,
+    ModalComponent,
+    ToastModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [MessageService]
 
 })
 export class StudentsListComponent implements OnInit {
@@ -25,23 +34,25 @@ export class StudentsListComponent implements OnInit {
   data: any[] = [];
   searchText: string = '';
 
-  showModal:boolean = false;
-  modal_type:number = ModalType.SELECT_OPTIONS;
-  modal_buttons:Array<any> = [];
-  data_delete:any;
+  showModal: boolean = false;
+  modal_type: number = ModalType.SELECT_OPTIONS;
+  modal_buttons: Array<any> = [];
+  data_delete: any;
+  searchSubject: Subject<any> = new Subject();
+
 
   constructor(
-    public studentsService:StudentsService,
+    public studentsService: StudentsService,
     private httpService: HttpService,
     private messageService: MessageService
 
-  ){
+  ) {
   }
 
   ngOnInit(): void {
 
     if (this.studentsService.students.data.length == 0) {
-      this.studentsService.getStudent().subscribe({
+      this.studentsService.getAllStudent().subscribe({
         next: (response) => {
           if (response.valid) {
             this.studentsService.students = response;
@@ -55,6 +66,10 @@ export class StudentsListComponent implements OnInit {
     } else {
       this.data = this.formatData(this.studentsService.students.data)
     }
+
+    this.searchSubject.pipe(debounceTime(400)).subscribe((response) => {
+      this.filterData()
+    })
   }
 
 
@@ -66,30 +81,65 @@ export class StudentsListComponent implements OnInit {
         phone: student.phone,
         email: student.email,
         _id: student._id,
-        page:student.hasOwnProperty('page')?student.page:1
+        page: student.hasOwnProperty('page') ? student.page : 1
       };
     });
   }
 
+  onInput(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if (inputValue.trim() === '') {
+      this.data = this.formatData(this.studentsService.students.data)
+    }
+  }
+
   filterData(): void {
-    if (this.searchText === "") {
+
+    if (!this.searchText.trim()) {
       this.data = this.formatData(this.studentsService.students.data);
+      return;
     }
     const searchTextLower = this.searchText.toLowerCase().trim();
 
-    const dataFilter = this.studentsService.students.data.filter((item: any) => {
-      return Object.keys(item).some(key => {
-        const value = item[key].toString().toLowerCase();
-        return value.includes(searchTextLower);
-      });
-    });
+    const dataFilter = this.studentsService.students.data.filter((item: any) =>
+      Object.values(item).some(value => {
+        if (typeof value === 'string' || typeof value === 'number') {
+          return value.toString().toLowerCase().includes(searchTextLower);
+        }
+        return false;
+      })
+    );
 
-    this.data = this.formatData(dataFilter);
+    if (dataFilter.length===0) {
+      this.searchStudents()
+    } else {
+      this.data = dataFilter.map(student => ({
+        ...student,
+        page: 1,
+      }));
+    }
+
   };
+
+  searchStudents() {
+    this.studentsService.searchStudents(this.searchText).subscribe({
+      next: (response: any) => {
+        if (response.valid) {
+          this.data = this.formatData(response.data);
+        }
+      },
+      error: (error) => {
+
+      }
+    })
+  }
+
+
+
 
   deleteStudent(data: any) {
 
-    this.httpService.deleteItem(`/students/${data._id}`).subscribe((response: any) => {  
+    this.httpService.deleteItem(`/students/${data._id}`).subscribe((response: any) => {
 
       if (response.valid && response.data.deletedCount > 0) {
 
@@ -101,11 +151,11 @@ export class StudentsListComponent implements OnInit {
           summary: 'Eliminado correctamente.',
           detail: 'El profesor ha sido eliminado correctamente.'
         });
-        
+
       } else {
 
         this.messageService.add({
-          severity: 'Error',
+          severity: 'error',
           summary: 'Ha ocurrido un error.',
           detail: 'Ha ocurrido un error al eliminar el profesor, por favor intenta nuevamente.'
         });
@@ -115,30 +165,30 @@ export class StudentsListComponent implements OnInit {
   }
 
 
-  deleteConfirmProperty(data:any){
-    this.data_delete=data;
-    this.modal_type=ModalType.DELETE_STUDENT;
-    this.showModal=true;
-    this.modal_buttons=[
+  deleteConfirmProperty(data: any) {
+    this.data_delete = data;
+    this.modal_type = ModalType.DELETE_STUDENT;
+    this.showModal = true;
+    this.modal_buttons = [
       {
-        name:'Eliminar'
+        name: 'Eliminar'
       },
       {
-        name:'Cancelar'
-      }, 
-    ]    
+        name: 'Cancelar'
+      },
+    ]
   }
 
-  deleteProperty(){
+  deleteProperty() {
     this.deleteStudent(this.data_delete);
     this.cancel();
   }
 
-  cancel(){
-    this.data_delete=null;
-    this.modal_type=ModalType.SELECT_OPTIONS;
-    this.showModal=false;
-    this.modal_buttons=[]
+  cancel() {
+    this.data_delete = null;
+    this.modal_type = ModalType.SELECT_OPTIONS;
+    this.showModal = false;
+    this.modal_buttons = []
   }
 
   getMoreStudent(event: any) {
@@ -147,8 +197,8 @@ export class StudentsListComponent implements OnInit {
     if (metadata) {
       const { limit } = metadata;
       if (!event.pageFetching.includes(event.page)) {
-        this.studentsService.getMoreStudent(event.page,limit).subscribe((response)=>{
-          if(response.valid){
+        this.studentsService.getMoreStudent(event.page, limit).subscribe((response) => {
+          if (response.valid) {
             this.studentsService.students.data.push(...response.data);
             this.studentsService.students.metadata = response.metadata;
             this.data = this.formatData(this.studentsService.students.data)
@@ -156,7 +206,7 @@ export class StudentsListComponent implements OnInit {
         })
       }
     }
-    
+
   }
 
 }

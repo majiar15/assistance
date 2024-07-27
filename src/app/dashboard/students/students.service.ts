@@ -24,9 +24,18 @@ export class StudentsService {
     return this.httpService.deleteItem(`/students/${teacher_id}`)
   }
 
-  public getStudent(): Observable<Response<Student>>{
+  public getStudent(id:string): Observable<any>{
+    return this.httpService.getItem('/students/'+id);
+  }
+
+  public getAllStudent(): Observable<Response<Student>>{
     return this.httpService.getItem('/students');
   }
+
+  searchStudents(name:string):Observable<any>{
+    return this.httpService.getItem(`/students/search?name=${name}`)
+  }
+
   public getMoreStudent(page:number,limit:number): Observable<Response<Student>>{
     return this.httpService.getItem(`/students?page=${page}&limit=${limit}`);
   }
