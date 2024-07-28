@@ -10,18 +10,21 @@ import { CoursesService } from '../../courses/courses.service';
 import { Student, Response } from 'src/app/shared/interfaces/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime, Subject, Subscription } from 'rxjs';
+import { TableEnrollComponent } from "./table-enroll/table-enroll.component";
+import { TableEnrollType } from 'src/app/shared/enum/modalType';
 
 @Component({
   selector: 'select-students',
   standalone: true,
   templateUrl: './select-students.component.html',
   styleUrl: './select-students.component.css',
-  imports: [CommonModule, FormsModule, CourseGridComponent, ToastModule],
+  imports: [CommonModule, FormsModule, CourseGridComponent, ToastModule, TableEnrollComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MessageService]
 })
 export class SelectStudentsComponent {
 
+  tableType = TableEnrollType;
   titles = ["Documento de identidad", "Nombre", "Facultad", "Programa"];
   students: any[] = []
   enrolledStudents: any[] = [];
@@ -33,14 +36,14 @@ export class SelectStudentsComponent {
 
   constructor(
     private messageService: MessageService,
-    private enrollService: EnrollService,
+    public enrollService: EnrollService,
     private studentsService: StudentsService,
     private route: ActivatedRoute
   ) { }
 
 
   ngOnInit(): void {
-
+    this.tableType.LIST_STUDENT
     this.course_id = this.route.snapshot.paramMap.get('id') || '';
 
 
@@ -115,22 +118,16 @@ export class SelectStudentsComponent {
       faculty: student.academic_program.faculty,
       program: student.academic_program.name,
       _id: student._id,
+      page: student.hasOwnProperty('page') ? student.page : 1
     }));
   }
 
 
 
-  getObjectKeys(obj: any): string[] {
-    const newObject = { ...obj }; // se utiliza desestructuracion para romper el enlace con el objeto origial
-    delete newObject._id;
-    return Object.keys(newObject);
-  }
-
-
   onInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     if (inputValue.trim() === '') {
-      this.students = this.filterEnrolledStudent(this.studentsService.students.data)
+      this.students = this.filterEnrolledStudent(this.enrollService.unenrolledStudents!.data)
     }
   }
 
@@ -140,7 +137,7 @@ export class SelectStudentsComponent {
     }
 
     this.subscriptions.push(
-      this.enrollService.searchStudents(this.searchText,this.course_id).subscribe({
+      this.enrollService.searchStudents(this.searchText, this.course_id).subscribe({
         next: (response: any) => {
           if (response.valid && response.data.length) {
             this.students = this.filterEnrolledStudent(response.data)
@@ -189,27 +186,66 @@ export class SelectStudentsComponent {
 
     this.subscriptions.push(
       this.enrollService.enrollStudents(data).subscribe({
-        next:(response: any) => {
-        console.log("🚀 ~ SelectStudentsComponent ~ this.enrollService.enrollStudents ~ response:", response)
-        this.loading = false;
+        next: (response: any) => {
+          console.log("🚀 ~ SelectStudentsComponent ~ this.enrollService.enrollStudents ~ response:", response)
+          this.loading = false;
 
-      
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Matricula Exitosa!',
-          detail: 'los estudiantes han sido matriculados correctamente.'
-        });
-      },
-      error:(err)=>{
-        console.error("ERROR enrollStudents: ",err);
-        this.messageService.add({
-          severity: 'Error',
-          summary: 'Error en la matrícula',
-          detail: 'Ocurrió un problema al matricular a los estudiantes. Por favor, intenta nuevamente.'
-        });
-      }
-    }),
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Matricula Exitosa!',
+            detail: 'los estudiantes han sido matriculados correctamente.'
+          });
+        },
+        error: (err) => {
+          console.error("ERROR enrollStudents: ", err);
+          this.messageService.add({
+            severity: 'Error',
+            summary: 'Error en la matrícula',
+            detail: 'Ocurrió un problema al matricular a los estudiantes. Por favor, intenta nuevamente.'
+          });
+        }
+      }),
     )
+  }
+
+
+
+  getMore(event: any) {
+
+    if (event.type == this.tableType.LIST_STUDENT) {
+      const metadata = this.enrollService.unenrolledStudents?.metadata;
+      if (metadata) {
+        const { page, pageCount, limit } = metadata;
+        if (!event.pageFetching.includes(event.page)) {
+  
+          this.enrollService.getMore('/not-enrolled',event.page, limit,this.course_id).subscribe((response) => {
+            if (response.valid) {
+              this.enrollService.unenrolledStudents?.data.push(...response.data);
+              this.enrollService.unenrolledStudents!.metadata = response.metadata;
+              this.students = this.formatData(this.enrollService.unenrolledStudents!.data)
+            }
+          });
+        }
+
+      }
+    }else{
+      const metadata = this.enrollService.enrolledStudents?.metadata;
+      if (metadata) {
+        const { page, pageCount, limit } = metadata;
+        if (!event.pageFetching.includes(event.page)) {
+  
+          this.enrollService.getMore('/enrolled',event.page, limit,this.course_id).subscribe((response) => {
+            if (response.valid) {
+              this.enrollService.enrolledStudents?.data.push(...response.data);
+              this.enrollService.enrolledStudents!.metadata = response.metadata;
+              this.students = this.formatData(this.enrollService.enrolledStudents!.data)
+            }
+          });
+        }
+
+      }
+    }
   }
 
 }

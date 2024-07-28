@@ -16,6 +16,7 @@ import { SelectCourseComponent } from "./enroll/select-course/select-course.comp
 import { SelectStudentsComponent } from "./enroll/select-students/select-students.component";
 import { AssistanceComponent } from "./home-courses/assistance/assistance.component";
 import { SelectCourseAssistanceComponent } from "./home-courses/select-course-assistance/select-course-assistance.component";
+import { RoleGuard } from "../shared/guards/role.guard";
 
 const routes: Routes = [
   {
@@ -30,6 +31,8 @@ const routes: Routes = [
           { path: 'assistance/:id', component: AssistanceComponent },
           
         ],
+        canActivate:[RoleGuard],
+        data: { expectedRole: ['teacher'] }
       },
 
       {
@@ -38,8 +41,9 @@ const routes: Routes = [
           { path: '', component: StudentsListComponent },
           { path: 'create', component: RegisterStudentComponent },
           { path: ':id', component: RegisterStudentComponent },
-        ]
-
+        ],
+        canActivate:[RoleGuard],
+        data: { expectedRole: ['admin'] }
       },
       
       {
@@ -48,7 +52,9 @@ const routes: Routes = [
           { path: '', component: CoursesListComponent },
           { path: 'create', component: CreateCourseComponent },
           { path: ':id', component: CreateCourseComponent },
-        ]
+        ],
+        canActivate:[RoleGuard],
+        data: { expectedRole: ['admin'] }
       },
       {
         path: 'teachers', component: TeacherComponent,
@@ -56,7 +62,9 @@ const routes: Routes = [
           { path: '', component: TeacherListComponent },
           { path: 'create', component: RegisterTeacherComponent },
           { path: ':id', component: RegisterTeacherComponent },
-        ]
+        ],
+        canActivate:[RoleGuard],
+        data: { expectedRole: ['admin'] }
       },
       {
         path: 'enroll', component: EnrollComponent,
@@ -64,7 +72,9 @@ const routes: Routes = [
           { path: '', component: SelectCourseComponent },
           { path: ':id', component: SelectStudentsComponent },
           // { path: '**', redirectTo: 'select-course', pathMatch: 'full' },
-        ]
+        ],
+        canActivate:[RoleGuard],
+        data: { expectedRole: ['admin','teacher'] }
       },
       
       { path: '', redirectTo: '', pathMatch: 'full' }

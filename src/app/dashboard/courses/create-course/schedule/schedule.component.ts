@@ -38,7 +38,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   saveSchedule(index: number) {
-    debugger
+    
     const { week_day, room, hour_start, hour_end } = this.coursesService.schedule[index]
 
     if (week_day == '' || room == '' || hour_start == '' || hour_end == '') {

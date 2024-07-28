@@ -25,13 +25,31 @@ export class SelectCourseComponent implements OnInit {
 
 
   constructor(
-    private coursesService: CoursesService,
+    public coursesService: CoursesService,
     private enrollService: EnrollService,
     public router: Router,
   ) { }
 
   ngOnInit(): void {
-    console.log("🚀 ~ SelectCourseComponent ~ ngOnInit ~ ngOnInit:")
+
+    if (this.coursesService.courses.data.length == 0) {
+      this.coursesService.getCourses().subscribe({
+        next: (response) => {
+          if (response.valid) {
+
+            this.coursesService.courses = response;
+            this.courses = this.coursesService.courses.data;
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching COURSES:', err);
+        }
+      });
+    } else {
+      this.courses = this.coursesService.courses.data;
+    }
+
+
     if (this.coursesService.courses.data.length) {
       this.courses = this.coursesService.courses.data;
     } 
@@ -43,7 +61,7 @@ export class SelectCourseComponent implements OnInit {
 
   onInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
-    if (inputValue.trim() === '') {
+    if (inputValue.trim() == '') {
       this.courses = this.coursesService.courses.data;
     }
   }
@@ -57,6 +75,8 @@ export class SelectCourseComponent implements OnInit {
       next: (response: any) => {
         if (response.valid && response.data.length) {
           this.courses = response.data
+        }else{
+          this.courses = [];
         }
       },
       error: (error) => {
@@ -70,5 +90,26 @@ export class SelectCourseComponent implements OnInit {
 
   navigateToSelectStudents(course:any){
     this.router.navigate(['dashboard/enroll',course._id]);
+  }
+
+
+  getMoreCourse(event: any) {
+
+    const metadata = this.coursesService.courses.metadata;
+    if (metadata) {
+      const { page, pageCount,limit } = metadata;
+      if (!event.pageFetching.includes(event.page)) {
+        this.coursesService.getMoreCourse(event.page,limit).subscribe((response)=>{
+          console.log("🚀 ~ response:", response)
+
+          if(response.valid){
+            this.coursesService.courses.data.push(...response.data);
+            this.coursesService.courses.metadata = response.metadata;
+            this.courses = this.coursesService.courses.data
+          }
+        });
+      }
+
+    }
   }
 }

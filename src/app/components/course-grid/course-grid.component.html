@@ -1,16 +1,36 @@
 <div class="wrap-card">
-    <div class="w-100" *ngIf="courses.length == 0 && !loading">
-        <div class="alert alert-danger">
-            <h3>Usted no tiene cursos disponibles.</h3>
-        </div>
+  <div class="w-100" *ngIf="courses.length == 0 && !loading">
+    <div class="alert alert-danger">
+      <h3>Usted no tiene cursos disponibles.</h3>
     </div>
-    <div *ngIf="loading" class="spinner-border" role="status"></div>
-    <div *ngFor="let course of courses; let i = index">
-        <div (click)="clickCard(course)" class="card" style="width: 19rem;">
-            <div class="cardColor" [ngClass]="courseColors[i]"></div>
-            <div class="card-body">
-                <h5 class="card-title">{{course.name}}</h5>
-            </div>
-        </div>
+  </div>
+  <div *ngIf="loading" class="spinner-border" role="status"></div>
+  <div *ngFor="let course of paginatedData; let i = index">
+    <div (click)="clickCard(course)" class="card" style="width: 19rem;">
+      <div class="cardColor" [ngClass]="courseColors[i]"></div>
+      <div class="card-body">
+        <h5 class="card-title">{{course.name}}</h5>
+      </div>
     </div>
+  </div>
 </div>
+@if (courses.length>0) {
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" (click)="setPage(currentPage - 1)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+      [class.active]="currentPage === i + 1" [class.custom-active]="currentPage === i + 1">
+      <a class="page-link custom-page-link" (click)="setPage(i + 1)">{{ i + 1 }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link" (click)="setPage(currentPage + 1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+}

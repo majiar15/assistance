@@ -35,7 +35,7 @@ export class EnrollService {
 
   searchStudents(name:string,course_id:string):Observable<any>{
     
-    return this.httpService.getItem(`/students/search-not-enrolled?name=${name},course_id=${course_id}`)
+    return this.httpService.getItem(`/students/search-not-enrolled?name=${name}&course_id=${course_id}`)
   }
 
   enrollStudents(data:any):Observable<any>{
@@ -50,6 +50,10 @@ export class EnrollService {
   getUnenrolledStudents(course_id:string):Observable<Response<Student>>{
     
     return this.httpService.getItem(`/students/not-enrolled?course_id=${course_id}`)
+  }
+
+  public getMore( path:string,page:number,limit:number,course_id:string):Observable<Response<Student>>{
+    return this.httpService.getItem(`/students${path}?page=${page}&limit=${limit}&course_id=${course_id}`);
   }
 
   default(){

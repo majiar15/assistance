@@ -4,7 +4,10 @@
     flex-wrap: wrap;
     gap: 40px;
 }
-
+nav{
+    display: flex;
+    justify-content: flex-end;
+}
 /* ===== CARD =====*/
 
 

@@ -2,8 +2,8 @@
 <div class="content-filter card-filter">
     <div class="filter">
         <label class="form-label">Ingrese el nombre del estudiante o documento de identidad*</label>
-        <input type="text" class="form-control" id="filter" placeholder="Ej. 0.000.000.000"
-            [(ngModel)]="searchText" (ngModelChange)="searchSubject.next($event)" (input)="onInput($event)">
+        <input type="text" class="form-control" id="filter" placeholder="Ej. 0.000.000.000" [(ngModel)]="searchText"
+            (ngModelChange)="searchSubject.next($event)" (input)="onInput($event)">
     </div>
     <button class="button" (click)="enroll()" [disabled]="loading">
         <div *ngIf="loading" class="spinner-border" role="status"></div>
@@ -13,42 +13,42 @@
 </div>
 
 
-<div  class="table-grid">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th *ngFor="let title of titles">{{ title }}</th>
-                <th>Seleccionar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let record of students">
-                <td *ngFor="let property of getObjectKeys(record)">
-                    {{ record[property] }}
-                </td>
-                <td (click)="addEnrolledStudent(record)">
-                    <i class="bi bi-plus-circle"></i>
-                    <!-- <input type="checkbox" [(ngModel)]="record.check" /> -->
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th *ngFor="let title of titles">{{ title }}</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let record of enrolledStudents">
-                <td *ngFor="let property of getObjectKeys(record)">
-                    {{ record[property] }}
-                </td>
-                <td>
-                    <i (click)="removeEnrolledStudent(record)" class="bi bi-trash"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="table-grid">
+    <div class="table-container">
+        <table-enroll [students]="students" [type]="tableType.LIST_STUDENT" 
+            [metadata]="enrollService.unenrolledStudents?.metadata"
+            (buttonItem)="addEnrolledStudent($event)"
+            (paginationItem)="getMore($event)"
+    ></table-enroll>
+    </div>
+    
+  
+    <div class="table-container">
+
+        <table-enroll [students]="enrolledStudents" [type]="tableType.STUDENT_ENROLLED" 
+            [metadata]="enrollService.enrolledStudents?.metadata"
+            (buttonItem)="removeEnrolledStudent($event)"
+            (paginationItem)="getMore($event)"
+    ></table-enroll>
+        <!-- <h5>Estudiantes Matriculados</h5>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th *ngFor="let title of titles">{{ title }}</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of enrolledStudents">
+                    <td *ngFor="let property of getObjectKeys(record)">
+                        {{ record[property] }}
+                    </td>
+                    <td>
+                        <i (click)="removeEnrolledStudent(record)" class="bi bi-trash"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+    </div>
 </div>

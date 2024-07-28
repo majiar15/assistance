@@ -8,5 +8,5 @@
 
 </div>
 
-<course-grid [courses]="courses" (courseEvent)="navigateToSelectStudents($event)"
-    ></course-grid>
+<course-grid [courses]="courses" [metadata]="coursesService.courses.metadata"
+    (courseEvent)="navigateToSelectStudents($event)" (paginationItem)="getMoreCourse($event)"></course-grid>
