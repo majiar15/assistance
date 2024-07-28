@@ -60,8 +60,9 @@
 
         <div class="mb-3">
             <label for="academic_program" class="form-label">Programa academico*</label>
-            <ng-select [items]="academic_programs" bindLabel="name" bindValue="_id" formControlName="academic_program"
-                [multiple]="true" placeholder="Select multiple items" (change)="logSelectedItems()">
+            <ng-select [items]="academic_programs" bindLabel="name" bindValue="_id" 
+                formControlName="academic_program" [class]="isControlInvalid('academic_program') ? 'is-invalid' :''"
+                [multiple]="true" placeholder="">
 
             </ng-select>
             @if (isControlInvalid('academic_program')) {
@@ -77,8 +78,8 @@
         <div class="mb-3">
             <label for="intensity">Intencidad de horas</label>
             <input type="number" class="form-control" name="intensity" id="intensity" formControlName="intensity"
-                (keyup)="showSchedule($event)" [class]="isControlInvalid('teacher_id') ? 'is-invalid' :''">
-            @if (isControlInvalid('teacher_id')) {
+                (keyup)="showSchedule($event)" [class]="isControlInvalid('intensity') ? 'is-invalid' :''">
+            @if (isControlInvalid('intensity')) {
             <div class="invalid-feedback">
                 Debe indicar la intencidad de horas.
             </div>

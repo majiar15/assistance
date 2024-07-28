@@ -58,7 +58,7 @@ export class CreateCourseComponent implements OnInit {
       "teacher_id": new FormControl('', [Validators.required]),
       "intensity": new FormControl('', [Validators.required]),
       "description": new FormControl(''),
-      "academic_program": new FormControl([])
+      "academic_program": new FormControl([], [Validators.required])
 
     })
 
@@ -76,9 +76,6 @@ export class CreateCourseComponent implements OnInit {
     }
   }
 
-  logSelectedItems(): void {
-    console.log('Selected Items:', this.form.get('academic_program')?.value);
-  }
 
   loadCourseData() {
     const course = this.coursesService.courses.data.find(item => item._id == this.course_id)
@@ -153,7 +150,7 @@ export class CreateCourseComponent implements OnInit {
 
     }
 
-    let data = {
+    const data = {
       teacher_id: this.form.value.teacher_id,
       name: this.form.value.name,
       date_start: this.form.value.date_start,
@@ -165,34 +162,30 @@ export class CreateCourseComponent implements OnInit {
     }
 
     if(this.course_id){
-      this.coursesService.updateCourse(this.course_id, data).subscribe({
-        next: (response: any) => {
-          this.handleResponse(response);
-        },
-        error: (error) => {
-  
-          this.loading = false;
-          console.log(error);
-  
-          this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
-        }
-      })
+      this.updateCourse(data);
     }else{
-      this.coursesService.createCourse(data).subscribe({
-        next: (response: any) => {
-          this.handleResponse(response);
-        },
-        error: (error) => {
-  
-          this.loading = false;
-          console.log(error);
-  
-          this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false }
-        }
-      })
+      this.createCourse(data);
     }
 
     
+  }
+
+  private createCourse(data: any) {
+    this.coursesService.createCourse(data).subscribe({
+      next: (response: any) => {
+        this.handleResponse(response);
+      },
+      error: (err) => this.handleError(err)
+    })
+  }
+
+  private updateCourse(data: any) {
+    this.coursesService.updateCourse(this.course_id, data).subscribe({
+      next: (response: any) => {
+        this.handleResponse(response);
+      },
+      error: (err) => this.handleError(err)
+    })
   }
 
   handleResponse(response: any) {
@@ -208,6 +201,7 @@ export class CreateCourseComponent implements OnInit {
         }
 
       } else {
+        response.data['page'] = 1;
         this.coursesService.courses.data.unshift(response.data);
       }
 
@@ -220,6 +214,12 @@ export class CreateCourseComponent implements OnInit {
     } else {
       this.message = { text: 'Ha ocurrido un error, por favor intente nuevamente.', status: false };
     }
+  }
+
+  private handleError(err: any) {
+    const message = err.message || 'Ha ocurrido un error, por favor intente nuevamente.';
+    this.loading = false;
+    this.message = { status:false,text:message  };
   }
 
   isControlInvalid(controlName: string) {
@@ -245,16 +245,12 @@ export class CreateCourseComponent implements OnInit {
             page = metadata.page < metadata.pageCount ? metadata.page + 1 : metadata.pageCount;
             hasMorePages = metadata.page < metadata.pageCount;
           } else {
-            hasMorePages = false; // No hay metadata, detener la paginación
+            hasMorePages = false;
           }
         } else {
-          hasMorePages = false; // Respuesta no válida, detener la paginación
+          hasMorePages = false;
         }
       }
-
-      // if (this.teachers.length > 0) {
-      //   this.selectedTeacher = this.teachers[0];
-      // }
 
     } catch (error) {
       console.log("🚀 ~ Error loading teachers:", error);

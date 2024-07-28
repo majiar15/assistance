@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import * as moment from 'moment';
 import { CoursesService } from 'src/app/dashboard/courses/courses.service';
 import { weekdays } from 'src/app/shared/model/format';
@@ -11,7 +12,7 @@ import { weekdays } from 'src/app/shared/model/format';
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule,NgSelectModule]
 })
 export class ScheduleComponent implements OnInit {
 
@@ -36,7 +37,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   saveSchedule(index: number) {
-
+    debugger
     const { week_day, room, hour_start, hour_end } = this.coursesService.schedule[index]
 
     if (week_day == '' || room == '' || hour_start == '' || hour_end == '') {
