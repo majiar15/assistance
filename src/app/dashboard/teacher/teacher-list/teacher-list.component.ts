@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ModalType } from "src/app/shared/enum/modalType";
 import { User } from 'src/app/shared/interfaces/interfaces';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-teacher-list',
@@ -30,6 +31,7 @@ export class TeacherListComponent implements OnInit {
   modal_type: number = ModalType.SELECT_OPTIONS;
   modal_buttons: Array<any> = [];
   data_delete: any;
+  searchSubject: Subject<any> = new Subject();
 
   constructor(
     public teacherService: TeacherService,
@@ -54,6 +56,10 @@ export class TeacherListComponent implements OnInit {
       this.data = this.formatData(this.teacherService.teachers.data)
     }
 
+    this.searchSubject.pipe(debounceTime(400)).subscribe((response) => {
+      this.filterData()
+    })
+
   }
 
   formatData(teachers: any[]): any[] {
@@ -69,21 +75,53 @@ export class TeacherListComponent implements OnInit {
     });
   }
 
+  onInput(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if (inputValue.trim() === '') {
+      this.data = this.formatData(this.teacherService.teachers.data)
+    }
+  }
+
   filterData(): void {
     if (this.searchText === "") {
       this.data = this.formatData(this.teacherService.teachers.data);
+      return;
     }
     const searchTextLower = this.searchText.toLowerCase().trim();
 
-    const dataFilter = this.teacherService.teachers.data.filter((item: any) => {
-      return Object.keys(item).some(key => {
-        const value = item[key].toString().toLowerCase();
-        return value.includes(searchTextLower);
-      });
-    });
+    const dataFilter = this.teacherService.teachers.data.filter((item: any) =>
+      Object.values(item).some(value => {
+        if (typeof value === 'string' || typeof value === 'number') {
+          return value.toString().toLowerCase().includes(searchTextLower);
+        }
+        return false;
+      })
+    );
 
-    this.data = this.formatData(dataFilter);
+    if (dataFilter.length===0) {
+      this.searchTeacher()
+    } else {
+      const data = dataFilter.map(student => ({
+        ...student,
+        page: 1,
+      }));
+      this.data = this.formatData(data);
+    }
   };
+
+
+  searchTeacher() {
+    this.teacherService.searchTeacher(this.searchText).subscribe({
+      next: (response: any) => {
+        if (response.valid) {
+          this.data = this.formatData(response.data);
+        }
+      },
+      error: (error) => {
+
+      }
+    })
+  }
 
 
   deleteTeacher(data: any) {

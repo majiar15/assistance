@@ -32,7 +32,7 @@ export class StudentsService {
     return this.httpService.getItem('/students');
   }
 
-  searchStudents(name:string):Observable<any>{
+  public searchStudents(name:string):Observable<any>{
     return this.httpService.getItem(`/students/search?name=${name}`)
   }
 

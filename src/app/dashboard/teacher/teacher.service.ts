@@ -14,6 +14,24 @@ export class TeacherService {
     private httpService: HttpService
   ) {}
 
+  
+
+  public getTeacher(id:string): Observable<any>{
+    return this.httpService.getItem('/teachers/'+id);
+  }
+
+  public getTeachers(): Observable<Response<User>>{
+    return this.httpService.getItem('/teachers');
+  }
+
+  public searchTeacher(name:string):Observable<any>{
+    return this.httpService.getItem(`/teachers/search?name=${name}`)
+  }
+
+  public getMoreTeachers(page:number,limit:number): Observable<Response<User>>{
+    return this.httpService.getItem(`/teachers?page=${page}&limit=${limit}`);
+  }
+
   public createTeacher(data: any): Observable<any> {
     return this.httpService.postItem('/teachers',data)
   }
@@ -25,13 +43,5 @@ export class TeacherService {
   public deleteTeacher(teacher_id:string){
     return this.httpService.deleteItem(`/teachers/${teacher_id}`)
   }
-
-  public getTeachers(): Observable<Response<User>>{
-    return this.httpService.getItem('/teachers');
-  }
-  public getMoreTeachers(page:number,limit:number): Observable<Response<User>>{
-    return this.httpService.getItem(`/teachers?page=${page}&limit=${limit}`);
-  }
-
 
 }

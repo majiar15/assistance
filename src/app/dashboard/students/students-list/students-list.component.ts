@@ -113,10 +113,11 @@ export class StudentsListComponent implements OnInit {
     if (dataFilter.length===0) {
       this.searchStudents()
     } else {
-      this.data = dataFilter.map(student => ({
+      const data = dataFilter.map(student => ({
         ...student,
         page: 1,
       }));
+      this.data = this.formatData(data);
     }
 
   };

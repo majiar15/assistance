@@ -11,7 +11,7 @@
                 <input type="number" class="form-control" name="CC" id="CC" formControlName="dni"
                     [class]="isControlInvalid('dni') ? 'is-invalid' :''">
                 <div *ngIf="isControlInvalid('dni')" class="invalid-feedback">
-                    Debe tener minimo 6 numeros
+                    Debe tener minimo 6 caracteres.
                 </div>
             </div>
         </div>

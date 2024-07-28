@@ -6,7 +6,9 @@
     <div class="content-filter card-filter">
         <div class="filter ">
             <label class="form-label">Ingrese el nombre*</label>
-            <input type="text" class="form-control" id="filter" (input)="filterData()" [(ngModel)]="searchText">
+            <input type="text" class="form-control" id="filter"  
+                (ngModelChange)="searchSubject.next($event)"
+                (input)="onInput($event)" [(ngModel)]="searchText">
         </div>
         <button class="button" [routerLink]="['create']">Registrar profesor</button>
 

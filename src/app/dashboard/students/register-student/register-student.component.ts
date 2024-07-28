@@ -51,36 +51,18 @@ export class RegisterStudentComponent implements OnInit {
       "phone": new FormControl('', [Validators.required,Validators.min(1000000000), Validators.max(10000000000)]),
     })
 
-    if (this.student_id) this.loadTeacherData();
+    if (this.student_id) this.loadStudentData();
   }
 
-  loadTeacherData() {
+  loadStudentData() {
     const find_student = this.studentsService.students.data.find(item => item._id == this.student_id)
     if (find_student) {
-      this.form.patchValue({
-        'dni': find_student.dni,
-        'name': find_student.name,
-        'surnames': find_student.surnames,
-        'email': find_student.email,
-        'student_code': find_student.phone,
-        'academic_program': find_student.academic_program._id,
-        'phone': find_student.phone
-      });
+      this.patchFormValues(find_student);
     }else{
       this.studentsService.getStudent(this.student_id).subscribe({
         next:(response) => {
-          console.log("🚀 ~ RegisterStudentComponent ~ this.studentsService.getStudent ~ response:", response)
           if(response.valid){
-            const student = response.data;
-            this.form.patchValue({
-              'dni': student.dni,
-              'name': student.name,
-              'surnames': student.surnames,
-              'email': student.email,
-              'student_code': student.phone,
-              'academic_program': student.academic_program._id,
-              'phone': student.phone
-            });
+            this.patchFormValues(response.data);
 
           }
         },
@@ -98,6 +80,18 @@ export class RegisterStudentComponent implements OnInit {
         }
       })
     }
+  }
+
+  private patchFormValues(student: any): void {
+    this.form.patchValue({
+      'dni': student.dni,
+      'name': student.name,
+      'surnames': student.surnames,
+      'email': student.email,
+      'student_code': student.student_code,
+      'academic_program': student.academic_program._id,
+      'phone': student.phone
+    });
   }
 
 
@@ -139,7 +133,7 @@ export class RegisterStudentComponent implements OnInit {
         this.loading = false;
 
         if (response.valid) {
-          debugger
+          
           
           const student_index = this.studentsService.students.data.findIndex((item) => item._id == response.data._id)
           
