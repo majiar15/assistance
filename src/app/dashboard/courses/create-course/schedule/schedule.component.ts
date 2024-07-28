@@ -32,8 +32,9 @@ export class ScheduleComponent implements OnInit {
   editItemSchedule(index: number) {
 
     this.coursesService.schedule[index].disabled = false;
+    this.coursesService.intensity += this.coursesService.schedule[index].hour_milliseconds
     this.coursesService.schedule.splice(index = 1);
-    this.coursesService.intensity = this.coursesService.intensityBefore
+    
   }
 
   saveSchedule(index: number) {
@@ -48,8 +49,6 @@ export class ScheduleComponent implements OnInit {
       const  hrSalida  = moment(hour_end, 'hh:mm A');
       const duration = hrSalida.diff(hrEntrada);
 
-      console.log(duration, ' -- ', this.coursesService.intensity);
-
       if (duration < 3600000) {
 
         this.message = { text: 'Minimo 1 hora de clases', status: false, index: index }
@@ -58,16 +57,17 @@ export class ScheduleComponent implements OnInit {
         
         if (duration < this.coursesService.intensity) {
 
-          this.coursesService.intensityBefore = this.coursesService.intensity;
+          this.coursesService.schedule[index].hour_milliseconds =duration
           this.coursesService.intensity -= duration
 
           this.coursesService.schedule[index].disabled = true;
 
-          this.coursesService.schedule.push({ week_day: '', hour_start: "", hour_end: "", room: "", disabled: false })
+          this.coursesService.schedule.push({ week_day: '', hour_start: "", hour_end: "", room: "",hour_milliseconds:0, disabled: false })
 
           this.weekdays = this.weekdays.filter(item => item.value != week_day)
 
         } else if (duration == this.coursesService.intensity) {
+          this.coursesService.schedule[index].hour_milliseconds =duration
           this.coursesService.intensity = 0
           this.coursesService.schedule[index].disabled = true
 

@@ -40,6 +40,7 @@ export interface Schedule {
     room: string,
     course_id: string,
     disabled?: boolean,
+    hour_milliseconds:number
 
 
 }

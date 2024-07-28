@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CoursesService } from 'src/app/dashboard/courses/courses.service';
@@ -9,6 +9,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import * as moment from 'moment';
 import { AppService } from 'src/app/app.service';
 import { AcademicProgram } from 'src/app/shared/interfaces/interfaces';
+import { MessageService } from 'primeng/api';
 @Component({
   standalone: true,
   selector: 'create-course',
@@ -20,8 +21,9 @@ import { AcademicProgram } from 'src/app/shared/interfaces/interfaces';
     ReactiveFormsModule,
     FormsModule,
     NgSelectModule,
-
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [MessageService]
   
 })
 export class CreateCourseComponent implements OnInit {
@@ -38,6 +40,7 @@ export class CreateCourseComponent implements OnInit {
     public coursesService: CoursesService,
     public teacherService: TeacherService,
     public appService:AppService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
   ) { }
 
@@ -80,29 +83,57 @@ export class CreateCourseComponent implements OnInit {
   loadCourseData() {
     const course = this.coursesService.courses.data.find(item => item._id == this.course_id)
     console.log("🚀 ~ CreateCourseComponent ~ loadCourseData ~ course:", course)
+    
     if (course) {
-      const dateStart = moment(course.date_start).format('YYYY-MM-DD');
-      const dateEnd = moment(course.date_end).format('YYYY-MM-DD');
-      //const academicProgramsIds = course.academic_program.map(program => program._id);
-
-      this.form.patchValue({
-        'name': course.name,
-        'date_start': dateStart,
-        'date_end': dateEnd,
-        'teacher_id': course.teacher_id,
-        'description': course.description,
-        'intensity':course.intensity,
-        'academic_program':course.academic_programs
-
-      });
-      this.coursesService.intensity =course.intensity;
+      
+      this.patchFormValues(course);
+      this.coursesService.intensity =course.schedules[course.schedules.length-1].hour_milliseconds;
       this.coursesService.schedule = (course.schedules || []).map((item, index, array) => ({
         ...item,
         disabled: index === array.length - 1 ? false : true
       }));
+    }else{
+      this.coursesService.getCourse(this.course_id).subscribe({
+        next:(response) => {
+          console.log("🚀 ~ getCourse: ", response)
+          this.patchFormValues(response.data);
+          this.coursesService.intensity =response.data.schedules[response.data.schedules.length-1].hour_milliseconds;
+          this.coursesService.schedule = (response.data.schedules || []).map((item:any, index: number, array: any[]) => ({
+            ...item,
+            disabled: index === array.length - 1 ? false : true
+          }));
+        },
+        error:(err)=>{
+          const message = err.message || 'Ha ocurrido un error, por favor intente nuevamente.';
+          setTimeout(() => {
+            this.messageService.add({
+              severity: 'error',
+              summary: '¡ERROR!.',
+              detail: message
+            });
+          }, 700);
+        }
+      })
     }
 
     
+  }
+
+  private patchFormValues(course: any): void {
+
+    const dateStart = moment(course.date_start).format('YYYY-MM-DD');
+    const dateEnd = moment(course.date_end).format('YYYY-MM-DD');
+
+    this.form.patchValue({
+      'name': course.name,
+      'date_start': dateStart,
+      'date_end': dateEnd,
+      'teacher_id': course.teacher_id,
+      'description': course.description,
+      'intensity':course.intensity,
+      'academic_program':course.academic_programs
+
+    });
   }
   
 
@@ -117,10 +148,9 @@ export class CreateCourseComponent implements OnInit {
 
     } else {
       this.coursesService.intensity = Number(event.target.value) * 3600000
-      this.coursesService.intensityBefore = Number(event.target.value) * 3600000
 
       if (this.coursesService.schedule.length == 0 && event.target.value != '') {
-        this.coursesService.schedule.push({ week_day: '', hour_start: "", hour_end: "", room: "", disabled: false })
+        this.coursesService.schedule.push({ week_day: '', hour_start: "", hour_end: "", room: "", disabled: false ,hour_milliseconds:0})
       }
       if (event.target.value == '') {
         this.coursesService.schedule = []
@@ -207,7 +237,6 @@ export class CreateCourseComponent implements OnInit {
 
       this.form.reset();
       this.coursesService.intensity = 0;
-      this.coursesService.intensityBefore = 0;
       this.coursesService.schedule = [];
       this.loading = false;
       this.message = { text: this.course_id ? 'El curso ha sido actualizado correctamente' : 'El curso ha sido registrado correctamente', status: true };
@@ -255,5 +284,11 @@ export class CreateCourseComponent implements OnInit {
     } catch (error) {
       console.log("🚀 ~ Error loading teachers:", error);
     }
+  }
+
+
+  ngOnDestroy():void{
+    this.coursesService.schedule=[];
+    this.coursesService.intensity=0;
   }
 }

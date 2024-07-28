@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { TeacherService } from '../../teacher/teacher.service';
 import { AppService } from 'src/app/app.service';
 import { FormsModule } from '@angular/forms';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-courses-list',
@@ -34,10 +35,12 @@ export class CoursesListComponent implements OnInit {
   modal_type:number = ModalType.SELECT_OPTIONS;
   modal_buttons:Array<any> = [];
   data_delete:any;
+  searchSubject: Subject<any> = new Subject();
 
   constructor(
     public coursesService: CoursesService,
     public teacherService: TeacherService,
+    private messageService: MessageService,
     private appService:AppService,
   ){}
 
@@ -50,16 +53,19 @@ export class CoursesListComponent implements OnInit {
 
             this.coursesService.courses = response;
             this.data = this.formatData(this.coursesService.courses.data)
-            console.log("🚀 ~ data:", this.data)
           }
         },
         error: (err) => {
-          console.error('Error fetching teachers:', err);
+          console.error('Error fetching COURSES:', err);
         }
       });
     } else {
       this.data = this.formatData(this.coursesService.courses.data)
     }
+
+    this.searchSubject.pipe(debounceTime(400)).subscribe((response) => {
+      this.filterData()
+    })
     
   } 
 
@@ -78,21 +84,54 @@ export class CoursesListComponent implements OnInit {
     });
   }
 
+  onInput(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if (inputValue.trim() === '') {
+      this.data = this.formatData(this.coursesService.courses.data)
+    }
+  }
+
   filterData(): void {
     if (this.searchText === "") {
       this.data = this.formatData(this.coursesService.courses.data);
     }
     const searchTextLower = this.searchText.toLowerCase().trim();
 
-    const dataFilter = this.coursesService.courses.data.filter((item: any) => {
-      return Object.keys(item).some(key => {
-        const value = item[key].toString().toLowerCase();
-        return value.includes(searchTextLower);
-      });
-    });
+    const dataFilter = this.teacherService.teachers.data.filter((item: any) =>
+      Object.values(item).some(value => {
+        if (typeof value === 'string' || typeof value === 'number') {
+          return value.toString().toLowerCase().includes(searchTextLower);
+        }
+        return false;
+      })
+    );
 
-    this.data = this.formatData(dataFilter);
+    if (dataFilter.length===0) {
+      this.searchCourse()
+    } else {
+      const data = dataFilter.map(student => ({
+        ...student,
+        page: 1,
+      }));
+      this.data = this.formatData(data);
+    }
   };
+
+  searchCourse() {
+    this.coursesService.searchCourse(this.searchText).subscribe({
+      next: (response: any) => {
+        if (response.valid) {
+          this.data = this.formatData(response.data);
+        }
+      },
+      error: (error) => {
+
+      }
+    })
+  }
+
+
+
 
   deleteConfirmProperty(data:any){
     this.data_delete=data;
@@ -109,8 +148,35 @@ export class CoursesListComponent implements OnInit {
   }
 
   deleteProperty(){
-    
+    this.deleteCourse(this.data_delete);
     this.cancel();
+  }
+
+  deleteCourse(data: any) {
+
+    this.coursesService.deleteCourse(data._id).subscribe((response: any) => {
+    
+      if (response.valid && response.data.deletedCount > 0) {
+
+        this.coursesService.courses.data = this.coursesService.courses.data.filter((item) => item._id != data._id)
+        this.data = this.formatData(this.coursesService.courses.data);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Eliminado correctamente.',
+          detail: 'El curso ha sido eliminado correctamente.'
+        });
+
+      } else {
+
+        this.messageService.add({
+          severity: 'Error',
+          summary: 'Ha ocurrido un error.',
+          detail: 'Ha ocurrido un error al eliminar el curso, por favor intenta nuevamente.'
+        });
+      }
+
+    })
   }
 
   cancel(){
