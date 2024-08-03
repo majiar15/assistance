@@ -142,7 +142,7 @@ export class TeacherListComponent implements OnInit {
       } else {
 
         this.messageService.add({
-          severity: 'Error',
+          severity: 'error',
           summary: 'Ha ocurrido un error.',
           detail: 'Ha ocurrido un error al eliminar el profesor, por favor intenta nuevamente.'
         });

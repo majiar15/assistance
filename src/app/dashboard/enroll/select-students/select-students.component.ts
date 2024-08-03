@@ -200,7 +200,7 @@ export class SelectStudentsComponent {
         error: (err) => {
           console.error("ERROR enrollStudents: ", err);
           this.messageService.add({
-            severity: 'Error',
+            severity: 'error',
             summary: 'Error en la matrícula',
             detail: 'Ocurrió un problema al matricular a los estudiantes. Por favor, intenta nuevamente.'
           });

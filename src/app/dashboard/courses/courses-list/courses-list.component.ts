@@ -170,7 +170,7 @@ export class CoursesListComponent implements OnInit {
       } else {
 
         this.messageService.add({
-          severity: 'Error',
+          severity: 'error',
           summary: 'Ha ocurrido un error.',
           detail: 'Ha ocurrido un error al eliminar el curso, por favor intenta nuevamente.'
         });
