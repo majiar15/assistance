@@ -5,10 +5,18 @@
         <input type="text" class="form-control" id="filter" placeholder="Ej. 0.000.000.000" [(ngModel)]="searchText"
             (ngModelChange)="searchSubject.next($event)" (input)="onInput($event)">
     </div>
-    <button class="button" (click)="enroll()" [disabled]="loading">
-        <div *ngIf="loading" class="spinner-border" role="status"></div>
-        <span *ngIf="!loading">Matricular</span>
-    </button>
+    <div class="buttons">
+        <button class="button-outline" (click)="fileInput.click()" [disabled]="loading">
+            <div *ngIf="loadingFile" class="spinner-border" role="status"></div>
+            <span *ngIf="!loadingFile">Cargar excel</span>
+        </button>
+        <input type="file" #fileInput (change)="uploadFile($event)" style="display: none;">
+        
+        <button class="button" (click)="enroll()" [disabled]="loading">
+            <div *ngIf="loading" class="spinner-border" role="status"></div>
+            <span *ngIf="!loading">Matricular</span>
+        </button>
+    </div>
 
 </div>
 

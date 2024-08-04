@@ -43,6 +43,11 @@ export class EnrollService {
     return this.httpService.postItem('/enroll',data)
   }
 
+  uploadFile(data:FormData):Observable<any>{
+    
+    return this.httpService.postFile('/enroll/upload',data)
+  }
+
   getStudentsEnrolled(course_id:string):Observable<Response<Student>>{
     
     return this.httpService.getItem(`/students/enrolled?course_id=${course_id}`)

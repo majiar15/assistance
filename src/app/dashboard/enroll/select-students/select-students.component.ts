@@ -31,6 +31,7 @@ export class SelectStudentsComponent {
   course_id: string = '';
   searchText: string = '';
   loading: boolean = false;
+  loadingFile: boolean = false;
   searchSubject: Subject<any> = new Subject();
   private subscriptions: Subscription[] = [];
 
@@ -175,6 +176,7 @@ export class SelectStudentsComponent {
 
     this.loading = true;
     if (!this.enrolledStudents.length) {
+      this.loading = false;
       return;
     }
 
@@ -187,7 +189,7 @@ export class SelectStudentsComponent {
     this.subscriptions.push(
       this.enrollService.enrollStudents(data).subscribe({
         next: (response: any) => {
-          console.log("🚀 ~ SelectStudentsComponent ~ this.enrollService.enrollStudents ~ response:", response)
+
           this.loading = false;
 
 
@@ -198,7 +200,7 @@ export class SelectStudentsComponent {
           });
         },
         error: (err) => {
-          console.error("ERROR enrollStudents: ", err);
+
           this.messageService.add({
             severity: 'error',
             summary: 'Error en la matrícula',
@@ -209,7 +211,63 @@ export class SelectStudentsComponent {
     )
   }
 
+  uploadFile(event: Event) {
 
+    const fileInput = event.target as HTMLInputElement;
+    const files = fileInput.files;
+
+    if (files && files.length > 0) {
+
+      this.loadingFile = true;
+      const file = files[0];
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('course_id', this.course_id);
+
+      this.enrollService.uploadFile(formData).subscribe({
+        next: (response: any) => {
+
+          if (response.valid) {
+
+            this.start();
+
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Matricula Exitosa!',
+              detail: response.data
+            });
+
+          } else {
+
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error en la matrícula',
+              detail: 'Ocurrió un problema al matricular a los estudiantes. Por favor, intenta nuevamente.'
+            });
+
+          }
+
+          this.loadingFile = false;
+
+        },
+        error: (error:Error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error en la matrícula',
+            detail: error.message
+          });
+          this.loadingFile = false;
+        }
+      });
+    }else{
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error al cargar archivo.',
+        detail: 'Debe seleccionar un archivo valido.'
+      });
+    }
+  }
 
   getMore(event: any) {
 
@@ -218,8 +276,8 @@ export class SelectStudentsComponent {
       if (metadata) {
         const { page, pageCount, limit } = metadata;
         if (!event.pageFetching.includes(event.page)) {
-  
-          this.enrollService.getMore('/not-enrolled',event.page, limit,this.course_id).subscribe((response) => {
+
+          this.enrollService.getMore('/not-enrolled', event.page, limit, this.course_id).subscribe((response) => {
             if (response.valid) {
               this.enrollService.unenrolledStudents?.data.push(...response.data);
               this.enrollService.unenrolledStudents!.metadata = response.metadata;
@@ -229,17 +287,17 @@ export class SelectStudentsComponent {
         }
 
       }
-    }else{
+    } else {
       const metadata = this.enrollService.enrolledStudents?.metadata;
       if (metadata) {
         const { page, pageCount, limit } = metadata;
         if (!event.pageFetching.includes(event.page)) {
-  
-          this.enrollService.getMore('/enrolled',event.page, limit,this.course_id).subscribe((response) => {
+
+          this.enrollService.getMore('/enrolled', event.page, limit, this.course_id).subscribe((response) => {
             if (response.valid) {
               this.enrollService.enrolledStudents?.data.push(...response.data);
               this.enrollService.enrolledStudents!.metadata = response.metadata;
-              this.students = this.formatData(this.enrollService.enrolledStudents!.data)
+              this.enrolledStudents = this.formatData(this.enrollService.enrolledStudents!.data)
             }
           });
         }

@@ -26,6 +26,14 @@ export class HttpService {
     return ({ headers });
   }
 
+  private getHeadersFiles(): any {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + HttpService.idtoken
+    })
+
+    return ({ headers });
+  }
+
   private getHeadersGET(): any {
     let headers = new HttpHeaders({
       'Authorization': 'Bearer ' + HttpService.idtoken
@@ -59,6 +67,14 @@ export class HttpService {
   public postItem(path:any,data:any):Observable<any>{
     
     return this.post(`${path}`,data).pipe(
+      map(response => this.resValid(response)),
+      catchError(this.handleError)
+    );
+  }
+
+  public postFile(path:any,data:any):Observable<any>{
+    
+    return this.post(`${path}`,data,this.getHeadersFiles()).pipe(
       map(response => this.resValid(response)),
       catchError(this.handleError)
     );
