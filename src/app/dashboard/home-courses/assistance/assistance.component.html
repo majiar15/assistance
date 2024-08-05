@@ -7,7 +7,14 @@
             <div class="filter-assistance ">
 
                 <label class="form-label">FECHA:</label>
-                <input type="date" class="form-control" id="filter" (input)="getAsistanceByDate()" [(ngModel)]="date"  >
+                <!-- <input type="date" class="form-control" id="filter" (input)="getAsistanceByDate()" [(ngModel)]="date"> -->
+                <!-- <app-date-filter [validDays]="[1, 3, 5]" (dateSelected)="onDateSelected($event)"></app-date-filter>  -->
+                <app-date-picker
+                    [validDays]="datesAvailable"
+                    [date]="date"
+                    (dateSelected)="onDateSelected($event)"
+                ></app-date-picker>
+
             </div>
         </div>
         <app-table-assistance
