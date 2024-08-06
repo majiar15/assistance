@@ -50,13 +50,23 @@ function createSecondaryWindow() {
     // Si quieres abrir la ventana secundaria desde el inicio, llama a createSecondaryWindow aquí
     // createSecondaryWindow();
 
-    
+    ipcMain.on('open-window', (event, windowType) => {
+        if (windowType === 'secondary') {
+            createSecondaryWindow();
+        }
+    });
 });
-app.on('open-window', (event, windowType) => {
-    if (windowType === 'secondary') {
-        createSecondaryWindow();
+
+
+app.on('open-window', (event, { url }) => {
+    if (!secondaryWindow) {
+        createSecondaryWindow(url);
+    } else {
+      qrWindow.setBounds({ width, height });
+      qrWindow.webContents.send('update-qr-image', url);
     }
-});
+  });
+
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {

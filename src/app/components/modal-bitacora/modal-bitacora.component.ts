@@ -72,7 +72,9 @@ export class ModalBitacoraComponent implements OnInit {
     
   }
   openSecondaryWindow() {
-    this.bitacoraService.windowQR('secondary');
+    // this.bitacoraService.windowQR('secondary');
+    // ipcRenderer.send('open-qr-window', { url: url });
+    // this.bitacoraService.send("open-qr-window", "ping");
   }
   
 
