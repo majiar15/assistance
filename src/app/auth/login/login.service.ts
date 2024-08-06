@@ -108,6 +108,8 @@ export class LoginService {
 
   }
 
+  
+
   logout(){
     this.logoutSession=true;
     localStorage.clear();

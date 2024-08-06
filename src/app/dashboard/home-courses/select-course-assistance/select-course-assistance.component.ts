@@ -64,8 +64,13 @@ export class SelectCourseAssistanceComponent implements OnInit {
     return this.homeCoursesService.inProgress().subscribe((resp:any)=>{
     
       if(resp.valid && resp.data!=null){
-        this.showModalBitacora=true;
-        this.homeCoursesService.courseBitacora=resp.data;
+        this.homeCoursesService.getBitacora(resp.data._id).subscribe((response)=>{
+          if(!response.valid){
+            this.showModalBitacora=true;
+            this.homeCoursesService.courseBitacora=resp.data;
+          }
+        })
+        
       }
 
     });

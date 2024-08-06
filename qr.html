@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:;">
+    <style>
+        /* qrpage.css */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+    </style>
+</head>
+
+<body>
+    <img id="qrCodeImage" src="" alt="QR Code">
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        ipcRenderer.on('update-qr-image', (event, url) => {
+            document.getElementById('qrCodeImage').src = url;
+        });
+
+    </script>
+</body>
+
+</html>
