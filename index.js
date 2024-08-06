@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require("electron");
+const { app, ipcMain, BrowserWindow, screen } = require("electron");
+const path = require("path");
 
 let secondaryWindow;
 let appWin;
@@ -11,11 +12,14 @@ createWindow = () => {
         resizable: true,
         webPreferences: {
             contextIsolation: false,
-            nodeIntegration: true
+            nodeIntegration: true,
+
+            preload: path.join(__dirname, 'preload.js')
         }
+
     });
     
-    appWin.loadURL(`${__dirname}/dist/index.html`);
+    appWin.loadFile(`${__dirname}/dist/index.html`);
 
     //appWin.setMenu(null);
 
@@ -27,16 +31,24 @@ createWindow = () => {
 }
 
 function createSecondaryWindow() {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
+    const x = width - 140;
+    const y = height - 175;
+
     secondaryWindow = new BrowserWindow({
-      width: 400,
-      height: 300,
-      resizable: true,
-        webPreferences: {
-            contextIsolation: false,
-            nodeIntegration: true
-        }
+      width: 140,
+      height: 175,
+      x: x,
+      y: y,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        preload: path.join(__dirname, 'preload.js')
+      },
+      alwaysOnTop: true,
     });
-  
+
     secondaryWindow.loadFile(path.join(__dirname, './qr.html'));
   
     secondaryWindow.on('closed', () => {
@@ -55,6 +67,14 @@ function createSecondaryWindow() {
             createSecondaryWindow();
         }
     });
+    ipcMain.on('open-qr-window', (event) => {
+        createSecondaryWindow();
+        // if (!qrWindow) {
+        // } else {
+        //   qrWindow.setBounds({ width, height });
+        //   qrWindow.webContents.send('update-qr-image', url);
+        // }
+      });
 });
 
 

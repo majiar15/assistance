@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AppService } from "src/app/app.service";
 import { HttpService } from "src/app/shared/services/http.service";
 import { IpcRenderer} from "electron";
+import { IpcService } from "src/app/ipc.service";
 
 @Injectable({
     providedIn: 'root'
@@ -9,21 +10,13 @@ import { IpcRenderer} from "electron";
   export class BitacoraService {
     
     bitacora :any=null;
-    private ipc: any;
 
     constructor(
         private httpService: HttpService,
         private appService:AppService,
-        ) { 
-            if (window.require) {
-                try {
-                  this.ipc = window.require("electron").ipcRenderer;
-                } catch (e) {
-                  throw e;
-                }
-              } else {
-                console.warn("Electron IPC was not loaded");
-              }
+        private ipc: IpcService
+        ) {
+            this.openQRPage();
         }
 
     createBitacora(data:any){
@@ -34,10 +27,7 @@ import { IpcRenderer} from "electron";
         return this.httpService.getItem('/assistance-teacher/get-today/'+course_id);
     }
 
-    public send(channel: string, ...args: any[]): void {
-        if (!this.ipc) {
-          return;
-        }
-        this.ipc.send(channel, ...args);
-      }
+    openQRPage(){
+        this.ipc.send('open-qr-window')
+    }
   }

@@ -31,8 +31,7 @@ export class ModalBitacoraComponent implements OnInit {
     private bitacoraService:BitacoraService,
     private homeService:HomeCoursesService,
     public router: Router,
-  ) { 
-    
+  ) {
   }
 
   
@@ -72,7 +71,7 @@ export class ModalBitacoraComponent implements OnInit {
     
   }
   openSecondaryWindow() {
-    // this.bitacoraService.windowQR('secondary');
+    this.bitacoraService.openQRPage();
     // ipcRenderer.send('open-qr-window', { url: url });
     // this.bitacoraService.send("open-qr-window", "ping");
   }
