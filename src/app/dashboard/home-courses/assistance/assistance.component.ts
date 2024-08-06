@@ -7,8 +7,10 @@ import { ToastModule } from 'primeng/toast';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { StudentsService } from '../../students/students.service';
 import { HomeCoursesService } from '../home-courses.service';
-import { Student } from 'src/app/shared/interfaces/interfaces';
+import { Schedule, Student } from 'src/app/shared/interfaces/interfaces';
 import { TableAssistanceComponent } from 'src/app/components/table-assistance/table-assistance.component';
+import { DatePickerComponent } from 'src/app/components/datepicker/datepicker.component';
+import { getDayNumber } from 'src/app/shared/model/format';
 
 @Component({
     standalone: true,
@@ -18,7 +20,7 @@ import { TableAssistanceComponent } from 'src/app/components/table-assistance/ta
     imports: [
       CommonModule, RouterLink,
       FormsModule, TableAssistanceComponent,
-      ModalComponent,ToastModule],
+      ModalComponent,ToastModule, DatePickerComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [MessageService]
 })
@@ -28,16 +30,20 @@ export class AssistanceComponent implements OnInit {
   data: any[] = [];
   date: string = '';
   students: Student[] = [];
+  datesAvailable: number[] = [];
+  scheduleFilterToday: Schedule | null = null;
   constructor(
     public studentsService:StudentsService,
     public homeCoursesService:HomeCoursesService,
+    private messageService: MessageService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id')!;
-      this.getLastAssist();
+      this.getScheduleByCourse();
+ 
       this.getStudentsEnrolled();
     });
   }
@@ -50,7 +56,7 @@ export class AssistanceComponent implements OnInit {
         name: student.name + ' ' + student.surnames || '',
         email: student.email,
         programa: student.academic_program.name,
-        assist: false,
+        assist: 'no',
         _id: student._id
       };
     });
@@ -105,33 +111,102 @@ export class AssistanceComponent implements OnInit {
   }
   getLastAssist() {
     this.homeCoursesService.getLastAssist(this.id).subscribe((response)=>{
-      this.date = response.data.date;
+      if (this.scheduleFilterToday){
+        this.date = this.formatDateForInput(new Date());
+      }else{
+
+        this.date = response.data.date;
+
+        if (!response?.data?.date) {
+          this.date = this.formatDateForInput(new Date());
+        }
+      }
+    });
+  }
+  private formatDateForInput(date: Date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  getScheduleByCourse() {
+    this.homeCoursesService.getScheduleByCourse(this.id).subscribe((response)=>{
+      this.scheduleFilterToday = response.data.filter((schedule:any) => {
+        const dayNumberSchedule = getDayNumber(schedule.week_day);
+        this.datesAvailable.push(dayNumberSchedule);
+        const today = new Date();
+        const dayNumber = today.getDay();
+        if(dayNumberSchedule == dayNumber){
+          return schedule;
+        }
+      })[0] ?? null;
+
+      this.getLastAssist();
     });
   }
   getStudentsEnrolled() {
     this.homeCoursesService.getStudentsEnrolled(this.id).subscribe((response)=>{
       this.data = this.formatData(response.data.students);
-      this.getAsistanceByDate();
+      if (this.data.length > 0) {
+        this.getAsistanceByDate();
+      }
     });
   }
   getAsistanceByDate() {
-    this.homeCoursesService.getAsistanceByDate(this.id, this.date).subscribe((response)=>{
-      const studentIdsWithAttendance = response.data.map((attendance:any) => attendance.student_id);
-      this.data = this.data.map((element)=>{
-        return {
-          ...element,
-          assist: studentIdsWithAttendance.includes(element._id) ? true : false
-        }
-      });
-      console.log(this.data);
+    this.homeCoursesService.getAsistanceByDate(this.id, this.date).subscribe((response) => {
+        const attendanceData = response.data;
+
+        // Crear un mapa para la asistencia de los estudiantes
+        const attendanceMap = new Map();
+        attendanceData.forEach((attendance: any) => {
+            attendanceMap.set(attendance.student_id, attendance.late ? 'late' : 'done');
+        });
+
+        // Actualizar los datos con la propiedad assist
+        this.data = this.data.map((element) => {
+          console.log("attendanceMap", attendanceMap);
+            const assistStatus = attendanceMap.get(element._id) || 'no';
+            return {
+                ...element,
+                assist: assistStatus
+            };
+        });
+        console.log("data", this.data);
     });
+}
+  onDateSelected(event: any){
+    if (event.isValid) {
+      this.date =event.date;
+      this.getAsistanceByDate();
+    }else{
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Dia incorrecto.',
+        detail: 'No tiene clases en este dia.'
+      });
+      
+      console.log("no valida");
+    }
   }
   takeAssist(student:Student){
-    console.log("this.isToday()",this.isToday());
     if(this.isToday()){
         this.homeCoursesService.takeAssitance(this.id, student._id).subscribe((response)=>{
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Muy bien!',
+            detail: 'Asistencia tomada correctamente.'
+          });
           this.getAsistanceByDate();
-        });
+        },
+        (response)=>{
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Opps!!',
+            detail: `${response.message}.`
+          });
+        }
+      );
     }
   }
 
