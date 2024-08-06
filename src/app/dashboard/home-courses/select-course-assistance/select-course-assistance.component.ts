@@ -50,7 +50,8 @@ export class SelectCourseAssistanceComponent implements OnInit {
 
   selectCourse(course:Course){
 
-    
+    this.homeCoursesService.selectedCourse =course;
+    this.router.navigate([`dashboard/assistance`, course._id])
   }
   
   deleteProperty(){

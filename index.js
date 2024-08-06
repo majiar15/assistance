@@ -30,12 +30,11 @@ function createSecondaryWindow() {
     secondaryWindow = new BrowserWindow({
       width: 400,
       height: 300,
-      webPreferences: {
-        preload: path.join(__dirname, 'preload.js'),
-        contextIsolation: true,
-        enableRemoteModule: false,
-        nodeIntegration: false
-      }
+      resizable: true,
+        webPreferences: {
+            contextIsolation: false,
+            nodeIntegration: true
+        }
     });
   
     secondaryWindow.loadFile(path.join(__dirname, './qr.html'));
@@ -45,9 +44,18 @@ function createSecondaryWindow() {
     });
   }
 
-app.on("ready", ()=>{
-    if (appWin !== null) createMainWindow();
-    //if (secondaryWindow === null) createSecondaryWindow();
+  app.whenReady().then(() => {
+    createWindow();
+
+    // Si quieres abrir la ventana secundaria desde el inicio, llama a createSecondaryWindow aquí
+    // createSecondaryWindow();
+
+    
+});
+app.on('open-window', (event, windowType) => {
+    if (windowType === 'secondary') {
+        createSecondaryWindow();
+    }
 });
 
 app.on("window-all-closed", () => {
@@ -56,11 +64,7 @@ app.on("window-all-closed", () => {
     }
 });
 
-app.on('open-window', (event, windowType) => {
-    // if (windowType === 'secondary') {
-    //   createSecondaryWindow();
-    // }
-  });
+
 
 
 
