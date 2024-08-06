@@ -14,11 +14,20 @@
       </ng-container>
 
       <td
-        [ngClass]="{'text-success': record['assist'], 'text-danger': !record['assist']}"
+
+        [ngClass]="{
+                'text-success': record['assist'] === 'done',
+                'text-danger': record['assist'] === 'no',
+                'text-warning': record['assist'] === 'late'
+                }"
         (click)="actionClick(record)"
       >
           <i
-            [ngClass]="record['assist'] ? 'bi bi-check-circle' : 'bi bi-x-circle'"
+            [ngClass]="record['assist'] === 'no'
+                ? 'bi bi-x-circle'
+                : record['assist'] === 'late'
+                  ? 'bi bi-check-circle'
+                  : 'bi bi-check-circle'"
           >
           </i>
       </td>

@@ -24,6 +24,10 @@ export class HomeCoursesService {
 
     return this.httpService.getItem(`/assistance/last/${courseId}`);
   }
+  getScheduleByCourse(courseId: string){
+
+    return this.httpService.getItem(`/courses/schedule-by/course/${courseId}`);
+  }
 
   getStudentsEnrolled(courseId: string){
 
