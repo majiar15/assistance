@@ -8,13 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalType } from 'src/app/shared/enum/modalType';
 import { HomeCoursesService } from '../home-courses.service';
+import { ModalBitacoraComponent } from "../../../components/modal-bitacora/modal-bitacora.component";
 
 @Component({
     selector: 'select-course-assistance',
     standalone: true,
     templateUrl: './select-course-assistance.component.html',
     styleUrl: './select-course-assistance.component.css',
-    imports: [CommonModule,FormsModule, CourseGridComponent],
+    imports: [CommonModule, FormsModule, CourseGridComponent, ModalBitacoraComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SelectCourseAssistanceComponent implements OnInit {
@@ -25,6 +26,7 @@ export class SelectCourseAssistanceComponent implements OnInit {
   modal_type:number = ModalType.SELECT_OPTIONS;
   modal_buttons:Array<any> = [];
   data_delete:any;
+  showModalBitacora:boolean=false;
 
   public colors = [
     'colorRed', 'colorBlue', 'colorGreen', 'colorYellow',
@@ -32,7 +34,9 @@ export class SelectCourseAssistanceComponent implements OnInit {
   constructor(
     public homeCoursesService:HomeCoursesService,
     public router: Router,
-  ) { }
+  ) {
+    this.inProgress()
+   }
 
   ngOnInit(): void {
     this.homeCoursesService.fetchCourses().subscribe((response) => {
@@ -45,8 +49,8 @@ export class SelectCourseAssistanceComponent implements OnInit {
 
 
   selectCourse(course:Course){
-    this.homeCoursesService.selectedCourse =course;
-    this.router.navigate([`dashboard/assistance`, course._id])
+
+    
   }
   
   deleteProperty(){
@@ -54,5 +58,16 @@ export class SelectCourseAssistanceComponent implements OnInit {
   }
   cancel(){
 
+  }
+
+  inProgress(){
+    return this.homeCoursesService.inProgress().subscribe((resp:any)=>{
+    
+      if(resp.valid && resp.data!=null){
+        this.showModalBitacora=true;
+        this.homeCoursesService.courseBitacora=resp.data;
+      }
+
+    });
   }
 }
