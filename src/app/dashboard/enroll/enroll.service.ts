@@ -64,5 +64,6 @@ export class EnrollService {
   default(){
     this.enrolledStudents = undefined;
     this.unenrolledStudents = undefined;
+    this.courses=[];
   }
 }

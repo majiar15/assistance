@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
 import { SidebarComponent } from '../core/sidebar/sidebar.component';
 import { Router, RouterModule } from '@angular/router';
+import { ModalUpdatePasswordComponent } from "../components/modal-update-password/modal-update-password.component";
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     standalone: true,
@@ -11,20 +14,24 @@ import { Router, RouterModule } from '@angular/router';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     imports: [
-      SidebarComponent,
-      CommonModule,
-      ModalComponent,
-      RouterModule
-    ]
+    SidebarComponent,
+    CommonModule,
+    ModalComponent,
+    RouterModule,
+    ModalUpdatePasswordComponent,
+    ToastModule
+],
+providers: [MessageService]
 })
 export default class DashboardComponent implements OnInit {
   course_active:any;
   loading = false;
-  modal = false
+  public showModalupdatePassword: boolean = false;
 
   constructor(
     public appService: AppService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +54,21 @@ export default class DashboardComponent implements OnInit {
     //   )
     // }
 
+  }
+  updatePassword(){
+    console.log("CAMBIAR CONTRSEÑA");
+    this.showModalupdatePassword=true;
+  }
+
+  closeModal(event:any){
+    if(event){
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Contraseña cambiada.',
+        detail: 'La contraseña se cambio correctamente.'
+      });
+    }
+    this.showModalupdatePassword=false;
   }
 
   goBack(): void {

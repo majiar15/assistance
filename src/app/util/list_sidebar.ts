@@ -29,5 +29,10 @@ export const items_teacher = [
         class: 'bi bi-book',
         link: 'home'
     },
+    {
+        title: 'Matriculas',
+        class: 'bi bi-card-checklist',
+        link: 'enroll'
+    },
     
 ];
