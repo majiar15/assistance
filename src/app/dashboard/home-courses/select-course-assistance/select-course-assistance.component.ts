@@ -79,7 +79,7 @@ export class SelectCourseAssistanceComponent implements OnInit {
             this.openQRPage()
           }
         })
-        
+
       }
 
     });
