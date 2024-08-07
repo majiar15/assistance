@@ -56,8 +56,11 @@ export class ModalBitacoraComponent implements OnInit {
     }
     this.bitacoraService.createBitacora(data).subscribe((response)=>{
       if(response.valid){
+        console.log("valid");
         this.loading=false;
         this.bitacoraService.bitacora=response.data;
+        this.homeService.inClass = true;
+        this.homeService.startInterval()
         //ENVIAR AL CODIGO QR
         this.openSecondaryWindow();
       }else{
@@ -72,8 +75,6 @@ export class ModalBitacoraComponent implements OnInit {
   }
   openSecondaryWindow() {
     this.bitacoraService.openQRPage();
-    // ipcRenderer.send('open-qr-window', { url: url });
-    // this.bitacoraService.send("open-qr-window", "ping");
   }
   
 

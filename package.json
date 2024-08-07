@@ -1,12 +1,11 @@
 {
   "name": "assistance",
   "version": "0.0.0",
-  "main":"index.js",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
-    
     "watch": "ng build --watch --configuration development",
     "electron": "ng build && electron .",
     "test": "ng test"
@@ -34,6 +33,7 @@
     "ng-sidebar": "^9.4.3",
     "primeicons": "^7.0.0",
     "primeng": "^17.16.1",
+    "qrcode": "^1.5.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { ModalType } from 'src/app/shared/enum/modalType';
 import { HomeCoursesService } from '../home-courses.service';
 import { ModalBitacoraComponent } from "../../../components/modal-bitacora/modal-bitacora.component";
+import { DashboardService } from '../../dashboard.service';
+import { BitacoraService } from 'src/app/components/modal-bitacora/modal-bitacora.service';
 
 @Component({
     selector: 'select-course-assistance',
@@ -34,6 +36,8 @@ export class SelectCourseAssistanceComponent implements OnInit {
   constructor(
     public homeCoursesService:HomeCoursesService,
     public router: Router,
+    public dashboardService: DashboardService,
+    public bitacoraService: BitacoraService,
   ) {
     this.inProgress()
    }
@@ -53,7 +57,7 @@ export class SelectCourseAssistanceComponent implements OnInit {
     this.homeCoursesService.selectedCourse =course;
     this.router.navigate([`dashboard/assistance`, course._id])
   }
-  
+
   deleteProperty(){
 
   }
@@ -66,14 +70,21 @@ export class SelectCourseAssistanceComponent implements OnInit {
     
       if(resp.valid && resp.data!=null){
         this.homeCoursesService.getBitacora(resp.data._id).subscribe((response)=>{
-          if(!response.valid){
+          if(!response.valid &&  !this.showModalBitacora){
+            console.log("por aca entramos");
             this.showModalBitacora=true;
             this.homeCoursesService.courseBitacora=resp.data;
+            this.homeCoursesService.inClass = true;
+            this.homeCoursesService.startInterval();
+            this.openQRPage()
           }
         })
         
       }
 
     });
+  }
+  openQRPage(){
+        this.bitacoraService.openQRPage();
   }
 }

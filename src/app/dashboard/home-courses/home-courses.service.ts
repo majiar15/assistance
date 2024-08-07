@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { SelectedCourse } from 'src/app/shared/interfaces/interfaces';
 import { HttpService } from 'src/app/shared/services/http.service';
 
@@ -10,6 +11,10 @@ export class HomeCoursesService {
   selectedCourse:SelectedCourse = {_id:"",name:""};
   courseBitacora:any;
 
+  public inClass = false;
+  private intervalId: any;
+  private intervalSubject = new BehaviorSubject<boolean>(false);
+  intervalActive$ = this.intervalSubject.asObservable();
   constructor(
     private httpService: HttpService,
   ) { }
@@ -53,7 +58,40 @@ export class HomeCoursesService {
 
   getBitacora(course_id:string){
     return this.httpService.getItem('/assistance-teacher/get-today/'+course_id);
-}
+  }
+  updateSecret(){
+    return this.httpService.postItem(
+      '/assistance-teacher/update-secret',
+      {
+        bitacora_id: this.courseBitacora._id,
+        secret: this.createNewSecret()
+      }
+    );
+  }
+  createNewSecret(): string {
+    const array = new Uint8Array(32);
+    window.crypto.getRandomValues(array);
 
+    return Array.from(array, byte => ('0' + byte.toString(16)).slice(-2)).join('');
+  }
+  startInterval(): void {
+    if (!this.intervalId) {
+      this.intervalId = setInterval(() => {
+        this.updateSecret();
+      }, 1000);
+      this.intervalSubject.next(true);
+    }
+  }
 
+  stopInterval(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+      this.intervalSubject.next(false);
+    }
+  }
+
+  private doSomething(): void {
+    console.log('actualizando QR');
+  }
 }

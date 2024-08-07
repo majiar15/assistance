@@ -16,7 +16,6 @@ import { IpcService } from "src/app/ipc.service";
         private appService:AppService,
         private ipc: IpcService
         ) {
-            this.openQRPage();
         }
 
     createBitacora(data:any){

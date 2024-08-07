@@ -49,7 +49,7 @@ function createSecondaryWindow() {
       alwaysOnTop: true,
     });
 
-    secondaryWindow.loadFile(path.join(__dirname, './qr.html'));
+    secondaryWindow.loadFile(path.join(__dirname, './desktop/QR/qr.html'));
   
     secondaryWindow.on('closed', () => {
       secondaryWindow = null;

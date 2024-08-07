@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../components/modal/modal.component";
@@ -14,40 +14,20 @@ import { Router, RouterModule } from '@angular/router';
       SidebarComponent,
       CommonModule,
       ModalComponent,
-      RouterModule
-    ]
+      RouterModule,
+      
+    ],
 })
-export default class DashboardComponent implements OnInit {
+export default class DashboardComponent {
   course_active:any;
   loading = false;
-  modal = false
 
   constructor(
     public appService: AppService,
     private router: Router
-  ) { }
+  ) {
+   }
 
-  ngOnInit(): void {
-    // let tokenEncript = localStorage.getItem('token') ?? '';
-    // let token = decodedAccessToken(tokenEncript)
-    //console.log("Token decodificado: ", token);
-    // if (this.appService.course_teacher.length == 0) {
-    //   console.log("ENTRO EN EL IF PRIMERO");
-    //   this.loading=true;
-    //   this.httpService.getItem(`/api/courses/byTeacher/ndkjadknakddasdsa`).subscribe(
-    //     (response: any) => {
-    //       if (response.valid) {
-    //         console.log("ENTRO EN EL IF");
-
-    //         this.appService.course_teacher = response.data;
-    //         this.loading=false;
-    //       }
-
-    //     }
-    //   )
-    // }
-
-  }
 
   goBack(): void {
     window.history.back();
