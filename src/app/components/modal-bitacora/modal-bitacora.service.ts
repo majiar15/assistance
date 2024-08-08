@@ -16,6 +16,7 @@ import { IpcService } from "src/app/ipc.service";
         private appService:AppService,
         private ipc: IpcService
         ) {
+            
         }
 
     createBitacora(data:any){
@@ -26,7 +27,15 @@ import { IpcService } from "src/app/ipc.service";
         return this.httpService.getItem('/assistance-teacher/get-today/'+course_id);
     }
 
-    openQRPage(){
-        this.ipc.send('open-qr-window')
+    openQRPage(secret:string){
+        this.ipc.send('open-qr-window',{secret})
+    }
+
+    updateQR(secret:string){
+        this.ipc.send('update-qr',{secret})
+    }
+
+    closeQr(){
+        this.ipc.send('closed-qr')
     }
   }

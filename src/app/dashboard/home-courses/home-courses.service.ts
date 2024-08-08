@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { BitacoraService } from 'src/app/components/modal-bitacora/modal-bitacora.service';
 import { SelectedCourse } from 'src/app/shared/interfaces/interfaces';
 import { HttpService } from 'src/app/shared/services/http.service';
 
@@ -10,6 +11,7 @@ export class HomeCoursesService {
 
   selectedCourse:SelectedCourse = {_id:"",name:""};
   courseBitacora:any;
+  courseInProgress:any;
 
   public inClass = false;
   private intervalId: any;
@@ -17,6 +19,7 @@ export class HomeCoursesService {
   intervalActive$ = this.intervalSubject.asObservable();
   constructor(
     private httpService: HttpService,
+    public bitacoraService: BitacoraService,
   ) { }
 
 
@@ -59,26 +62,40 @@ export class HomeCoursesService {
   getBitacora(course_id:string){
     return this.httpService.getItem('/assistance-teacher/get-today/'+course_id);
   }
-  updateSecret(){
+
+
+  updateSecret(secret:string){
     return this.httpService.postItem(
       '/assistance-teacher/update-secret',
       {
         bitacora_id: this.courseBitacora._id,
-        secret: this.createNewSecret()
+        secret: secret
       }
     );
   }
+
+
   createNewSecret(): string {
     const array = new Uint8Array(32);
     window.crypto.getRandomValues(array);
 
     return Array.from(array, byte => ('0' + byte.toString(16)).slice(-2)).join('');
   }
+
+
   startInterval(): void {
     if (!this.intervalId) {
       this.intervalId = setInterval(() => {
-        this.updateSecret();
-      }, 1000);
+        const secret = this.createNewSecret();
+        this.bitacoraService.updateQR(secret)
+        this.updateSecret(secret).subscribe((response)=>{
+          console.log("RESPUESTA DE LA SECRET: ",response);
+          if(response.valid && !response.data.inClass){
+            this.bitacoraService.closeQr();
+            this.stopInterval();
+          }
+        });
+      }, 3000);
       this.intervalSubject.next(true);
     }
   }

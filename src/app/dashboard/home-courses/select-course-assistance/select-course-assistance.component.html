@@ -23,5 +23,5 @@
 </div>
 
 <modal-dialog-bitacora
-[hidden]="!showModalBitacora" ></modal-dialog-bitacora>
+[hidden]="!showModalBitacora" (closeModalEvent)="showModalBitacora=false" ></modal-dialog-bitacora>
 

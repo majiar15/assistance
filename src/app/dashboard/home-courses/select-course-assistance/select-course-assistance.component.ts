@@ -1,4 +1,4 @@
-import { Component,CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CourseGridComponent } from "../../../components/course-grid/course-grid.component";
 import { Course } from 'src/app/shared/interfaces/interfaces';
 import { CommonModule } from '@angular/common';
@@ -13,78 +13,81 @@ import { DashboardService } from '../../dashboard.service';
 import { BitacoraService } from 'src/app/components/modal-bitacora/modal-bitacora.service';
 
 @Component({
-    selector: 'select-course-assistance',
-    standalone: true,
-    templateUrl: './select-course-assistance.component.html',
-    styleUrl: './select-course-assistance.component.css',
-    imports: [CommonModule, FormsModule, CourseGridComponent, ModalBitacoraComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  selector: 'select-course-assistance',
+  standalone: true,
+  templateUrl: './select-course-assistance.component.html',
+  styleUrl: './select-course-assistance.component.css',
+  imports: [CommonModule, FormsModule, CourseGridComponent, ModalBitacoraComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SelectCourseAssistanceComponent implements OnInit {
 
 
-  public courses:Course[]=[];
-  showModal:boolean = false;
-  modal_type:number = ModalType.SELECT_OPTIONS;
-  modal_buttons:Array<any> = [];
-  data_delete:any;
-  showModalBitacora:boolean=false;
+  public courses: Course[] = [];
+  showModal: boolean = false;
+  modal_type: number = ModalType.SELECT_OPTIONS;
+  modal_buttons: Array<any> = [];
+  data_delete: any;
+  showModalBitacora: boolean = false;
 
   public colors = [
     'colorRed', 'colorBlue', 'colorGreen', 'colorYellow',
     'colorSilver', 'colorWhite', 'colorBlack', 'colorRed', 'colorGreen'];
   constructor(
-    public homeCoursesService:HomeCoursesService,
+    public homeCoursesService: HomeCoursesService,
     public router: Router,
     public dashboardService: DashboardService,
     public bitacoraService: BitacoraService,
   ) {
     this.inProgress()
-   }
+  }
 
   ngOnInit(): void {
     this.homeCoursesService.fetchCourses().subscribe((response) => {
-      if(response.valid){
+      if (response.valid) {
 
-        this.courses=response.data;
-        }
+        this.courses = response.data;
+      }
     });
   }
 
 
-  selectCourse(course:Course){
+  selectCourse(course: Course) {
 
-    this.homeCoursesService.selectedCourse =course;
+    this.homeCoursesService.selectedCourse = course;
     this.router.navigate([`dashboard/assistance`, course._id])
   }
 
-  deleteProperty(){
+  deleteProperty() {
 
   }
-  cancel(){
+  cancel() {
 
   }
 
-  inProgress(){
-    return this.homeCoursesService.inProgress().subscribe((resp:any)=>{
-    
-      if(resp.valid && resp.data!=null){
-        this.homeCoursesService.getBitacora(resp.data._id).subscribe((response)=>{
-          if(!response.valid &&  !this.showModalBitacora){
+  inProgress() {
+    return this.homeCoursesService.inProgress().subscribe((resp: any) => {
+
+      if (resp.valid && resp.data != null) {
+        this.homeCoursesService.courseInProgress=resp.data;
+        this.homeCoursesService.getBitacora(resp.data._id).subscribe((response) => {
+
+          console.log("🚀 ~ response:", response)
+
+          if (!response.valid) {
             console.log("por aca entramos");
-            this.showModalBitacora=true;
-            this.homeCoursesService.courseBitacora=resp.data;
+            this.showModalBitacora = true;
+
+          } else {
+            this.homeCoursesService.courseBitacora = response.data;
             this.homeCoursesService.inClass = true;
+            this.bitacoraService.openQRPage(response.data.secret);
             this.homeCoursesService.startInterval();
-            this.openQRPage()
+
           }
         })
-
       }
-
     });
   }
-  openQRPage(){
-        this.bitacoraService.openQRPage();
-  }
+
 }
