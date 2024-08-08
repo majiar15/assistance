@@ -49,20 +49,17 @@ export class ModalBitacoraComponent implements OnInit {
   enviarBitacora() {
     if (this.messageBitacora != '') {
       this.loading = true;
-      console.log("courseInProgress: ", this.homeService.courseInProgress);
       const data = {
         "courseId": this.homeService.courseInProgress._id,
-        "secret": "XFAHh7282882jsn",
+        "secret": this.createNewSecret(),
         "bitacora": this.messageBitacora,
         "isCancel": this.confirmCheck
       }
-      console.log("ENVIAR BITACORA: ",data);
       
       this.bitacoraService.createBitacora(data).subscribe((response) => {
-        console.log("🚀 ~ Bitacora:", response)
+
         if (response.valid) {
 
-          console.log("valid");
           this.loading = false;
           this.bitacoraService.bitacora = response.data;
           this.homeService.inClass = true;
@@ -79,6 +76,13 @@ export class ModalBitacoraComponent implements OnInit {
       this.errorMessage = { text: 'La descripcion no puede estar vacia.', status: false }
     }
 
+  }
+
+  createNewSecret(): string {
+    const array = new Uint8Array(32);
+    window.crypto.getRandomValues(array);
+
+    return Array.from(array, byte => ('0' + byte.toString(16)).slice(-2)).join('');
   }
 
 
