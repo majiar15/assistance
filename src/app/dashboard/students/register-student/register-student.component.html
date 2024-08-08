@@ -20,11 +20,11 @@
             </div>
 
             <div class="date-expanded">
-                <label for="student_code" class="form-label">Codigo de carnet*</label>
-                <input type="number" class="form-control" name="student_code" id="student_code"
-                    formControlName="student_code" [class]="isControlInvalid('student_code') ? 'is-invalid' :''">
+                <label for="code" class="form-label">Codigo de carnet*</label>
+                <input type="number" class="form-control" name="code" id="code"
+                    formControlName="code" [class]="isControlInvalid('code') ? 'is-invalid' :''">
 
-                @if (isControlInvalid('student_code')) {
+                @if (isControlInvalid('code')) {
                 <div class="invalid-feedback">
                     El codigo del carnet es requerido.
                 </div>
