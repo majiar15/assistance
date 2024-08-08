@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AppService } from "src/app/app.service";
 import { HttpService } from "src/app/shared/services/http.service";
-import { IpcRenderer} from "electron";
 import { IpcService } from "src/app/ipc.service";
 
 @Injectable({
@@ -13,7 +11,6 @@ import { IpcService } from "src/app/ipc.service";
 
     constructor(
         private httpService: HttpService,
-        private appService:AppService,
         private ipc: IpcService
         ) {
             

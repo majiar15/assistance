@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppService } from 'src/app/app.service';
 import { ModalType } from "src/app/shared/enum/modalType";
 import { BitacoraService } from './modal-bitacora.service';
 import { HomeCoursesService } from 'src/app/dashboard/home-courses/home-courses.service';
@@ -28,7 +27,7 @@ export class ModalBitacoraComponent implements OnInit {
   loading: boolean = false;
   confirmCheck: boolean = false;
   constructor(
-    private appService: AppService,
+   
     private bitacoraService: BitacoraService,
     private homeService: HomeCoursesService,
     public router: Router,

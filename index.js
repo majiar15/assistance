@@ -34,12 +34,12 @@ createWindow = () => {
 function createSecondaryWindow(qrCodeUrl) {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
-  const x = width - 140;
-  const y = height - 175;
+  const x = width - 160;
+  const y = height - 190;
 
   secondaryWindow = new BrowserWindow({
-    width: 140,
-    height: 175,
+    width: 150,
+    height: 180,
     x: x,
     y: y,
     webPreferences: {
@@ -49,6 +49,8 @@ function createSecondaryWindow(qrCodeUrl) {
     },
     alwaysOnTop: true,
   });
+
+  secondaryWindow.setMenu(null);
 
   secondaryWindow.loadFile(path.join(__dirname, './desktop/QR/qr.html'));
 

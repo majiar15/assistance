@@ -6,7 +6,7 @@
   </div>
   <div *ngIf="loading" class="spinner-border" role="status"></div>
   <div *ngFor="let course of paginatedData; let i = index">
-    <div (click)="clickCard(course)" class="card" style="width: 19rem;">
+    <div (click)="clickCard(course)" class="card" >
       <div class="cardColor" [ngClass]="courseColors[i]"></div>
       <div class="card-body">
         <h5 class="card-title">{{course.name}}</h5>

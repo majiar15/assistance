@@ -43,3 +43,18 @@
         width: 100%;
     }
 }
+
+@media  screen and (max-width: 700px) {
+    .filter-assistance{
+        width: 200px;
+    }
+    .container{
+        margin-right: 0px;
+        margin-left: 0px;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .filter-assistance{
+        margin-right: 20px;
+    }
+}

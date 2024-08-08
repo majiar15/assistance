@@ -211,3 +211,12 @@ label {
     color: #3AA337;
     font-size: 14px;
 }
+
+@media  screen and (max-width: 700px) {
+    .main{
+        padding: 30px;
+    }
+    .button-outline{
+        width: 170px;
+    }
+}

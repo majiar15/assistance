@@ -22,6 +22,7 @@ h5{
 
 .card{
  cursor: pointer;
+ width: 19rem;
 }
 .colorRed{
     
@@ -50,4 +51,19 @@ h5{
 .colorBlack{
     
     background-color: rgba(22, 22, 22, 0.897);
+}
+
+@media  screen and (max-width: 700px) {
+    .cardColor{
+        height: 130px;
+        width:auto;
+        
+    }
+
+    .card{
+        width: 230px;
+    }
+    h5{
+        font-size: 1rem;
+    }
 }
