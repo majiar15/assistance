@@ -8,12 +8,13 @@ createWindow = () => {
   appWin = new BrowserWindow({
     width: 700,
     height: 600,
-    title: "Angular and Electron",
-    resizable: true,
+    title: "Unilibre",
+    icon: path.join(`${__dirname}./src/assets/favicon.ico`),
+    resizable: false,
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
-
+      
       preload: path.join(__dirname, 'preload.js')
     }
 
@@ -21,9 +22,9 @@ createWindow = () => {
 
   appWin.loadFile(`${__dirname}/dist/index.html`);
 
-  //appWin.setMenu(null);
+  appWin.setMenu(null);
 
-  appWin.webContents.openDevTools();
+  //appWin.webContents.openDevTools();
 
   appWin.on("closed", () => {
     appWin = null;
@@ -42,6 +43,7 @@ function createSecondaryWindow(qrCodeUrl) {
     height: 180,
     x: x,
     y: y,
+    resizable:false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

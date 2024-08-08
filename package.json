@@ -8,6 +8,8 @@
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
     "watch": "ng build --watch --configuration development",
     "electron": "ng build && electron .",
+    "electron-build": "ng build --configuration production && electron .",
+    "package-win": "electron-packager . Unilibre --platform=win32 --arch=x64 --out=release-builds --overwrite",
     "test": "ng test"
   },
   "private": true,
