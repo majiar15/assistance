@@ -96,7 +96,7 @@ export class HomeCoursesService {
             this.stopInterval();
           }
         });
-      }, 4000);
+      }, 3000);
       this.intervalSubject.next(true);
     }
   }
