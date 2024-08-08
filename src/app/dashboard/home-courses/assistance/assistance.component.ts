@@ -28,7 +28,7 @@ export class AssistanceComponent implements OnInit {
   id!: string;
   titles = ["DNI - Código", "Nombre", "email", "programa"];
   data: any[] = [];
-  date: string = '';
+  date: string = this.formatDateForInput(new Date());
   students: Student[] = [];
   datesAvailable: number[] = [];
   scheduleFilterToday: Schedule | null = null;
@@ -145,6 +145,7 @@ export class AssistanceComponent implements OnInit {
     });
   }
   getStudentsEnrolled() {
+    
     this.homeCoursesService.getStudentsEnrolled(this.id).subscribe((response)=>{
       this.data = this.formatData(response.data.students);
       if (this.data.length > 0) {
