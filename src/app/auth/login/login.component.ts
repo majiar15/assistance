@@ -6,7 +6,6 @@ import { LoginService } from './login.service';
 import { ModalSessionExpiredComponent } from "../../components/modalSessionExpired/modalSessionExpired.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { handleLoginError } from 'src/app/util/handleErrors';
 
 @Component({
   standalone: true,

@@ -58,6 +58,10 @@ export class HomeCoursesService {
   inProgress(){
     return this.httpService.getItem(`/courses/in-progress`);
   }
+  default(){
+    this.selectedCourse={_id:"",name:""};
+  }
+
 
   getBitacora(course_id:string){
     return this.httpService.getItem('/assistance-teacher/get-today/'+course_id);

@@ -44,4 +44,8 @@ export class TeacherService {
     return this.httpService.deleteItem(`/teachers/${teacher_id}`)
   }
 
+
+  default(){
+    this.teachers={data:[],valid:false};
+  }
 }

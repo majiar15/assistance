@@ -2,6 +2,9 @@
     width: 100%;
     height: 60px;
     background-color: white;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 .nav-back button{
     border: none;
@@ -15,6 +18,15 @@
 }
 .nav-back button span{
     margin-left: 10px;
+}
+
+.nav-back .dropdown{
+    margin-right: 16px;
+}
+
+.nav-back .dropdown button{
+    color: red;
+    
 }
 
 .content{

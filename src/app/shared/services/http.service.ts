@@ -114,7 +114,10 @@ export class HttpService {
             return { valid: true, data: resData.data, metadata:resData.metadata };
           } else if(resData.hasOwnProperty('data')){
             return { valid: true, data: resData.data, };
-          }else {
+          }else if(resData.hasOwnProperty('message')){
+            return { valid: true, message: resData.message, };
+          }
+          else {
             return { valid: false, msg: 'Response does not contain the [data] property' };
           }
         } else {
