@@ -1,3 +1,7 @@
+<modal-dialog-bitacora
+[hidden]="!showModalBitacora" [data]="homeCoursesService.courseInProgress" (closeModalEvent)="showModalBitacora=false" ></modal-dialog-bitacora>
+
+
 <div class="container">
     <h1>Mis Cursos</h1>
     <div class="wrap-card">
@@ -21,4 +25,5 @@
         }
     </div>
 </div>
+
 

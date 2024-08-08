@@ -1,0 +1,41 @@
+<div  class="modalc" >
+    <div class="modal-container">
+        <div class="modal-header">
+            
+            <h4 class="modal-title">Bitacora</h4>
+        </div>
+        <div class="modal-body">
+            <p>Para poder continuar, por favor complete todos los campos en la bitácora con la información requerida. Esto nos ayudará a mantener un registro detallado y preciso de todas las actividades.</p>
+            <textarea class="form-control" name="description" id="description" rows="4"
+                [(ngModel)]="messageBitacora"></textarea>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="confirmCheck" [(ngModel)]="confirmCheck">
+                    <label class="form-check-label" for="confirmCheck">
+                        Cancelar clase
+                    </label>
+                </div>
+                    
+        </div>
+
+        <div *ngIf="errorMessage">
+            <div [ngClass]="errorMessage.status?'alert alert-primary':'alert alert-danger'">
+                {{errorMessage.text}}
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            
+            <button class="button" type="submit"
+                (click)="enviarBitacora()" >
+                <div *ngIf="loading" class="spinner-border" role="status"></div>
+                <span *ngIf="!loading">Enviar</span>
+                
+            </button>
+            
+
+        </div>
+
+    </div>
+</div>
+  

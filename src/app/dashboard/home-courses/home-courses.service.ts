@@ -8,6 +8,8 @@ import { HttpService } from 'src/app/shared/services/http.service';
 export class HomeCoursesService {
 
   selectedCourse:SelectedCourse = {_id:"",name:""};
+  courseBitacora:any;
+  courseInProgress:any;
 
   constructor(
     private httpService: HttpService,
@@ -46,7 +48,20 @@ export class HomeCoursesService {
     );
   }
 
+  inProgress(){
+    return this.httpService.getItem(`/courses/in-progress`);
+  }
+  
+
+
+  getBitacora(course_id:string){
+    return this.httpService.getItem('/assistance-teacher/get-today/'+course_id);
+  }
+
+
   default(){
+    this.courseBitacora=null;
+    this.courseInProgress=null;
     this.selectedCourse={_id:"",name:""};
   }
 
