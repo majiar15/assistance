@@ -58,9 +58,7 @@ export class HomeCoursesService {
   inProgress(){
     return this.httpService.getItem(`/courses/in-progress`);
   }
-  default(){
-    this.selectedCourse={_id:"",name:""};
-  }
+  
 
 
   getBitacora(course_id:string){
@@ -93,13 +91,12 @@ export class HomeCoursesService {
         const secret = this.createNewSecret();
         this.bitacoraService.updateQR(secret)
         this.updateSecret(secret).subscribe((response)=>{
-          console.log("RESPUESTA DE LA SECRET: ",response);
           if(response.valid && !response.data.inClass){
             this.bitacoraService.closeQr();
             this.stopInterval();
           }
         });
-      }, 3000);
+      }, 4000);
       this.intervalSubject.next(true);
     }
   }
@@ -112,7 +109,16 @@ export class HomeCoursesService {
     }
   }
 
-  private doSomething(): void {
-    console.log('actualizando QR');
+  default(){
+    this.stopInterval()
+    this.selectedCourse={_id:"",name:""};
+
+
+    this.courseBitacora=null;
+    this.courseInProgress=null;
+    this.inClass = false;
+    this.intervalId=null;
+    this.intervalSubject.unsubscribe();
+    
   }
 }

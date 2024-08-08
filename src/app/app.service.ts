@@ -6,6 +6,7 @@ import { EnrollService } from './dashboard/enroll/enroll.service';
 import { StudentsService } from './dashboard/students/students.service';
 import { TeacherService } from './dashboard/teacher/teacher.service';
 import { HomeCoursesService } from './dashboard/home-courses/home-courses.service';
+import { BitacoraService } from './components/modal-bitacora/modal-bitacora.service';
 
 
 @Injectable({
@@ -25,10 +26,10 @@ export class AppService {
     private studentsService: StudentsService,
     private teacherService: TeacherService,
     private homeCoursesService: HomeCoursesService,
+    public bitacoraService: BitacoraService,
   ) { }
 
   startApp() {
-    console.log("SE EJECUTO EL START");
     this.getAcademicProgram().subscribe((response) => {
       if (response.valid) {
         this.academic_programs = response.data;
@@ -53,6 +54,7 @@ export class AppService {
     this.studentsService.default();
     this.teacherService.default();
     this.homeCoursesService.default();
+    this.bitacoraService.closeQr();
   }
 
 }
