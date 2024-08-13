@@ -6,13 +6,26 @@
 
 <div class="d-flex container-page">
     
-    <app-sidebar></app-sidebar>
+    <!-- <app-sidebar></app-sidebar> -->
     <div class="content">
         <div class="nav-back">
             <button (click)="goBack()" [ngClass]="{'invisible': !canBack()}">
                 <i class="bi bi-arrow-left"></i>
                 <span>Volver</span>
             </button>
+
+            
+
+            <div class="right">
+                <div class="logo">
+                    <img src="./assets/unilibre.png" alt="logo unilibre" id="logo-login" routerLink="/dashboard">
+    
+                </div>
+
+                <button (click)="logout()" routerLink="/login">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
 
         </div>
         <router-outlet></router-outlet>

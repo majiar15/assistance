@@ -28,7 +28,7 @@ export class SelectCourseAssistanceComponent implements OnInit {
   modal_type: number = ModalType.SELECT_OPTIONS;
   modal_buttons: Array<any> = [];
   data_delete: any;
-  showModalBitacora: boolean = false;
+  
 
   public colors = [
     'colorRed', 'colorBlue', 'colorGreen', 'colorYellow',
@@ -76,7 +76,7 @@ export class SelectCourseAssistanceComponent implements OnInit {
 
           if (!response.valid) {
             console.log("por aca entramos");
-            this.showModalBitacora = true;
+            this.homeCoursesService.showModalBitacora = true;
 
           } else {
             this.homeCoursesService.courseBitacora = response.data;

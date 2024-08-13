@@ -7,6 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ModalUpdatePasswordComponent } from "../components/modal-update-password/modal-update-password.component";
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { LoginService } from '../auth/login/login.service';
 
 @Component({
     standalone: true,
@@ -34,7 +35,8 @@ export default class DashboardComponent {
   constructor(
     public appService: AppService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public loginService:LoginService,
   ) { }
 
   ngOnInit(): void {
@@ -79,5 +81,9 @@ export default class DashboardComponent {
   }
   canBack(): boolean{
     return this.router.url !== '/dashboard'
+  }
+
+  logout(){
+    this.loginService.logout();
   }
 }

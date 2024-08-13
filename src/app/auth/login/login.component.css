@@ -71,3 +71,10 @@
 .item-input .error span{
     margin-left: 3px;
 }
+
+@media  screen and (max-width: 720px) {
+    .login{
+        width: 490px;
+        padding: 50px 96px;
+    }
+}

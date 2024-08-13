@@ -5,10 +5,13 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    align-items: center;
+    padding: 12px;
+
 }
 .nav-back button{
     border: none;
-    height: 50px;
+   
     background-color: transparent;
     margin-left: 10px;
 
@@ -27,6 +30,15 @@
 .nav-back .dropdown button{
     color: red;
     
+}
+.nav-back .right{
+    display: flex;
+    flex-direction: row;
+}
+.nav-back .logo img{
+    height: 50px;
+    width: auto;
+    margin-right: 20px;
 }
 
 .content{
