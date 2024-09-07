@@ -34,6 +34,7 @@ export class HttpService {
     return ({ headers });
   }
 
+
   private getHeadersGET(): any {
     let headers = new HttpHeaders({
       'Authorization': 'Bearer ' + HttpService.idtoken
@@ -92,6 +93,18 @@ export class HttpService {
       map(response => this.resValid(response)),
       catchError(this.handleError)
     );
+  }
+
+  public getItemBlob(path:any):Observable<Blob>{
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + HttpService.idtoken,
+    });
+
+    // @ts-ignore
+    return this.http.get(this.baseUrl+path, {
+      headers: headers,
+      responseType: 'blob',
+    });
   }
 
   public deleteItem(path:any):Observable<any>{

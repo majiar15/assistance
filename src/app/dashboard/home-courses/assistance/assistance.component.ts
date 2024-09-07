@@ -12,6 +12,7 @@ import { TableAssistanceComponent } from 'src/app/components/table-assistance/ta
 import { DatePickerComponent } from 'src/app/components/datepicker/datepicker.component';
 import { getDayNumber } from 'src/app/shared/model/format';
 import { ModalAssistanceComponent } from 'src/app/components/modal-assistance/modal-assistance.component';
+import { ExcelService } from './report.service';
 
 @Component({
     standalone: true,
@@ -41,7 +42,8 @@ export class AssistanceComponent implements OnInit {
     public studentsService:StudentsService,
     public homeCoursesService:HomeCoursesService,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private excelService: ExcelService
   ) { }
 
   ngOnInit(): void {
@@ -67,7 +69,18 @@ export class AssistanceComponent implements OnInit {
     });
   }
 
-
+  downloadExcel(): void {
+    this.excelService.downloadExcel(this.id).subscribe((response: Blob) => {
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      console.log(url);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'report.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
   deleteStudent(data: any) {
 
     // this.httpService.deleteItem(`/students/${data._id}`).subscribe((response: any) => {  

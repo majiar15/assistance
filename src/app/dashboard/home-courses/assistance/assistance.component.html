@@ -7,7 +7,7 @@
     <h1>{{homeCoursesService.selectedCourse.name}}</h1>
     <div class="content-table">
         <div class="content-filter card-filter">
-            <button class="button-outline" [routerLink]="['create']" >Descargar Reporte</button>
+            <button class="button-outline" (click)="downloadExcel()" >Descargar Reporte</button>
             <div class="filter-assistance ">
 
                 <label class="form-label">FECHA:</label>
