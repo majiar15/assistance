@@ -6,7 +6,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let record of data">
+    <tr *ngFor="let record of data" (click)="selectStudent(record)">
       <ng-container *ngFor="let property of getObjectKeys(record)">
         <td *ngIf="property !== 'assist'">
           {{ record[property] }}

@@ -1,4 +1,8 @@
 <p-toast></p-toast>
+<modal-assistance [hidden]="!showModalAssistance" 
+[data]="modalAssistanceData"
+(closeModalEvent)="closeModalAssistance($event)"></modal-assistance>
+
 <div class="container">
     <h1>{{homeCoursesService.selectedCourse.name}}</h1>
     <div class="content-table">
@@ -21,6 +25,7 @@
             [data]="data"
             [titles]="titles"
             (actionItem)="takeAssist($event)"
+            (selectStudentEvent)="showAssistanceForStudent($event)"
         ></app-table-assistance>
     </div>
 </div>

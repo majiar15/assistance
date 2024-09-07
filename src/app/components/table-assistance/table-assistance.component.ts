@@ -18,6 +18,7 @@ export class TableAssistanceComponent implements OnInit {
   @Input() filters: string[] = [];
   @Input() isLoading = false;
   @Output () actionItem: EventEmitter<any> = new EventEmitter();
+  @Output () selectStudentEvent: EventEmitter<any> = new EventEmitter();
 
   showModal:boolean = false;
   modal_type:number = 0;
@@ -66,5 +67,8 @@ export class TableAssistanceComponent implements OnInit {
     this.actionItem.emit(record);
   }
 
+  selectStudent(record:any){
+    this.selectStudentEvent.emit(record)
+  }
 
 }

@@ -1,0 +1,73 @@
+<div  class="modalc" >
+    <div class="modal-container">
+        <div class="modal-header">
+            
+            <h4 class="modal-title">Reporte de asistencia</h4>
+            
+            <i class="bi bi-x" (click)="close()"></i>
+        </div>
+        
+        
+        <div class="modal-body">
+            <span class="sub-title student">Estudiante:</span>
+            <ul>
+                <li>Nombre de estudiante: {{data?.name}}</li>
+                <li>Programa: {{data?.programa}}</li>
+                <li>Cedula: {{data?.dni}}</li>
+                <li>Correo institucional: {{data?.email}}</li>
+        
+            </ul>
+            <span style="margin-bottom: 10px;">[ X ] Llegó puntual | [ - ] Llegó tarde | [     ] No asistió</span>
+            @if (loading) {
+                <div class="loading">
+                    <div class="spinner-border" role="status"></div>
+                </div>
+                
+            }@else {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                          <th>Fechas</th>
+                          @for (item of dataTable; track $index) {
+                            <th >{{item.date}}</th>
+                          }
+                          
+                          <!-- <th>Accion</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td>Asistencia</td>
+                            @for (item of dataTable; track $index) {
+                                <td>{{item.assistance==null?'':item.assistance}}</td>
+                              }
+                            
+                        </tr>
+                      </tbody>
+
+                </table>
+                <div class="topics">
+                    <span class="sub-title">Tematicas</span>
+                    <ul>
+                        @for (topic of topics; track $index) {
+                            <li>{{topic.date}}: {{topic.name}}</li>
+                        }
+                        
+                    </ul>
+                </div>
+            }
+            
+                    
+        </div>
+
+        
+
+        <div class="modal-footer">
+            
+            
+
+        </div>
+
+    </div>
+</div>
+  

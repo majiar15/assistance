@@ -11,6 +11,7 @@ import { Schedule, Student } from 'src/app/shared/interfaces/interfaces';
 import { TableAssistanceComponent } from 'src/app/components/table-assistance/table-assistance.component';
 import { DatePickerComponent } from 'src/app/components/datepicker/datepicker.component';
 import { getDayNumber } from 'src/app/shared/model/format';
+import { ModalAssistanceComponent } from 'src/app/components/modal-assistance/modal-assistance.component';
 
 @Component({
     standalone: true,
@@ -20,7 +21,9 @@ import { getDayNumber } from 'src/app/shared/model/format';
     imports: [
       CommonModule, RouterLink,
       FormsModule, TableAssistanceComponent,
-      ModalComponent,ToastModule, DatePickerComponent],
+      ModalComponent,ToastModule, DatePickerComponent,
+      ModalAssistanceComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [MessageService]
 })
@@ -32,6 +35,8 @@ export class AssistanceComponent implements OnInit {
   students: Student[] = [];
   datesAvailable: number[] = [];
   scheduleFilterToday: Schedule | null = null;
+  showModalAssistance:boolean=false;
+  modalAssistanceData:any=null;
   constructor(
     public studentsService:StudentsService,
     public homeCoursesService:HomeCoursesService,
@@ -218,5 +223,14 @@ export class AssistanceComponent implements OnInit {
     today.setHours(0, 0, 0, 0);
   
     return inputDate.getTime() === today.getTime();
+  }
+
+  showAssistanceForStudent(student:Student){
+    this.modalAssistanceData={...student,course_id:this.id};
+    this.showModalAssistance=true;
+  }
+
+  closeModalAssistance(event:any){
+    this.showModalAssistance=false;
   }
 }
