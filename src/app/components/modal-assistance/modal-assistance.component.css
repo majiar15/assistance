@@ -51,15 +51,11 @@ i{
 
 
 }
-.modalc .modal-body{
-    display: flex;
-    justify-content: center;
+.modalc .modal-body{  
     padding: 2px 20px;
     background: #ffff;
-   
     font-size: 15px;
     color: #334D6E;
-    flex-direction: column;
     height: 400px;
     overflow: auto;
 }

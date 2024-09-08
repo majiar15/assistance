@@ -23,7 +23,6 @@ export class ModalAssistanceComponent implements OnInit {
   @Input() data:any;
   @Output() closeModalEvent = new EventEmitter<any>();
 
-  errorMessage: any;
   loading: boolean = false;
   dataTable:any;
   topics:any[]=[];
@@ -78,6 +77,9 @@ export class ModalAssistanceComponent implements OnInit {
 
   close(): void {
     this.closeModalEvent.emit(false);
+    this.topics = [];
+    this.dataTable = []
+    this.loading = false
   }
 
 
