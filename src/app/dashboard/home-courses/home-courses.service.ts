@@ -67,6 +67,7 @@ export class HomeCoursesService {
 
 
   updateSecret(secret: string) {
+    
     return this.httpService.postItem(
       '/assistance-teacher/update-secret',
       {
@@ -86,7 +87,9 @@ export class HomeCoursesService {
 
 
   startInterval(): void {
+    
     if (!this.intervalId) {
+      
       this.intervalId = setInterval(() => {
         const secret = this.createNewSecret();
         this.bitacoraService.updateQR(secret)

@@ -58,14 +58,14 @@ export class ModalBitacoraComponent implements OnInit {
       this.bitacoraService.createBitacora(data).subscribe((response) => {
 
         if (response.valid) {
-
-          this.loading = false;
-          this.bitacoraService.bitacora = response.data;
-          this.homeService.inClass = true;
-          this.homeService.startInterval()
-          this.bitacoraService.openQRPage(response.data.secret);
-          this.closeModalEvent.emit(true);
           
+          this.loading = false;
+          this.homeService.courseBitacora = response.data;
+          this.homeService.inClass = true;
+          this.bitacoraService.openQRPage(response.data.secret);
+          
+          this.closeModalEvent.emit(true);
+          this.homeService.startInterval()
         } else {
           this.errorMessage = { text: 'La bitacora no fue guardarda. intente nuevamente.', status: false }
         }
