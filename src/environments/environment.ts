@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  domain:'https://asistencia-unilibre-qr-c712d878aa1c.herokuapp.com/api',
+  domain:'https://asistencia-unilibre-bcf5a90c9c34.herokuapp.com/api',
   //domains:'https://asistance-qr-6bc6a10b5951.herokuapp.com/api',
   urlBaseMocks:'https://7ffbe5d4-9719-42c4-8711-543699a7a94d.mock.pstmn.io',
 };
